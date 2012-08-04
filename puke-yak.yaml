@@ -1,12 +1,11 @@
-# Prod
 user-roxee-box-Linux:
-    # DEPLOY_ROOT: '/home/roxee/www/static/lib'
+    DEPLOY_ROOT: '/home/roxee/www/static/lib'
     # DOC_ROOT: '/home/roxee/doc/spitfire'
 
 # Integration
 user-jenkins-box-Linux:
     # ROOT: '/opt/puke/jenkins-roxee'
-    # DEPLOY_ROOT: '/var/www/deploy/app/lib'
+    DEPLOY_ROOT: '/var/www/deploy/static/lib'
     # DOC_ROOT: '/var/www/deploy/static/doc/spitfire'
     LINKS:
         # Where to hotlink static resources from
@@ -20,7 +19,7 @@ user-jenkins-box-Linux:
 # Mangled Deutz workin
 user-dmp-box-Darwin:
     # ROOT: '${HOME}/buildd/stage.webitup.org'
-    # DEPLOY_ROOT: '${HOME}/buildd/deploy.webitup.org/web/app/lib'
+    DEPLOY_ROOT: '${HOME}/buildd/deploy.webitup.org/web/static/lib'
     # DOC_ROOT: '${HOME}/buildd/deploy.webitup.org/doc/roxeecore'
     LINKS:
         JASMINE: '//static.loft.sn.ackitup.net:4242/lib/com/pivotallabs/jasmine-stable'
@@ -31,7 +30,7 @@ user-dmp-box-Darwin:
 # Raildecom workin
 user-raildecom-box-Darwin:
     # ROOT: '${HOME}/workspace/webitup/buildd'
-    # DEPLOY_ROOT: '${HOME}/workspace/webitup/deploy/web/app/lib'
+    DEPLOY_ROOT: '${HOME}/workspace/webitup/deploy/static/lib'
 #    DOC_ROOT: '${HOME}/workspace/webitup/deploy/web/app/doc/roxeecore'
     LINKS:
         JASMINE: '//static.sn.ackitup.net/lib/com/pivotallabs/jasmine-stable'

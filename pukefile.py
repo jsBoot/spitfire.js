@@ -5,7 +5,9 @@ global PH
 import pukehelpers as PH
 import re
 
-# Yak.DEPLOY_ROOT = Yak.DEPLOY_ROOT + '/' + Yak.PACKAGE['NAME'] + "/" + Yak.PACKAGE['VERSION']
+if Yak.DEPLOY_ROOT != './dist':
+  Yak.DEPLOY_ROOT = Yak.DEPLOY_ROOT + '/org/jsboot/' + Yak.PACKAGE['NAME'] + "/" + Yak.PACKAGE['VERSION']
+  makedir(Yak.DEPLOY_ROOT)
 
 @task("Default task")
 def default():
