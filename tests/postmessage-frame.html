@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<script src="{PUKE-CORE-LINK}/core/services/shim/postmessage.js"></script>
+
+</head>
+<body style="background-color: #FFFFFF">
+  <script>
+    if(!("console" in window))
+      window.console = {log: function(){}, warn: function(){}};
+  // IE quick and dirty fix
+    if(!("addEventListener" in window))
+      window.addEventListener = function(name, listener, phase){
+        attachEvent("on" + name, listener);
+      };
+
+    window.addEventListener("message", function(e){
+      console.log("IFRAME:", document.location.href, "Will send back", e.data);
+      // Just send the stuff back as is
+      e.source.postMessage(e.data, e.origin);
+      console.log("IFRAME: Just sent back", document.location.href, e.data);
+    }, false);
+  </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+  <script src="{PUKE-STATIC-LINK}/loaders/labjs-stable-min.js"></script>
+<!--
+  <script src="{PUKE-STATIC-LINK}/loaders/requirejs-stable-min.js"></script>
+  <script src="{PUKE-STATIC-LINK}/loaders/headjs-stable-min.js"></script>
+  <script src="{PUKE-STATIC-LINK}/loaders/yahoo-stable-min.js"></script>
+-->
+  <script src="../loader-min.js"></script>
+
+  <!-- Jasmine -->
+  <link rel="stylesheet" type="text/css" href="{PUKE-JASMINE-LINK}/jasmine.css"></link>
+
+  <!-- Booting shit -->
+  <script type="text/javascript">
+  var spitfireBaseUrl = '../';
+
+  // If you want to use Spitfire, have "use-spitfire" somehow in the url (eg: url#use-*)
+  // If you want the extra (unsafe!) shims as well, use-spitfire-full
+  // If you want to use ES5, have "use-es5"
+
+  // Specs
+  jsBoot.core.loader
+    .script('{PUKE-JASMINE-LINK}/jasmine.js')
+    .script('{PUKE-JASMINE-LINK}/jasmine-html.js')
+    .script('specs/Function.js')
+    .script('specs/Object.js')
+    .script('specs/Array.js')
+    .script('specs/String.js')
+    .script('specs/Math.js')
+    .script('specs/Globals.js')
+
+    .script('es5/h.js')
+    .script('es5/h-matchers.js')
+
+  // If we are told to use-* a shiming shcript, load it as well
+  if(location.href.match(/use-/)){
+    var path = location.href.match(/use-spitfire/) ? (spitfireBaseUrl + 'spitfire-min.js') : 'es5/es5-shim.js';
+    jsBoot.core.loader.script(path);
+  }
+
+  var allSetBaby = function(){
+    // If we want the full shims from spitfire
+    if(location.href.match(/use-spitfire-full/))
+      Spitfire.extraShims();
+    if(typeof Spitfire != 'undefined'){
+      var shims = Spitfire.boot(true);
+      for(var x = 0; x < shims.length; x++)
+        jsBoot.core.loader.script(spitfireBaseUrl + shims[x]);
+    }
+    // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe statements
+    // (hence dereference unshimed-yet code...), so, we need to WAIT for the shimer to come in
+    // And so is our event testing...
+    jsBoot.core.loader.wait()
+      .script('specs/Events.js')
+      .script('es5/s-array.js')
+      .script('es5/s-function.js')
+      .script('es5/s-string.js')
+      .script('es5/s-object.js')
+      .script('es5/s-date.js');
+
+    // Once everything is in place, start jasmine
+    jsBoot.core.loader.wait(function(){
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+      var trivialReporter = new jasmine.TrivialReporter();
+      jasmineEnv.addReporter(trivialReporter);
+      jasmineEnv.specFilter = function(spec) {
+        return trivialReporter.specFilter(spec);
+      };
+      jasmineEnv.execute();
+    });
+  };
+
+  jsBoot.core.loader.wait(allSetBaby);
+
+  </script>
+
+</head>
+<body>
+</body>
+</html>
