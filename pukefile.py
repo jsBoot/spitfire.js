@@ -14,6 +14,7 @@ def default():
   # executeTask("build")
   # executeTask("tests")
   executeTask("deploy")
+  executeTask("tests")
   # executeTask("stats")
 
 # @task("Calling all interesting tasks")
@@ -30,6 +31,7 @@ def default():
 @task("All")
 def all():
   executeTask("deploy")
+  executeTask("tests")
   executeTask("mint")
 
 
@@ -37,7 +39,6 @@ def all():
 @task("Build package")
 def deploy():
 # Get the extra shims here
-
     deepcopy("http:" + Yak.LINKS["STATIC"] + "/shims/json.js", Yak.DEPLOY_ROOT + '/burnscars/')
 
     sed = Sed()
@@ -47,6 +48,12 @@ def deploy():
     list = FileList("src", filter="*.js,*.html")
     deepcopy(list, Yak.DEPLOY_ROOT, replace=sed)
 
+    # Build a loader bundling labjs - XXX beware! This won't get strict unless minified
+    list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/labjs-stable.js", 'src/loader.js']
+    combine(list, Yak.DEPLOY_ROOT + '/loader-lab.js', replace=sed)
+
+@task("Build tests")
+def tests():
     sed = Sed()
     PH.addlinksreplace(sed)
     PH.addpackagereplace(sed)
