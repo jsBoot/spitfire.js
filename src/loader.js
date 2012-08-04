@@ -29,37 +29,46 @@ jsBoot.core.loader = (function() {
 
   // http://headjs.com/#api
   if (typeof head != 'undefined')
-    backend = function(uris, callback) {
-      uris.push(callback);
-      return head.js.apply(head.js, uris);
-      // head.js(file1 … fileN, [callback])
+    backend = function(){
+      // Head has no "fork" feature
+      return function(uris, callback) {
+        uris.push(callback);
+        return head.js.apply(head.js, uris);
+        // head.js(file1 … fileN, [callback])
+      }
     };
 
   // http://yuilibrary.com/yui/docs/get/index.html
   if (typeof YUI != 'undefined') {
-    var Y;
-    YUI().use('get', function(o) {
-      Y = o;
+    backend = function(){
+      var Y;
+      YUI().use('get', function(o) {
+        Y = o;
+      });
       Y.Get.options.async = true;
-      backend = function() {
+      return function() {
         Y.Get.js.apply(Y.Get, arguments);
       };
-    });
+    };
   }
 
   // http://requirejs.org/
   if (typeof requirejs != 'undefined')
-    backend = function(uris, callback) {
-      requirejs(uris, callback);
+    backend = function(){
+      return function(uris, callback) {
+        requirejs(uris, callback);
+      };
     };
 
   // http://labjs.com/documentation.php
   if (typeof $LAB != 'undefined') {
-    var q = $LAB;
-    backend = function(uris, callback) {
-      while (uris.length)
-        q = q.script(uris.shift());
-      q = q.wait(callback);
+    backend = function(){
+      var q = $LAB.sandbox();
+      return function(uris, callback) {
+        while (uris.length)
+          q = q.script(uris.shift());
+        q = q.wait(callback);
+      };
     };
   }
 
@@ -74,6 +83,7 @@ jsBoot.core.loader = (function() {
 
     var toLoad = [];
     var loading;
+    var bck = backend();
 
     var lingerEnd = function() {
       if (loading)
@@ -94,7 +104,7 @@ jsBoot.core.loader = (function() {
       }
 
       // console.log('pulling', loading.uris);
-      backend(loading.uris, function(err) {
+      bck(loading.uris, function(err) {
         var cl = loading.callback;
         loading = false;
         if (cl)
@@ -114,6 +124,10 @@ jsBoot.core.loader = (function() {
 
       linger = setTimeout(lingerEnd, 1);
       return this;
+    };
+
+    this.fork = function(){
+      return new pvLoader();
     };
 
     this.wait = function(callback) {
