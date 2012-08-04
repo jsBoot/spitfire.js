@@ -52,6 +52,12 @@ def deploy():
     list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/labjs-stable.js", 'src/loader.js']
     combine(list, Yak.DEPLOY_ROOT + '/loader-lab.js', replace=sed)
 
+    list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/headjs-stable.js", 'src/loader.js']
+    combine(list, Yak.DEPLOY_ROOT + '/loader-head.js', replace=sed)
+
+    list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/requirejs-stable.js", 'src/loader.js']
+    combine(list, Yak.DEPLOY_ROOT + '/loader-require.js', replace=sed)
+
 @task("Build tests")
 def tests():
     sed = Sed()
