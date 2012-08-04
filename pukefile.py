@@ -25,6 +25,13 @@ def default():
 #     executeTask("stats")
 #     executeTask("statsdoc")
 
+@task("All")
+def all():
+  executeTask("deploy")
+  executeTask("mint")
+
+
+
 @task("Build package")
 def deploy():
 # Get the extra shims here

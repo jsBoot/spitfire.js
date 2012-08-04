@@ -18,7 +18,7 @@ Content:
 
 How to build:
 - install puke (a python build system): pip install puke
-- puke it: puke && puke mint
+- puke it: puke all
 
 How to use:
 - start dist/tests/All.html in a browser to run the tests
