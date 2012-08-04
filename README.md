@@ -31,47 +31,37 @@ How to use in your project:
 
 Otherwise, to use the shim system in you own project:
 
-<!-- Include your favorite loading mechanic - right now, requirejs, labjs, headjs and yahoo are supported -->
-  <script src="MYLOADER.js"></script>
-<!-- Include, or load otherwise the spitfire script -->
-  <script src="spitfire-min.js"></script>
-  <script>
-    // If you want NON FUNCTIONAL shims (see es5 for an explanation), uncomment this
-    // Spitfire.extraShims();
+- include your favorite loading mechanic - right now, requirejs, labjs, headjs and yahoo are supported
+- include, or load otherwise the spitfire script (spitfire-min.js, or spitfire.js)
+- now:
+      // If you want NON FUNCTIONAL shims (see es5 for an explanation), uncomment this
+      // Spitfire.extraShims();
 
-    // Get all the needed shims uris for this browser
-    var shims = Spitfire.boot(); // pass true as argument to get non minified versions
+      // Get all the needed shims uris for this browser
+      var shims = Spitfire.boot(); // pass true as argument to get non minified versions
 
-    // Now, load the shims the way you want
-    for(var x = 0; x < shims.length; x++){
-      // load(shims[x])
-    }
-  </script>
+      // Now, load the shims the way you want
+      for(var x = 0; x < shims.length; x++){
+        // load(shims[x])
+      }
 
 
+If you want to use the loader interface instead:
+- include your favorite loading mechanic - right now, requirejs, labjs, headjs and yahoo are supported
+- include, or load otherwise the loader script (loader-min.js, or loader.js)
+- Now
+        jsBoot.core.loader.script('spitfire-min.js')
+          .wait(function(){
+            // If you want NON FUNCTIONAL shims (see es5 for an explanation), uncomment this
+            // Spitfire.extraShims();
 
-If you want to use the loader interface instead
+            // Get all the needed shims uris for this browser
+            var shims = Spitfire.boot(); // pass true as argument to get non minified versions
 
-<!-- Include your favorite loading mechanic - right now, requirejs, labjs, headjs and yahoo are supported -->
-  <script src="MYLOADER.js"></script>
-<!-- Include (or load) the loader interface the way you want -->
-  <script src="loader-min.js"></script>
-<!-- Start things up -->
-  <script>
-    jsBoot.core.loader.script('spitfire-min.js')
-      .wait(function(){
-        // If you want NON FUNCTIONAL shims (see es5 for an explanation), uncomment this
-        // Spitfire.extraShims();
-
-        // Get all the needed shims uris for this browser
-        var shims = Spitfire.boot(); // pass true as argument to get non minified versions
-
-        // Load the shims, either using the loader, or your favorite loading mechanism
-        for(var x = 0; x < shims.length; x++)
-          jsBoot.core.loader.script(shims[x]);
-      });
-  </script>
-
+            // Load the shims, either using the loader, or your favorite loading mechanism
+            for(var x = 0; x < shims.length; x++)
+              jsBoot.core.loader.script(shims[x]);
+          });
 
 Credits for the shims:
 - es5-shim: https://github.com/kriskowal/es5-shim/
