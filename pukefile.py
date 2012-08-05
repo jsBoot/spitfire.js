@@ -50,6 +50,7 @@ def deploy():
 
     # Build a loader bundling labjs - XXX beware! This won't get strict unless minified
     list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/labjs-stable.js", 'src/loader.js']
+    # list = ["src/lab-fork.js", 'src/loader.js']
     combine(list, Yak.DEPLOY_ROOT + '/loader-lab.js', replace=sed)
 
     list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/headjs-stable.js", 'src/loader.js']
@@ -80,7 +81,7 @@ def tests():
 
 @task("Lint")
 def lint():
-    list = FileList("src", filter = "*.js")
+    list = FileList("src", filter = "*.js", exclude="*lab-fork*")
     jslint(list, relax=False)
 
 @task("Flint")

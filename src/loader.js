@@ -29,7 +29,7 @@ jsBoot.core.loader = (function() {
 
   // http://headjs.com/#api
   if (typeof head != 'undefined')
-    backend = function(){
+    backend = function() {
       // Head has no "fork" feature
       return function(uris, callback) {
         uris.push(callback);
@@ -40,7 +40,7 @@ jsBoot.core.loader = (function() {
 
   // http://yuilibrary.com/yui/docs/get/index.html
   if (typeof YUI != 'undefined') {
-    backend = function(){
+    backend = function() {
       var Y;
       YUI().use('get', function(o) {
         Y = o;
@@ -54,22 +54,50 @@ jsBoot.core.loader = (function() {
 
   // http://requirejs.org/
   if (typeof requirejs != 'undefined')
-    backend = function(){
+    backend = function() {
       return function(uris, callback) {
         requirejs(uris, callback);
       };
     };
 
+
+
+  // LAB override entirely the thingie to take advantage of speed
   // http://labjs.com/documentation.php
   if (typeof $LAB != 'undefined') {
-    backend = function(){
+    var labLoader = function() {
       var q = $LAB.sandbox();
-      return function(uris, callback) {
-        while (uris.length)
-          q = q.script(uris.shift());
-        q = q.wait(callback);
+      this.script = function(uri) {
+        q = q.script(uri);
+        return this;
+      };
+      this.wait = function(cbk) {
+        // Lab has an irritable anus
+        if (cbk)
+          q = q.wait(cbk);
+        else
+          q = q.wait();
+        return this;
       };
     };
+    labLoader.prototype.fork = function() {
+      return new labLoader();
+    };
+
+    return new labLoader();
+    /*    backend = function(){
+      var q = $LAB.sandbox();
+      q.mark = Math.random(1);
+      return function(uris, callback) {
+        var mark = q.mark;
+        for(var x = 0; x < uris.length; x++)
+          q = q.script(uris[x]);
+        // while (uris.length)
+        //   q = q.script(uris.shift());
+        q = q.wait(callback);
+        q.mark = mark;
+      };
+    };*/
   }
 
   // XXX TODO be AMD compliant, generally
@@ -79,34 +107,33 @@ jsBoot.core.loader = (function() {
 
   var pvLoader = function() {
     var linger = null;
-    var mustWait = false;
-
     var toLoad = [];
-    var loading;
+    var currentLoading = false;
     var bck = backend();
 
+    this.DEBUG = toLoad;
+
     var lingerEnd = function() {
-      if (loading)
+      if (currentLoading)
         return;
 
-      loading = toLoad.shift();
+      currentLoading = toLoad.shift();
 
-      if (!loading)
+      if (!currentLoading)
         return;
 
-      if (!loading.uris.length) {
-        var cl = loading.callback;
-        loading = false;
+      if (!currentLoading.uris.length) {
+        var cl = currentLoading.callback;
+        currentLoading = false;
         if (cl)
           cl();
         lingerEnd();
         return;
       }
 
-      // console.log('pulling', loading.uris);
-      bck(loading.uris, function(err) {
-        var cl = loading.callback;
-        loading = false;
+      bck(currentLoading.uris, function(err) {
+        var cl = currentLoading.callback;
+        currentLoading = false;
         if (cl)
           cl(err);
         lingerEnd();
@@ -114,7 +141,6 @@ jsBoot.core.loader = (function() {
     };
 
     this.script = function(uri) {
-      // console.log('adding', uri);
       if (linger)
         clearTimeout(linger);
 
@@ -126,16 +152,12 @@ jsBoot.core.loader = (function() {
       return this;
     };
 
-    this.fork = function(){
-      return new pvLoader();
-    };
-
     this.wait = function(callback) {
       // Grab the last waiting stack, if any
       var me = toLoad.length ? toLoad[toLoad.length - 1] : false;
       // If currently loading, that's our client
-      if (loading)
-        me = loading;
+      if (currentLoading)
+        me = currentLoading;
       // If we have no stack and still a calback, call it now
       if (!me) {
         if (callback)
@@ -152,6 +174,10 @@ jsBoot.core.loader = (function() {
       }
       return this;
     };
+  };
+
+  pvLoader.prototype.fork = function() {
+    return new pvLoader();
   };
 
   return new pvLoader();
