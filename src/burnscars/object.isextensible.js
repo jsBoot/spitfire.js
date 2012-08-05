@@ -22,3 +22,5 @@ if (!Object.isExtensible)
       return returnValue;
     };
   })();
+
+/**#nocode-*/

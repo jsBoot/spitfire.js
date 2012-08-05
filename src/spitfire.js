@@ -252,28 +252,27 @@ var Spitfire = new (function() {
     {
       test: !navigator.geolocation,
       uri: 'geolocation'
-    }
+    },
 
     // ==========
     // Console
     // ==========
-    // {
+    {
 
-    //   test: !window["console"] /*@cc_on || @_jscript_version <= 9 @*/ || !(function(){
-    //     var ok = true;
-    //     var props = [
-    //       'log', 'debug', 'info', 'warn', 'error', 'assert', 'dir', 'dirxml', 'exception', 'time',
-    //       'timeEnd', 'table',
-    //       'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile', 'profileEnd',
-    //       'count'
-    //     ];
-    //     for(var x = 0; x < props.length; x++)
-    //       ok &= !!window.console[x];
-    //     return ok;
-    //   })(),
-    //   uri: 'https://getfirebug.com/firebug-lite.js'
-    //   // uri: 'console'
-    // }
+      test: !window["console"] /*@cc_on || @_jscript_version <= 9 @*/ || !(function(){
+        var ok = true;
+        var props = [
+          'log', 'debug', 'info', 'warn', 'error', 'assert', 'dir', 'dirxml', 'exception', 'time',
+          'timeEnd', 'table',
+          'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile', 'profileEnd',
+          'count'
+        ];
+        for(var x = 0; x < props.length; x++)
+          ok &= !!window.console[x];
+        return ok;
+      })(),
+      uri: 'console'
+    }
 
   ];
 
