@@ -1,0 +1,5 @@
+/**#nocode+*/
+
+'use strict';
+
+/**#nocode-*/
