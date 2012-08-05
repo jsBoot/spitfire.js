@@ -268,7 +268,7 @@ var Spitfire = new (function() {
           'count'*/
         ];
         for (var x = 0; x < props.length; x++)
-          ok &= !!window.console[x];
+          ok &= !!window.console[props[x]];
         return ok;
       })(),
       uri: 'console'

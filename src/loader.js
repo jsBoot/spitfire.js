@@ -12,6 +12,25 @@
 
 // XXX AMD this to satisfy AMD hipsters
 
+// Approaches for embeded loader:
+// https://gist.github.com/603980
+// http://www.dustindiaz.com/scriptjs/
+
+/*
+Random shims of interest
+http://afarkas.github.com/webshim/demos/demos/json-storage.html
+http://code.google.com/p/html5-shims/wiki/LinksandResources
+https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
+ */
+
+/*
+Random code of interest
+
+https://github.com/bestiejs/
+http://es5.github.com/#x15.4.4.13
+ */
+
+
 'use strict';
 
 var jsBoot = {core: {}};

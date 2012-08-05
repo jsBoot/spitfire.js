@@ -43,15 +43,15 @@ def deploy():
     PH.addpackagereplace(sed)
 
   # Get JSON here
-    list = ['src/strict.js', "http:" + Yak.LINKS["STATIC"] + "/shims/json.js"]
+    list = ['src/strict.js', Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/shims/json.js"]
     combine(list, Yak.DEPLOY_ROOT + '/burnscars/json.js', replace=sed)
 
   # Get console here
-    list = ['src/strict.js', "http:" + Yak.LINKS["STATIC"] + "/shims/console.js"]
+    list = ['src/strict.js', Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/shims/console.js"]
     combine(list, Yak.DEPLOY_ROOT + '/burnscars/console.js', replace=sed)
 
   # Get XHR here
-    list = ['src/strict.js', "http:" + Yak.LINKS["STATIC"] + "/shims/xmlhttprequest-all.js"]
+    list = ['src/strict.js', Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/shims/xmlhttprequest-all.js"]
     combine(list, Yak.DEPLOY_ROOT + '/burnscars/xmlhttprequest.js', replace=sed)
 
   # Get everything else
@@ -59,14 +59,14 @@ def deploy():
     deepcopy(list, Yak.DEPLOY_ROOT, replace=sed)
 
   # Build a loader bundling labjs - XXX beware! This won't get strict unless minified
-    list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/labjs-stable.js", 'src/loader.js']
+    list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/labjs-stable.js", 'src/loader.js']
     # list = ["src/lab-fork.js", 'src/loader.js']
     combine(list, Yak.DEPLOY_ROOT + '/loader-lab.js', replace=sed)
 
-    list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/headjs-stable.js", 'src/loader.js']
+    list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/headjs-stable.js", 'src/loader.js']
     combine(list, Yak.DEPLOY_ROOT + '/loader-head.js', replace=sed)
 
-    list = ["http:" + Yak.LINKS["STATIC"] + "/loaders/requirejs-stable.js", 'src/loader.js']
+    list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/requirejs-stable.js", 'src/loader.js']
     combine(list, Yak.DEPLOY_ROOT + '/loader-require.js', replace=sed)
 
 

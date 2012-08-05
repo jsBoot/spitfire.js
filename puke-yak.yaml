@@ -21,6 +21,7 @@ user-dmp-box-Darwin:
     # ROOT: '${HOME}/buildd/stage.webitup.org'
     DEPLOY_ROOT: '${HOME}/buildd/deploy.webitup.org/web/static/lib'
     # DOC_ROOT: '${HOME}/buildd/deploy.webitup.org/doc/roxeecore'
+    REMOTE_BUILD: 'http:'
     LINKS:
         JASMINE: '//static.loft.sn.ackitup.net:4242/lib/com/pivotallabs/jasmine-stable'
         LIB: '//static.loft.sn.ackitup.net:4242/lib/org/wiu'
@@ -69,6 +70,8 @@ yak:
         DEPLOY: 'dist'
         # Where to deploy the documentation, if any
         DOC: 'doc'
+
+    REMOTE_BUILD: 'https:'
 
     LINKS:
         # Where to find "external" dependencies that are to be fetched either runtime or compile time
