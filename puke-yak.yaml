@@ -52,7 +52,7 @@ yak:
     # Copyright to be replaced in files
         COPYRIGHT: '<a href="http://www.webitup.fr">Web It Up</a>'
     # Author
-        AUTHOR: '<a href="mailto:dev@webitup.fr">dmp</a>'
+        AUTHOR: '<a href="mailto:dev@webitup.fr">Mangled Deutz & Raildecom</a>'
     # Repo base url
         GIT_ROOT: 'https://github.com/webitup/spitfire.js/blob/master/src/'
     # Link to the product page

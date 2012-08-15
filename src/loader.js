@@ -33,8 +33,8 @@ http://es5.github.com/#x15.4.4.13
 
 'use strict';
 
-var jsBoot = {core: {}};
-
+if(!('Spitfire' in window))
+  window.Spitfire = {};
 
 /**
  * Provides a crude "script loader" abstraction on top of whatever
@@ -42,7 +42,7 @@ var jsBoot = {core: {}};
  * Currently supports labjs, requirejs, headjs and yahoo loader
  * @namespace jsBoot.core.loader
  */
-jsBoot.core.loader = (function() {
+Spitfire.loader = (function() {
   // Get a backend
   var backend;
 

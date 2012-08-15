@@ -112,7 +112,7 @@ setTimeout(function(a) {
 
 
 
-var Spitfire = new (function() {
+window.Spitfire = new (function() {
   var mandatory = [
     // ==========
     // Arrays
