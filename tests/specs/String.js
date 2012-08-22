@@ -2,19 +2,22 @@ describe("String basics test suite", function(){
   var monade = function(desc, obj, property){
     it(desc, function(){
         runs(function(){
-          expect(property in obj).toBe(true);
+          // expect(property in obj).toBe(true);
+          expect(!!obj[property]).toBe(true);
         });
       }
     );
   };
 
-
-  describe("String inherits Function", function(){
+  /**
+   * String itself
+   */
+  describe("String inherits Function: properties", function(){
     monade("String has property constructor", String, "constructor");
     monade("String has property length", String, "length");
   });
 
-  describe("String inherits Function", function(){
+  describe("String inherits Function: functions", function(){
     monade("String has method toString()", String, "toString");
     monade("String has method call()", String, "call");
     monade("String has method apply()", String, "apply");
@@ -27,20 +30,23 @@ describe("String basics test suite", function(){
     monade("String has method fromCharCode", String, "fromCharCode");
   });
 
-  describe("String instances structure", function(){
-    monade("String instance has property constructor", new String('a'), "constructor");
+  /**
+   * Set of generic tests to be used on array(-like) objects 
+   */
+  var basechecks = function(exp){
+    monade("String instance has property constructor", exp, "constructor");
  
-    monade("String instance has method hasOwnProperty()", new String('a'), "hasOwnProperty");
-    monade("String instance has method isPrototypeOf()", new String('a'), "isPrototypeOf");
-    monade("String instance has method propertyIsEnumerable()", new String('a'), "propertyIsEnumerable");
-    monade("String instance has method toLocaleString()", new String('a'), "toLocaleString");
-    monade("String instance has method toString()", new String('a'), "toString");
-    monade("String instance has method valueOf()", new String('a'), "valueOf");
+    monade("String instance has method hasOwnProperty()", exp, "hasOwnProperty");
+    monade("String instance has method isPrototypeOf()", exp, "isPrototypeOf");
+    monade("String instance has method propertyIsEnumerable()", exp, "propertyIsEnumerable");
+    monade("String instance has method toLocaleString()", exp, "toLocaleString");
+    monade("String instance has method toString()", exp, "toString");
+    monade("String instance has method valueOf()", exp, "valueOf");
 
-    monade("String instance has property length", new String('a'), "length");
+    monade("String instance has property length", exp, "length");
     it("String instance has property [N]", function(){
         runs(function(){
-          expect(new String('a')[0]).toEqual('a');
+          expect(exp[0]).toEqual('a');
         });
       }
     );
@@ -67,6 +73,18 @@ describe("String basics test suite", function(){
     // monade("String instance has method trimLeft()", new String('a'), "trimLeft");
     // monade("String instance has method trimRight()", new String('a'), "trimRight");
 
+  };
+
+  describe("String instance via String constructor (base structure)", function(){
+    basechecks(new String('a'));
+  });
+
+  describe("String instance via String constructor method (base structure)", function(){
+    basechecks(String('a'));
+  });
+
+  describe("String instance via String literal (base structure)", function(){
+    basechecks('a');
   });
 
 });

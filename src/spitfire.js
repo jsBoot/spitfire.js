@@ -5,7 +5,7 @@
  * @homepage {PUKE-PACKAGE-HOME}
  * @version {PUKE-PACKAGE-VERSION}
  * @author {PUKE-PACKAGE-AUTHOR}
- * @location {PUKE-PACKAGE-GIT-ROOT}/lib/org/wiu/spitfire.js/loader.js
+ * @location {PUKE-PACKAGE-GIT-ROOT}/loader.js
  * @fileOverview This file runs a set of tests and proposes "solutions"
  * (eg: shims to load) in order to obtain a minimal common platform.
  * It doesn't do any loading itself.
@@ -71,48 +71,7 @@ var toObject = (function() {
   };
 })();
 
-// detect a Rhino bug and patch it
-if (Object.freeze) {
-  try {
-    Object.freeze(function() {});
-  } catch (exception) {
-    (function() {
-      Object.freeze = (function freeze(freezeObject) {
-        return function freeze(object) {
-          if (typeof object == 'function') {
-            return object;
-          } else {
-            return freezeObject(object);
-          }
-        };
-      })(Object.freeze);
-    })();
-  }
-}
-
-// IE at large doesn't support additional arguments on settimeout.
-// This can't be shimed independtly considering we work synchronously for now with loader
-// AND XXX BEWARE - this means that setTimeout can't be used in following code
-// BEFORE this specific setTimeout runs out
-setTimeout(function(a) {
-  if (!a) {
-    var deref = window.setTimeout;
-    window.setTimeout = function(callback, delay) {
-      var a = Array.prototype.slice.call(arguments);
-      a.shift();
-      a.shift();
-      var cl = function() {
-        callback.apply(this, a);
-      }
-      deref(cl, delay);
-    };
-  }
-}, 1, true);
-
-
-
-
-window.Spitfire = new (function() {
+(function(root) {
   var mandatory = [
     // ==========
     // Arrays
@@ -227,7 +186,7 @@ window.Spitfire = new (function() {
     // ==========
     {
       test: !window.JSON,
-      uri: 'json'
+      uri: '{SPIT-JSON}'
     },
 
     // ==========
@@ -271,7 +230,7 @@ window.Spitfire = new (function() {
           ok &= !!window.console[props[x]];
         return ok;
       })(),
-      uri: 'console'
+      uri: '{SPIT-CONSOLE}'
     }
 
   ];
@@ -318,15 +277,59 @@ window.Spitfire = new (function() {
     }
   ];
 
+
+  // detect a Rhino bug and patch it
+  if (Object.freeze) {
+    try {
+      Object.freeze(function() {});
+    } catch (exception) {
+      (function() {
+        Object.freeze = (function freeze(freezeObject) {
+          return function freeze(object) {
+            if (typeof object == 'function') {
+              return object;
+            } else {
+              return freezeObject(object);
+            }
+          };
+        })(Object.freeze);
+      })();
+    }
+  }
+
+  // IE at large doesn't support additional arguments on settimeout.
+  // This can't be shimed independtly considering we work synchronously for now with loader
+  // AND XXX BEWARE - this means that setTimeout can't be used in following code
+  // BEFORE this specific setTimeout runs out
+  setTimeout(function(a) {
+    if (!a) {
+      var deref = window.setTimeout;
+      window.setTimeout = function(callback, delay) {
+        var a = Array.prototype.slice.call(arguments);
+        a.shift();
+        a.shift();
+        var cl = function() {
+          callback.apply(this, a);
+        }
+        deref(cl, delay);
+      };
+    }
+  }, 1, true);
+
+
+  if (!('Spitfire' in root))
+    root.Spitfire = {};
+  root = root.Spitfire;
+
   // Calling this adds additional shims that really are NOT providing functionality but just
   // faking the functions so that ES5 code can pretend to work. This is NOT safe.
-  this.extraShims = function() {
-    for (var x = 0; x < unsafe.length; x++)
-      mandatory.push(unsafe[x]);
-  };
+  // root.extraShims = function() {
+  //   for (var x = 0; x < unsafe.length; x++)
+  //     mandatory.push(unsafe[x]);
+  // };
 
   // Yahoo things
-  this.boot = function(useFull) {
+  root.boot = function(useFull) {
     var uris = [];
     for (var x = 0, shim; x < mandatory.length, shim = mandatory[x]; x++) {
       if (shim.test)
@@ -334,12 +337,31 @@ window.Spitfire = new (function() {
     }
     return uris;
   };
-})();
 
+
+  root.UNSAFE = 'unsafe';
+  root.XHR = 'xhr';
+
+  root.use = function(extra) {
+    switch (extra) {
+      case this.XHR:
+        mandatory.push({test: true, uri: '{SPIT-XHR}'});
+        break;
+      case this.UNSAFE:
+        for (var x = 0; x < unsafe.length; x++)
+          mandatory.push(unsafe[x]);
+        break;
+      default:
+        break;
+    }
+  };
+
+})(window);
 
 
 // http://www.calormen.com/polyfill/
 // https://github.com/mozilla/shumway
+// Check for modernizr once again as well
 
 // https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
 

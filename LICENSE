@@ -3,7 +3,7 @@ Large portions of the code in here comes from https://github.com/kriskowal/es5-s
 Other code use various open licences (public domain, BSD, MIT - see individual files).
 
 
-We release additions and modifications under the same license, as follow:
+We release additions and modifications under the MIT license, as follow:
 
 Copyright (C) 2012 WebItUp. All rights reserved.
 

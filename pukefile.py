@@ -5,106 +5,139 @@ global PH
 import pukehelpers as PH
 import re
 
-if Yak.DEPLOY_ROOT != './dist':
-  Yak.DEPLOY_ROOT = Yak.DEPLOY_ROOT + '/org/jsboot/' + Yak.PACKAGE['NAME'] + "/" + Yak.PACKAGE['VERSION']
-  makedir(Yak.DEPLOY_ROOT)
-
 @task("Default task")
 def default():
-  # executeTask("build")
-  # executeTask("tests")
+  Cache.clean()
+  executeTask("build")
   executeTask("deploy")
-  executeTask("tests")
-  # executeTask("stats")
-
-# @task("Calling all interesting tasks")
-# def all():
-#     executeTask("build")
-#     executeTask("deploy")
-#     executeTask("mint")
-#     executeTask("tests")
-# #    executeTask("doc")
-#     executeTask("lint")
-#     executeTask("stats")
-#     executeTask("statsdoc")
 
 @task("All")
 def all():
-  executeTask("deploy")
-  executeTask("tests")
+  Cache.clean()
+  executeTask("lint")
+  executeTask("build")
   executeTask("mint")
+  executeTask("deploy")
+  executeTask("stats")
 
-
-
-@task("Build package")
+@task("Deploy package")
 def deploy():
-    sed = Sed()
-    PH.addlinksreplace(sed)
-    PH.addpackagereplace(sed)
-
-  # Get JSON here
-    list = ['src/strict.js', Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/shims/json.js"]
-    combine(list, Yak.DEPLOY_ROOT + '/burnscars/json.js', replace=sed)
-
-  # Get console here
-    list = ['src/strict.js', Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/shims/console.js"]
-    combine(list, Yak.DEPLOY_ROOT + '/burnscars/console.js', replace=sed)
-
-  # Get XHR here
-    list = ['src/strict.js', Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/shims/xmlhttprequest-all.js"]
-    combine(list, Yak.DEPLOY_ROOT + '/burnscars/xmlhttprequest.js', replace=sed)
-
-  # Get everything else
-    list = FileList("src", filter="*.js,*.html")
-    deepcopy(list, Yak.DEPLOY_ROOT, replace=sed)
-
-  # Build a loader bundling labjs - XXX beware! This won't get strict unless minified
-    list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/labjs-stable.js", 'src/loader.js']
-    # list = ["src/lab-fork.js", 'src/loader.js']
-    combine(list, Yak.DEPLOY_ROOT + '/loader-lab.js', replace=sed)
-
-    list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/headjs-stable.js", 'src/loader.js']
-    combine(list, Yak.DEPLOY_ROOT + '/loader-head.js', replace=sed)
-
-    list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/requirejs-stable.js", 'src/loader.js']
-    combine(list, Yak.DEPLOY_ROOT + '/loader-require.js', replace=sed)
-
-
-@task("Build tests")
-def tests():
-    sed = Sed()
-    PH.addlinksreplace(sed)
-    PH.addpackagereplace(sed)
-
-    list = FileList("tests", filter="*.js,*.html")
-    deepcopy(list, Yak.DEPLOY_ROOT + '/tests', replace=sed)
-
-    # Can't access from raw github using IE (mimetype mismatch, bitch)
-    deepcopy("https://raw.github.com/webitup/es5-shim/master/tests/helpers/h.js", Yak.DEPLOY_ROOT + '/tests/es5/');
-    deepcopy("https://raw.github.com/webitup/es5-shim/master/tests/helpers/h-matchers.js", Yak.DEPLOY_ROOT + '/tests/es5/');
-    deepcopy("https://raw.github.com/webitup/es5-shim/master/tests/spec/s-array.js", Yak.DEPLOY_ROOT + '/tests/es5/');
-    deepcopy("https://raw.github.com/webitup/es5-shim/master/tests/spec/s-function.js", Yak.DEPLOY_ROOT + '/tests/es5/');
-    deepcopy("https://raw.github.com/webitup/es5-shim/master/tests/spec/s-string.js", Yak.DEPLOY_ROOT + '/tests/es5/');
-    deepcopy("https://raw.github.com/webitup/es5-shim/master/tests/spec/s-object.js", Yak.DEPLOY_ROOT + '/tests/es5/');
-    deepcopy("https://raw.github.com/webitup/es5-shim/master/tests/spec/s-date.js", Yak.DEPLOY_ROOT + '/tests/es5/');
-    deepcopy('https://raw.github.com/webitup/es5-shim/master/es5-shim.js', Yak.DEPLOY_ROOT + '/tests/es5/');
-
+  PH.deployer(True)
 
 @task("Lint")
 def lint():
-    list = FileList("src", filter = "*.js", exclude="*lab-fork*")
-    jslint(list, relax=False)
+  PH.linter("src")
 
 @task("Flint")
 def flint():
-    list = FileList("src", filter = "*.js")
-    jslint(list, relax=True, fix=True)
+  PH.flinter("src")
 
 @task("Minting")
 def mint():
-    list = FileList(Yak.DEPLOY_ROOT, filter = "*.js", exclude = "*-min.js")
-    for burne in list.get():
-      minify(burne, re.sub(r"(.*).js$", r"\1-min.js", burne), strict=True)
+  PH.minter(Yak.BUILD_ROOT)
+
+@task("Stats report deploy")
+def stats():
+  PH.stater(Yak.BUILD_ROOT)
+
+@task("Build package")
+def build():
+    istrunk = Yak.VARIANT == 'bleed'
+    sed = Sed()
+    PH.replacer(sed)
+
+    # Get the remoty shims first
+    remoty = Yak.LINKS["STATIC_YAML"].split('/')
+    remoty.pop()
+    remoty = '/'.join(remoty)
+    yammy = http.get(Yak.LINKS["STATIC_YAML"])
+    yam = yaml.load(yammy.text)
+
+    # Prep-up the jasmine links
+    for i in yam['jasmine']:
+      if (i.find('trunk') == -1) or istrunk:
+        if i.find('.css') != -1:
+          sed.add('{SPIT-JASCSS}', remoty + '/' + i)#.replace('.css', '-min.css'))
+        elif i.find('.html') != -1:
+          sed.add('{SPIT-JASHTML}', remoty + '/' + i)#.replace('.js', '-min.js'))
+        else:
+          sed.add('{SPIT-JAS}', remoty + '/' + i)#.replace('.js', '-min.js'))
+
+
+    for (k, elem) in {'json': 'json3', 'xhr': 'xmlhttprequest', 'console': 'console'}.items():
+      candidate = ''
+      for i in yam[elem]:
+        if (i.find('trunk') == -1) or istrunk:
+          candidate = remoty + '/' + i
+          break
+      combine(['src/strict.js', candidate], '%s/burnscars/%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
+      sed.add('{SPIT-%s}' % k, elem)
+
+    # Get everything else
+    deepcopy(FileList("src/burnscars", filter="*.js,*.html"), Yak.BUILD_ROOT + '/burnscars', replace=sed)
+    deepcopy("src/spitfire.js", Yak.BUILD_ROOT, replace=sed)
+
+    # Prep-up the yaml manifest for spitfire
+    spitroot = Yak.PACKAGE['NAME'] + "/" + Yak.PACKAGE['VERSION']
+    description = []
+    description.append("spitfire: '%s/spitfire.js'" % spitroot)
+    description.append("loader: '%s/loader.js'" % spitroot)
+    description.append("xhr: '%s/burnscars/xmlhttprequest.js'" % spitroot)
+
+
+    # Get the loaders and prep-up flavoured loaders
+    for elem in ['lab', 'head', 'require']:
+      candidate = ''
+      for i in yam[elem]:
+        if (i.find('trunk') == -1) or istrunk:
+          candidate = remoty + '/' + i
+          break
+      combine(['src/strict.js', candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
+      description.append("loader-%s: '%s/loader-%s.js'" % (elem, spitroot, elem))
+
+    yamu = FileSystem.join(Yak.DEPLOY_ROOT, "spitfire.yaml")
+    description = yaml.load('\n'.join(description))
+    if FileSystem.exists(yamu):
+      mama = yaml.load(FileSystem.readfile(yamu))
+      mama[Yak.PACKAGE['VERSION']] = description
+    else:
+      mama = {Yak.PACKAGE['VERSION']: description}
+
+    # Straight to service root instead - kind of hackish...
+    FileSystem.writefile(yamu, yaml.dump(mama))
+
+
+  # # Build a loader bundling labjs - XXX beware! This won't get strict unless minified
+  #   list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/labjs-stable.js", 'src/loader.js']
+  #   # list = ["src/lab-fork.js", 'src/loader.js']
+  #   combine(list, Yak.BUILD_ROOT + '/loader-lab.js', replace=sed)
+
+  #   list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/headjs-stable.js", 'src/loader.js']
+  #   combine(list, Yak.BUILD_ROOT + '/loader-head.js', replace=sed)
+
+  #   list = [Yak.REMOTE_BUILD + Yak.LINKS["STATIC"] + "/loaders/requirejs-stable.js", 'src/loader.js']
+  #   combine(list, Yak.BUILD_ROOT + '/loader-require.js', replace=sed)
+
+    # sed = Sed()
+    # PH.addlinksreplace(sed)
+    # PH.addpackagereplace(sed)
+
+    list = FileList("tests", filter="*.js,*.html")
+    deepcopy(list, Yak.BUILD_ROOT + '/tests', replace=sed)
+
+    # Can't access from raw github using IE (mimetype mismatch, bitch)
+    list = [
+      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h-matchers.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-array.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-function.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-string.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-object.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-date.js",
+      "https://raw.github.com/webitup/es5-shim/master/es5-shim.js"
+    ]
+    deepcopy(list, Yak.DEPLOY_ROOT + '/tests/es5/');
+
       # minify(burne, burne.sub(r"(.*).js$", "-min.js"), strict=True)
 # .sub(r'(<textarea.*>).*(</textarea>)', r'\1Bar\2', s)
 # @task("Deploying")

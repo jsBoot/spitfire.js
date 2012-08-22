@@ -1,43 +1,31 @@
 user-roxee-box-Linux:
-    DEPLOY_ROOT: '/home/roxee/www/static/lib'
+    DEPLOY_ROOT: '/home/roxee/www/static/lib/webitup'
     # DOC_ROOT: '/home/roxee/doc/spitfire'
 
 # Integration
 user-jenkins-box-Linux:
     # ROOT: '/opt/puke/jenkins-roxee'
-    DEPLOY_ROOT: '/var/www/deploy/static/lib'
+    DEPLOY_ROOT: '/var/www/deploy/static/lib/webitup'
     # DOC_ROOT: '/var/www/deploy/static/doc/spitfire'
     LINKS:
-        # Where to hotlink static resources from
-        # Unless one is testing with a new / experimental version of some dependency lib, don't change that
-        JASMINE: '//static.sn.ackitup.net/lib/com/pivotallabs/jasmine-stable'
-        LIB: '//static.sn.ackitup.net/lib'
-        STATIC: '//static.sn.ackitup.net/lib'
-        # Static base for taupal stuff (used by the taupe itself to build its own documentation)
-        TAUPE: '//static.sn.ackitup.net/lib/org/wiu/gristaupe'
-
-# Mangled Deutz workin
-user-dmp-box-Darwin:
-    # ROOT: '${HOME}/buildd/stage.webitup.org'
-    DEPLOY_ROOT: '${HOME}/buildd/deploy.webitup.org/web/static/lib'
-    # DOC_ROOT: '${HOME}/buildd/deploy.webitup.org/doc/roxeecore'
-    REMOTE_BUILD: 'http:'
-    LINKS:
-        JASMINE: '//static.loft.sn.ackitup.net:4242/lib/com/pivotallabs/jasmine-stable'
-        LIB: '//static.loft.sn.ackitup.net:4242/lib/org/wiu'
-        STATIC: '//static.loft.sn.ackitup.net:4242/lib'
-        TAUPE: '//static.loft.sn.ackitup.net:4242/lib/org/wiu/gristaupe'
+        STATIC_YAML: 'https://static.sn.ackitup.net/static.yaml'
 
 # Raildecom workin
 user-raildecom-box-Darwin:
     # ROOT: '${HOME}/workspace/webitup/buildd'
-    DEPLOY_ROOT: '${HOME}/workspace/webitup/deploy/static/lib'
+    DEPLOY_ROOT: '${HOME}/workspace/webitup/deploy/static/lib/webitup'
 #    DOC_ROOT: '${HOME}/workspace/webitup/deploy/web/app/doc/roxeecore'
     LINKS:
-        JASMINE: '//static.sn.ackitup.net/lib/com/pivotallabs/jasmine-stable'
-        LIB: '//static.sn.ackitup.net/lib'
-        STATIC: '//static.sn.ackitup.net/lib'
-        TAUPE: '//static.sn.ackitup.net/lib/org/wiu/gristaupe'
+        STATIC_YAML: 'https://static.sn.ackitup.net/static.yaml'
+
+# Mangled Deutz workin
+user-dmp-box-Darwin:
+    ROOT: '${HOME}/buildd/stage.webitup.org'
+    DEPLOY_ROOT: '${HOME}/buildd/deploy.webitup.org/web/static/lib/webitup'
+    # DOC_ROOT: '${HOME}/buildd/deploy.webitup.org/doc/roxeecore'
+    # REMOTE_BUILD: 'http:'
+    LINKS:
+        STATIC_YAML: 'http://static.loft.sn.ackitup.net:4242/static.yaml'
 
 # Base setup for everyone
 yak:
@@ -61,25 +49,22 @@ yak:
 
     ############ Platform dependent stuff: change according to your milage
     # ROOT: '${HOME}/buildd'
-    ROOT: './'
+    ROOT: './build'
+
+    # Instruct puke to copy trunk versions of the shims - only of use for me:
+    # VARIANT: "bleed"
+    # Anything else is regular shit
+    VARIANT: "bleednot"
     # All these will be exposed as Yak.NAME_ROOT, where NAME is the key
-    # Note that, if relative, they will be resolved against Yak.ROOT
+      # Note that, if relative, they will be resolved against Yak.ROOT
     # Example: Yak.BUILD_ROOT <- ${HOME}/buildd/dist
     ROOT_PATHS:
-        # Where to build the stuff (this is a temporary directory)
+        BUILD: 'build'
+        TMP: 'tmp'
         DEPLOY: 'dist'
         # Where to deploy the documentation, if any
         DOC: 'doc'
 
-    REMOTE_BUILD: 'https:'
-
     LINKS:
         # Where to find "external" dependencies that are to be fetched either runtime or compile time
-        STATIC: '//static.roxee.net/lib'
-        # Where to find jasmine, specifically
-        JASMINE: '//static.roxee.net/lib/com/pivotallabs/jasmine-stable'
-        # Where to find the taupe
-        TAUPE: '//static.roxee.net/lib/org/wiu/gristaupe'
-
-        # Where the outputed library will be visible
-        LIB: '//app.roxee.net/lib'
+        STATIC_YAML: 'https://static.roxee.net/static.yaml'
