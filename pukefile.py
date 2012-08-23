@@ -50,6 +50,7 @@ def build():
     remoty = Yak.LINKS["STATIC_YAML"].split('/')
     remoty.pop()
     remoty = '/'.join(remoty)
+    # https://github.com/kennethreitz/requests/issues/749
     yammy = http.get(Yak.LINKS["STATIC_YAML"], verify=False)
     yam = yaml.load(yammy.text)
 
