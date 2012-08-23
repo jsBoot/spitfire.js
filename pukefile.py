@@ -50,7 +50,7 @@ def build():
     remoty = Yak.LINKS["STATIC_YAML"].split('/')
     remoty.pop()
     remoty = '/'.join(remoty)
-    yammy = http.get(Yak.LINKS["STATIC_YAML"])
+    yammy = http.get(Yak.LINKS["STATIC_YAML"], verify=False)
     yam = yaml.load(yammy.text)
 
     # Prep-up the jasmine links
