@@ -1,6 +1,8 @@
 user-roxee-box-Linux:
     DEPLOY_ROOT: '/home/roxee/www/static/lib/webitup'
     # DOC_ROOT: '/home/roxee/doc/spitfire'
+    LINKS:
+        STATIC_YAML: 'https://static.roxee.net/static.yaml'
 
 # Integration
 user-jenkins-box-Linux:
