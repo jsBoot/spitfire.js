@@ -1,88 +1,32 @@
 <!doctype html>
 <html>
 <head>
-<!--
-  <script src="{PUKE-STATIC-LINK}/loaders/labjs-stable-min.js"></script>
-  <script src="{PUKE-STATIC-LINK}/loaders/requirejs-stable-min.js"></script>
-  <script src="{PUKE-STATIC-LINK}/loaders/headjs-stable-min.js"></script>
-  <script src="{PUKE-STATIC-LINK}/loaders/yahoo-stable-min.js"></script>
--->
-  <script src="../loader-lab.js"></script>
-
   <!-- Jasmine -->
   <link rel="stylesheet" type="text/css" href="{SPIT-JASCSS}"></link>
 
+  <script src="../gulliver.js"></script>
+  <!--
+  <script src="../loader-require.js"></script>
+  <script src="All.js"></script>
+  -->
   <!-- Booting shit -->
   <script type="text/javascript">
-  var spitfireBaseUrl = '../';
-  var useSpitfire = !!location.href.match(/use-spitfire/);
-  var useSpitfireFull = !!location.href.match(/use-spitfire-full/);
-  var useES5 = !!location.href.match(/use-es5/);
-  var useMin = !!location.href.match(/use-min/);
-  var suffix = useMin ? '-min.js' : '.js';
-
-  // If you want to use Spitfire, have "use-spitfire" somehow in the url (eg: url#use-*)
-  // If you want the extra (unsafe!) shims as well, use-spitfire-full
-  // If you want to use ES5, have "use-es5"
-
-  // Specs
-  Spitfire.loader
-    .script('{SPIT-JAS}')
-    .script('{SPIT-JASHTML}')
-    .script('specs/Function.js')
-    .script('specs/Object.js')
-    .script('specs/Array.js')
-    .script('specs/String.js')
-    .script('specs/Math.js')
-    .script('specs/Globals.js')
-
-    .script('es5/h.js')
-    .script('es5/h-matchers.js')
-
-  // If we are told to use-* a shiming shcript, load it as well
-  if(useSpitfire)
-    Spitfire.loader.script(spitfireBaseUrl + 'spitfire' + suffix);
-  if(useES5)
-    Spitfire.loader.script('es5/es5-shim' + suffix);
-
-  var allSetBaby = function(){
-    if(useSpitfire){
-      // If we want the full shims from spitfire
-      if(useSpitfireFull)
-        Spitfire.use(Spitfire.UNSAFE);
-      var shims = Spitfire.boot(!useMin);
-      for(var x = 0; x < shims.length; x++)
-        Spitfire.loader.script(spitfireBaseUrl + shims[x]);
-    }
-    // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe statements
-    // (hence dereference unshimed-yet code...), so, we need to WAIT for the shimer to come in
-    // And so is our event testing...
-    Spitfire.loader.wait()
-      .script('specs/Events.js')
-      .script('es5/s-array.js')
-      .script('es5/s-function.js')
-      .script('es5/s-string.js')
-      .script('es5/s-object.js')
-      .script('es5/s-date.js');
-
-    // Once everything is in place, start jasmine
-    Spitfire.loader.wait(function(){
-      console.warn("Done loading");
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
-      var trivialReporter = new jasmine.TrivialReporter();
-      jasmineEnv.addReporter(trivialReporter);
-      jasmineEnv.specFilter = function(spec) {
-        return trivialReporter.specFilter(spec);
-      };
-      jasmineEnv.execute();
-    });
-  };
-
-  Spitfire.loader.wait(allSetBaby);
-
+  // Bootstrap loader loading with gulliver - typically, this should be aggregated to gulliver itself,
+  var baseLoader = location.href.match(/(loader-[a-z-]+)/);
+  baseLoader = baseLoader ? baseLoader.pop() : 'loader-lab';
+  var selfName = 'gulliver';
+  gulliver(function(){
+    // Once gulliver has booted the base loader, go on
+    if(typeof require != 'undefined')
+      require(['Spitfire/loader'], function(ld){
+        ld.script('All.js');
+      });
+    else
+      Spitfire.loader.script('All.js');
+  }, baseLoader, selfName);
   </script>
-
+  <!--
+-->
 </head>
 <body>
 </body>

@@ -13,33 +13,16 @@
 
 'use strict';
 
-// XXX AMD this to satisfy AMD hipsters
-
-// Need TypeError
+// Need TypeError for almost everything
 if (typeof TypeError == 'undefined')
   TypeError = Error || function() {};
-
-// Just to be dead sure gist won't fail at browser sniffing time
-(function() {
-  if (!('navigator' in window))
-    window.navigator = {};
-
-  if (!('appName' in navigator))
-    navigator.appName = '';
-  if (!('appVersion' in navigator))
-    navigator.appVersion = '';
-  if (!('platform' in navigator))
-    navigator.platform = '';
-  if (!('userAgent' in navigator))
-    navigator.userAgent = '';
-})();
 
 //
 // ======
 // Utils - useful for Array shims
 // ======
 // Currently at risk
-// XXX to be deletd once done?
+// XXX to be deleted once done?
 
 // ES5 9.4
 // http://es5.github.com/#x9.4
@@ -71,7 +54,7 @@ var toObject = (function() {
   };
 })();
 
-(function(root) {
+(function() {
   var mandatory = [
     // ==========
     // Arrays
@@ -187,6 +170,14 @@ var toObject = (function() {
     {
       test: !window.JSON,
       uri: '{SPIT-JSON}'
+    },
+
+    // ==========
+    // XHR
+    // ==========
+    {
+      test: !window.XMLHttpRequest,
+      uri: '{SPIT-XHR}'
     },
 
     // ==========
@@ -317,36 +308,50 @@ var toObject = (function() {
   }, 1, true);
 
 
-  if (!('Spitfire' in root))
-    root.Spitfire = {};
-  root = root.Spitfire;
+  /**
+   * =========================
+   * AMD / noAMD dummy pattern
+   * Asynchronous module loaders, CommonJS environments, web
+   * browsers, and JavaScript engines. Credits: Oyvind Sean Kinsey.
+   * =========================
+   */
+  var isLoader = typeof define === 'function' && define.amd;
+  var root = typeof exports == 'object' && exports;
 
-  // Calling this adds additional shims that really are NOT providing functionality but just
-  // faking the functions so that ES5 code can pretend to work. This is NOT safe.
-  // root.extraShims = function() {
-  //   for (var x = 0; x < unsafe.length; x++)
-  //     mandatory.push(unsafe[x]);
-  // };
-
-  // Yahoo things
-  root.boot = function(useFull) {
-    var uris = [];
-    for (var x = 0, shim; x < mandatory.length, shim = mandatory[x]; x++) {
-      if (shim.test)
-        uris.push('burnscars/' + shim.uri + (useFull ? '.js' : '-min.js'));
+  // Pattern from JSON3
+  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript engines.
+  if (isLoader || root) {
+    if (isLoader) {
+      // Export for asynchronous module loaders. The namespace is
+      // redefined because module loaders do not provide the "exports" object.
+      define('Spitfire', (root = {}));
     }
-    return uris;
-  };
-
+  } else {
+    // Export for browsers and JavaScript engines.
+    root = this.Spitfire || (this.Spitfire = {});
+  }
+  /**
+   * =========================
+   * End of dummy pattern
+   * =========================
+   */
 
   root.UNSAFE = 'unsafe';
   root.XHR = 'xhr';
+  root.JSON = 'json';
 
   root.use = function(extra) {
     switch (extra) {
+      // Force loading of patched XHR/JSON - usually, if you are going to do that
+      // you should rather compile it inside your library instead...
+      case this.JSON:
+        mandatory.push({test: true, uri: '{SPIT-JSON}'});
+        break;
       case this.XHR:
         mandatory.push({test: true, uri: '{SPIT-XHR}'});
         break;
+      // Use the "unsafe" class of shims - don't provide functionality, just fill-in the voids
+      // Note this will DEFINITELY break feature detection though - this is generally a bad idea
       case this.UNSAFE:
         for (var x = 0; x < unsafe.length; x++)
           mandatory.push(unsafe[x]);
@@ -356,15 +361,20 @@ var toObject = (function() {
     }
   };
 
-})(window);
+  root.boot = function(useFull) {
+    var uris = [];
+    for (var x = 0, shim; x < mandatory.length, shim = mandatory[x]; x++) {
+      if (shim.test)
+        uris.push('burnscars/' + shim.uri + (useFull ? '.js' : '-min.js'));
+    }
+    return uris;
+  };
+}).apply(this);
 
 
 // http://www.calormen.com/polyfill/
 // https://github.com/mozilla/shumway
 // Check for modernizr once again as well
-
 // https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
-
-
 
 /**#nocode-*/
