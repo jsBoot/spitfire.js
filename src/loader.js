@@ -1,13 +1,13 @@
 /**
- * @license {PUKE-PACKAGE-LICENSE}.
- * @copyright {PUKE-PACKAGE-COPYRIGHT}
  * @name {PUKE-PACKAGE-NAME}
  * @homepage {PUKE-PACKAGE-HOME}
  * @version {PUKE-PACKAGE-VERSION}
  * @author {PUKE-PACKAGE-AUTHOR}
- * @location {PUKE-PACKAGE-GIT-ROOT}/loader.js
- * @fileOverview The sole purpose of this file is to wrap any "loader" library
+ * @file The sole purpose of this file is to wrap any "loader" library
  * behind a unified interface - to be used internally by jsboot.
+ * @license {PUKE-PACKAGE-LICENSE}.
+ * @copyright {PUKE-PACKAGE-COPYRIGHT}
+ * @location {PUKE-PACKAGE-GIT-ROOT}/loader.js
  */
 
 // Approaches for embeded loader:

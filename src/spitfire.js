@@ -1,14 +1,14 @@
 /**
- * @license {PUKE-PACKAGE-LICENSE}.
- * @copyright {PUKE-PACKAGE-COPYRIGHT}
  * @name {PUKE-PACKAGE-NAME}
  * @homepage {PUKE-PACKAGE-HOME}
  * @version {PUKE-PACKAGE-VERSION}
  * @author {PUKE-PACKAGE-AUTHOR}
- * @location {PUKE-PACKAGE-GIT-ROOT}/loader.js
- * @fileOverview This file runs a set of tests and proposes "solutions"
+ * @file This file runs a set of tests and proposes "solutions"
  * (eg: shims to load) in order to obtain a minimal common platform.
  * It doesn't do any loading itself.
+ * @license {PUKE-PACKAGE-LICENSE}.
+ * @copyright {PUKE-PACKAGE-COPYRIGHT}
+ * @location {PUKE-PACKAGE-GIT-ROOT}/spitfire.js
  */
 
 'use strict';
