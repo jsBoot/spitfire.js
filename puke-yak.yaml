@@ -2,7 +2,7 @@ user-roxee-box-Linux:
     DEPLOY_ROOT: '/home/roxee/www/static/lib/webitup'
     # DOC_ROOT: '/home/roxee/doc/spitfire'
     LINKS:
-        STATIC_YAML: 'https://static.roxee.net/static.yaml'
+        STATIC_YAML: 'https://static.roxee.net/airstrip.yaml'
 
 # Integration
 user-jenkins-box-Linux:
@@ -18,7 +18,7 @@ user-raildecom-box-Darwin:
     DEPLOY_ROOT: '${HOME}/workspace/webitup/deploy/static/lib/webitup'
 #    DOC_ROOT: '${HOME}/workspace/webitup/deploy/web/app/doc/roxeecore'
     LINKS:
-        STATIC_YAML: 'https://static.sn.ackitup.net/static.yaml'
+        STATIC_YAML: 'https://static.sn.ackitup.net/airstrip.yaml'
 
 # Mangled Deutz workin
 user-dmp-box-Darwin:
@@ -27,7 +27,7 @@ user-dmp-box-Darwin:
     # DOC_ROOT: '${HOME}/buildd/deploy.webitup.org/doc/roxeecore'
     # REMOTE_BUILD: 'http:'
     LINKS:
-        STATIC_YAML: 'http://static.loft.sn.ackitup.net:4242/static.yaml'
+        STATIC_YAML: 'http://static.loft.sn.ackitup.net:4242/airstrip.yaml'
 
 # Base setup for everyone
 yak:
