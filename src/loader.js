@@ -7,7 +7,7 @@
  * behind a unified interface - to be used internally by jsboot.
  * @license {PUKE-PACKAGE-LICENSE}.
  * @copyright {PUKE-PACKAGE-COPYRIGHT}
- * @location {PUKE-PACKAGE-GIT-ROOT}/loader.js
+ * @location {PUKE-PACKAGE-GIT-ROOT}/loader.js{PUKE-PACKAGE-GIT-REV}
  */
 
 // Approaches for embeded loader:

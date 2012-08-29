@@ -16,7 +16,6 @@
   baseLoader = baseLoader ? baseLoader.pop() : 'loader-lab';
   var selfName = 'gulliver';
   gulliver(function(){
-    console.warn("Gulliver returned - loading all.js");
     // Once gulliver has booted the base loader, go on
     if(typeof require != 'undefined')
       require(['Spitfire/loader'], function(ld){

@@ -74,9 +74,7 @@ var code = function(ld){
     ld.script('es5/es5-shim' + suffix);
 
 
-  ld.wait(function(){
-    console.log("Loaded base stack");
-  });
+  ld.wait();
 
   if(typeof require != 'undefined')
     ld.wait(function(){

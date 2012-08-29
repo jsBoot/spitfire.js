@@ -36,7 +36,7 @@ def flint():
 def mint():
   PH.minter(Yak.BUILD_ROOT)
   # Yahoo and yep don't support strict
-  list = FileList(path, filter = "*yahoo*,*yepnope*", exclude = "*-min.js")
+  list = FileList(Yak.BUILD_ROOT, filter = "*yahoo*,*yepnope*", exclude = "*-min.js")
   for burne in list.get():
     minify(burne, re.sub(r"(.*).js$", r"\1-min.js", burne), strict = False)
 

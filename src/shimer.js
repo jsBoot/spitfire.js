@@ -8,7 +8,7 @@
  * It doesn't do any loading itself.
  * @license {PUKE-PACKAGE-LICENSE}.
  * @copyright {PUKE-PACKAGE-COPYRIGHT}
- * @location {PUKE-PACKAGE-GIT-ROOT}/spitfire.js
+ * @location {PUKE-PACKAGE-GIT-ROOT}/shimer.js{PUKE-PACKAGE-GIT-REV}
  */
 
 'use strict';

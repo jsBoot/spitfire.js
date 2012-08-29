@@ -9,7 +9,7 @@
  * Bad things can still happen here, and nasty bugs are lurking.
  * @license {PUKE-PACKAGE-LICENSE}.
  * @copyright {PUKE-PACKAGE-COPYRIGHT}
- * @location {PUKE-PACKAGE-GIT-ROOT}/gulliver.js
+ * @location {PUKE-PACKAGE-GIT-ROOT}/gulliver.js{PUKE-PACKAGE-GIT-REV}
  */
 
 // Adapted from getify JSLabs' gister at https://gist.github.com/603980
