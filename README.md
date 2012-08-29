@@ -82,6 +82,30 @@ If you don't think you need the loader abstraction either, then all you need is 
 below to understand the API and in-and-outs.
 
 
+The 10 seconds API
+-------------
+
+```
+<!doctype html>
+<html>
+<head>
+  <script src="//base-url-to-spitfire-dist/spitfire-lab.js"></script>
+  <script type="text/javascript">
+    var basePath = '//base-url-to-spitfire-dist/';
+    var shimsToLoad = Spitfire.boot();
+    for(var x = 0; x < shimsToLoad.length; x++)
+      Spitfire.loader.script(basePath + shimsToLoad[x]);
+    Spitfire.wait(function(){
+      // Ready to enjoy ES5
+      console.warn(" [spitfire.js] all shims loaded");
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
+```
+
 shimer.js API
 -------------
 
