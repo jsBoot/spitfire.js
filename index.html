@@ -1,0 +1,280 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Spitfire.js</title>
+  <meta name="description" content="Yet another pile of shims">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Spitfire.js</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">Yet another pile of shims</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/jsBoot/spitfire.js/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/jsBoot/spitfire.js/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/jsBoot/spitfire.js" class="code">View Spitfire.js on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>spitfire.js</h1>
+
+<p>Yet another pile of shims.</p>
+
+<h2>Background</h2>
+
+<p>There exist numerous projects providing "shims" for various "aspects" of the modern web.</p>
+
+<p>Though, these are usually provided in a rather monolithic/standalone/raw form, and there are few
+"shims frameworks" that would provide a from the get-go working solution to shim multiple aspects 
+at once.</p>
+
+<p>Furthermore, we wanted something that would conditionally load shims, based on tests, something that
+wouldn't make assumptions on the loader being used, and something where shims are granular.</p>
+
+<h2>Content</h2>
+
+<p>We provide very few new shims, but rather a slick solution that:</p>
+
+<ul>
+<li>select and maintains (from upstream) the best shims</li>
+<li>provides a detection mechanism and return a list of needed shims</li>
+<li>focuses on the basics (pretty much ES5 and a couple of others)</li>
+</ul><p>Note that for now it doesn't provide monolithic files: depending on the browser (say, IE), MANY files 
+may be loaded at runtime to patch the holes.</p>
+
+<p>Content:</p>
+
+<ul>
+<li>shims: most of these are not original, and come from well known and well maintained projects</li>
+<li>loader: a loader <em>interface</em>, that can use various backends (require, labjs, headjs, yahoo are supported for now)</li>
+<li>shimer: a tester that decides whether a shim is needed or not</li>
+<li>gulliver: a minimalist loader that is meant to load a unique file (async, obviously)</li>
+<li>a suite of tests using jasmine (fetches es5-shim tests as well)</li>
+</ul><h2>Technology</h2>
+
+<p>We use puke (<a href="https://github.com/webitup/puke">https://github.com/webitup/puke</a>), a (inhouse) versatile python build system.</p>
+
+<p>We also depend on airstrip.js (<a href="https://github.com/jsBoot/airstrip">https://github.com/jsBoot/airstrip</a>) in order to 
+provide dependencies at build time - though you don't require to set it up yourself and won't depend
+on it at runtime.</p>
+
+<p>Dependencies are listed in YAML.</p>
+
+<h2>How to build</h2>
+
+<ul>
+<li>clone: <code>git clone https://github.com/jsBoot/spitfire.js</code>
+</li>
+<li>install puke: <code>pip install puke</code>
+</li>
+<li>build it as-is: <code>cd spitfire.js; puke all</code>
+</li>
+</ul><h2>Build result</h2>
+
+<p>Inside the build/dist directory, you will find:</p>
+
+<p>A manifest file (spitfire.yaml) to be used by other projects / build systems, listing relative
+urls to the productions.</p>
+
+<p>Inside the build/dist/spitfire.js/VERSION/, the various productions:</p>
+
+<ul>
+<li>shimer.js</li>
+<li>loader.js (and loader-X.js)</li>
+<li>gulliver.js</li>
+<li>spitfire.js (and spitfire-X.js)</li>
+<li>tests</li>
+<li>"burnscars" (directory containing independent shims)</li>
+</ul><h2>What you want to use</h2>
+
+<p>... depends on how you want to integrate.</p>
+
+<p>If you are starting from scratch, then you should use spitfire-X.js, where X is your favorite loader
+(we recommend either lab or require).</p>
+
+<p>If you already have a loader in place, then use spitfire.js instead (shimer + loader abstraction).</p>
+
+<p>If you don't think you need the loader abstraction either, then all you need is shimer.js - but read
+below to understand the API and in-and-outs.</p>
+
+<h2>The 10 seconds API</h2>
+
+<pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="//base-url-to-spitfire-dist/spitfire-lab.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript"&gt;
+    var basePath = '//base-url-to-spitfire-dist/';
+    var shimsToLoad = Spitfire.boot();
+    for(var x = 0; x &lt; shimsToLoad.length; x++)
+      Spitfire.loader.script(basePath + shimsToLoad[x]);
+    Spitfire.wait(function(){
+      // Ready to enjoy ES5
+      console.warn(" [spitfire.js] all shims loaded");
+    });
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2>shimer.js API</h2>
+
+<pre><code>// If you want to ENFORCE loading patched XHR and JSON (eg: not only for the browsers that don't define the objects)
+// Spitfire.use(Spitfire.XHR);
+// Spitfire.use(Spitfire.JSON);
+
+// If you want shims that just *define* things without providing actual functionality (DANGEROUS)
+// Spitfire.use(Spitfire.UNSAFE);
+
+// Get the lists of required shims for that browser
+// Note the urls are relative to the url of the spitfire.js path
+var toBeLoaded = Spitfire.boot();
+
+// To get NOT minified shims urls instead
+// var toBeLoaded = Spitfire.boot(true);
+
+</code></pre>
+
+<p>If you are using AMD (at the time shimer.js is loaded), just require it instead.</p>
+
+<p>Once you get the list of needed shims, it's up to you to decide how you are going to load them.
+You obviously can do that your own way, or use the provided loader (see below).</p>
+
+<p>Coverage: for now, we try to cover everything ES5 (specifically arrays and objects methods),
+plus XHR, JSON, Date, console, localstorage and geolocation.</p>
+
+<h2>loader-X.js API:</h2>
+
+<p>The "loader" provides a uniform abstraction on-top of other backend loaders. Right now,
+the following flavors are implemented:</p>
+
+<ul>
+<li>requirejs</li>
+<li>labjs</li>
+<li>headjs</li>
+<li>yepnope</li>
+<li>yahoo base</li>
+</ul><p>loader.js doesn't contain any actual loader, just the API and abstractions.</p>
+
+<p>loader-X.js does bundle the "X" loader as well (eg: "requirejs").</p>
+
+<p>So, it's up to you to decide if you need the actual loader itself, or if you already got it by
+other means.</p>
+
+<p>The API goes like:</p>
+
+<pre><code>/** Script loading */
+// Load two scripts in parallel
+Spitfire.loader.script("some_url");
+Spitfire.loader.script("some_other_url");
+// This will wait until both scripts are evaluated
+Spitfire.loader.wait();
+// Load a third script, probably depending on the two firsts
+Spitfire.loader.script("some_other_other_url");
+Spitfire.loader.wait(function(){
+  // Do something and have the guarantee that every three scripts are there
+});
+
+/** Stylesheet loading */
+Spitfire.loader.style("some_css_url", "media");
+
+/** Experimental */
+// Get a different loading queue
+var newQueue = Spitfire.loader.fork();
+
+// Get the url of a specific document script
+var url = Spitfire.loader.resolve("somenametomatch");
+
+</code></pre>
+
+<h2>gulliver.js API:</h2>
+
+<p>Gulliver is a MINIMALIST loader (under 1kB), meant for ealy stage boot.
+If you don't understand what all that means, and the implications, you probably don't need it.</p>
+
+<p>How to use:</p>
+
+<pre><code>gulliver(function(){
+  // The targetted script has been loaded
+}, "uri_of_the_target_script_to_load", "name_of_the_gulliver_script");
+
+</code></pre>
+
+<h2>spitfire-X.js API:</h2>
+
+<p>This is just a bundle containing shimer, loader, and possibly a backend as well (eg: require).
+This is the recommended file to use.</p>
+
+<h2>tests</h2>
+
+<p>Navigate your browser to All.html.</p>
+
+<p>It will default to use loader-lab, unless you add an hashtag in the url to specify another loader
+(eg: #loader-require).</p>
+
+<p>The following additional fragments options are supported in the url:</p>
+
+<ul>
+<li>use shimer: #use-spitfire</li>
+<li>use shimer with unsafe shims: #use-spitfire-full</li>
+<li>to use ES5-shim instead: #use-es5</li>
+<li>to use minified versions of the shims: #use-min</li>
+</ul><h2>Credits</h2>
+
+<p>Some of the shims here are sourced or served as an inspiration (credits in the individual files
+usually):</p>
+
+<ul>
+<li>es5-shim: <a href="https://github.com/kriskowal/es5-shim/">https://github.com/kriskowal/es5-shim/</a>
+</li>
+<li>json3: <a href="http://bestiejs.github.com/json3/">http://bestiejs.github.com/json3/</a>
+</li>
+<li>geolocation: <a href="http://www.calormen.com/polyfill/geo.js">http://www.calormen.com/polyfill/geo.js</a>
+</li>
+<li><a href="http://developer.mozilla.org">http://developer.mozilla.org</a></li>
+</ul>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/jsBoot" class="avatar"><img src="https://secure.gravatar.com/avatar/1851e1cf11ea89d6e7a30a6e90274df1?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/jsBoot">jsBoot</a> maintains <a href="https://github.com/jsBoot/spitfire.js">Spitfire.js</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/jsBoot/spitfire.js/tarball/master" class="tar">tar</a><a href="https://github.com/jsBoot/spitfire.js/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>
