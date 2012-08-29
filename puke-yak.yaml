@@ -10,7 +10,7 @@ user-jenkins-box-Linux:
     DEPLOY_ROOT: '/var/www/deploy/static/lib/webitup'
     # DOC_ROOT: '/var/www/deploy/static/doc/spitfire'
     LINKS:
-        STATIC_YAML: 'https://static.sn.ackitup.net/static.yaml'
+        STATIC_YAML: 'https://static.sn.ackitup.net/airstrip.yaml'
 
 # Raildecom workin
 user-raildecom-box-Darwin:
@@ -21,13 +21,13 @@ user-raildecom-box-Darwin:
         STATIC_YAML: 'https://static.sn.ackitup.net/static.yaml'
 
 # Mangled Deutz workin
-user-dmp-box-Darwin:
-    ROOT: '${HOME}/buildd/stage.webitup.org'
-    DEPLOY_ROOT: '${HOME}/buildd/deploy.webitup.org/web/static/lib/webitup'
-    # DOC_ROOT: '${HOME}/buildd/deploy.webitup.org/doc/roxeecore'
-    # REMOTE_BUILD: 'http:'
-    LINKS:
-        STATIC_YAML: 'http://static.loft.sn.ackitup.net:4242/static.yaml'
+# user-dmp-box-Darwin:
+#     ROOT: '${HOME}/buildd/stage.webitup.org'
+#     DEPLOY_ROOT: '${HOME}/buildd/deploy.webitup.org/web/static/lib/webitup'
+#     # DOC_ROOT: '${HOME}/buildd/deploy.webitup.org/doc/roxeecore'
+#     # REMOTE_BUILD: 'http:'
+#     LINKS:
+#         STATIC_YAML: 'http://static.loft.sn.ackitup.net:4242/static.yaml'
 
 # Base setup for everyone
 yak:
@@ -40,7 +40,7 @@ yak:
     # License to be replaced in files
         LICENSE: '<a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>'
     # Copyright to be replaced in files
-        COPYRIGHT: 'All rights reserved <a href="http://www.webitup.fr">Web It Up</a>'
+        COPYRIGHT: 'All rights reserved <a href="http://www.webitup.fr">© Web It Up</a>'
     # Author
         AUTHOR: '<a href="mailto:dev@webitup.fr">Mangled Deutz & Raildecom</a>'
     # Repo base url
@@ -69,4 +69,4 @@ yak:
 
     LINKS:
         # Where to find "external" dependencies that are to be fetched either runtime or compile time
-        STATIC_YAML: 'https://static.roxee.net/static.yaml'
+        STATIC_YAML: 'https://static.sn.ackitup.net/airstrip.yaml'

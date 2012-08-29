@@ -51,9 +51,11 @@ var code = function(ld){
   // Specs
   // For some hard to understand reason, we can't use the stack used *outside*
   ld = ld.fork();
+  ld.script('{SPIT-JAS}')
+    .wait();
+  ld.script('{SPIT-JASHTML}')
+    .wait();
   ld
-    .script('{SPIT-JAS}')
-    .script('{SPIT-JASHTML}')
     .script('specs/Function.js')
     .script('specs/Object.js')
     .script('specs/Array.js')
@@ -66,7 +68,7 @@ var code = function(ld){
 
   // If we are told to use-* a shiming shcript, load it as well
   if(useSpitfire){
-    ld.script(spitfireBaseUrl + 'spitfire' + suffix);
+    ld.script(spitfireBaseUrl + 'shimer' + suffix);
   }
   if(useES5)
     ld.script('es5/es5-shim' + suffix);

@@ -206,6 +206,26 @@ http://es5.github.com/#x15.4.4.13
     return new pvLoader();
   };
 
+  /**
+   * This is NOT guaranteed to work - the document may NOT be ready at the time this is used...
+   * Correct approach is to timeout and repeat this in case it returns false.
+   */
+  pvLoader.prototype.resolve = function(currentName) {
+    var c = aDoc.getElementsByTagName('script');
+    var m;
+    var re = new RegExp(currentName);
+    // for(var x = 0, it; (x < c.length) && (it = c[x].src); x++){
+    for (var x = 0, it; x < c.length; (it = c[x].getAttribute('src')), x++) {
+      if (it && re.test(it)) {
+        m = it.split('/');
+        m.pop();
+        m = m.join('/');
+        break;
+      }
+    }
+    return m;
+  };
+
   pvLoader.prototype.style = function(url, media) {
     // XXX See gulliver - this may fail
     var h = document.getElementsByTagName('head')[0];

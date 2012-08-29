@@ -35,8 +35,10 @@ def flint():
 @task("Minting")
 def mint():
   PH.minter(Yak.BUILD_ROOT)
-  # Yahoo is crap and doesn't support strict
-  minify(Yak.BUILD_ROOT + '/loader-yahoo.js', Yak.BUILD_ROOT + '/loader-yahoo-min.js', strict = False)
+  # Yahoo and yep don't support strict
+  list = FileList(path, filter = "*yahoo*,*yepnope*", exclude = "*-min.js")
+  for burne in list.get():
+    minify(burne, re.sub(r"(.*).js$", r"\1-min.js", burne), strict = False)
 
 @task("Stats report deploy")
 def stats():
@@ -44,6 +46,9 @@ def stats():
 
 @task("Build package")
 def build():
+  # ============================
+  # Basic stuff
+  # ============================
     istrunk = Yak.VARIANT == 'bleed'
     sed = Sed()
     PH.replacer(sed)
@@ -77,6 +82,9 @@ def build():
     #     sed.add('{SPIT-HEAD}', remoty + '/' + i)#.replace('.css', '-min.css'))
 
 
+  # ============================
+  # Get the external shims
+  # ============================
     for (k, elem) in {'json': 'json3', 'xhr': 'xmlhttprequest', 'console': 'console'}.items():
       candidate = ''
       for i in yam[elem]:
@@ -86,20 +94,29 @@ def build():
       combine(['src/strict.js', candidate], '%s/burnscars/%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
       sed.add('{SPIT-%s}' % k.upper(), elem)
 
-    # Get everything else
+  # ============================
+  # Get local shims and vanilla flavors
+  # ============================
     deepcopy(FileList("src/burnscars", filter="*.js,*.html"), Yak.BUILD_ROOT + '/burnscars', replace=sed)
-    deepcopy("src/spitfire.js", Yak.BUILD_ROOT, replace=sed)
+    deepcopy("src/shimer.js", Yak.BUILD_ROOT, replace=sed)
+    deepcopy("src/loader.js", Yak.BUILD_ROOT, replace=sed)
+    deepcopy("src/gulliver.js", Yak.BUILD_ROOT, replace=sed)
+    combine(["src/loader.js", "src/shimer.js"], Yak.BUILD_ROOT + '/spitfire.js', replace=sed)
 
-    # Prep-up the yaml manifest for spitfire
+  # ============================
+  # Prep-up the manifest
+  # ============================
     spitroot = Yak.PACKAGE['NAME'] + "/" + Yak.PACKAGE['VERSION']
     description = []
-    description.append("spitfire: '%s/spitfire.js'" % spitroot)
+    description.append("shimer: '%s/shimer.js'" % spitroot)
     description.append("gulliver: '%s/gulliver.js'" % spitroot)
     description.append("loader: '%s/loader.js'" % spitroot)
+    description.append("spitfire: '%s/spitfire.js'" % spitroot)
     description.append("xhr: '%s/burnscars/xmlhttprequest.js'" % spitroot)
 
-
-    # Get the loaders and prep-up flavoured loaders
+  # ============================
+  # Build tainted loaders
+  # ============================
     for elem in ['lab', 'head', 'require']:
       candidate = ''
       for i in yam[elem]:
@@ -109,8 +126,6 @@ def build():
       combine(['src/strict.js', candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
       description.append("loader-%s: '%s/loader-%s.js'" % (elem, spitroot, elem))
 
-    ##########################################################
-    # XXX patch the shit
     # YepNope and Yahoo are crap and don't support strict mode
     candidate = ''
     elem = 'yahoo'
@@ -129,13 +144,20 @@ def build():
         break
     combine([candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
     description.append("loader-%s: '%s/loader-%s.js'" % (elem, spitroot, elem))
-    ##########################################################
 
 
-    # Vanilla loader and gulliver
-    combine('src/loader.js', '%s/loader.js' % Yak.BUILD_ROOT, replace=sed)
-    combine('src/gulliver.js', '%s/gulliver.js' % Yak.BUILD_ROOT, replace=sed)
+  # ============================
+  # Build all-in-one
+  # ============================
+    for elem in ['lab', 'head', 'require', 'yepnope', 'yahoo']:
+      combine(['%s/loader-%s.js' % (Yak.BUILD_ROOT, elem), '%s/shimer.js' % Yak.BUILD_ROOT], '%s/spitfire-%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
+      description.append("spitfire-%s: '%s/spitfire-%s.js'" % (elem, spitroot, elem))
 
+
+
+  # ============================
+  # Build manifest itself
+  # ============================
     yamu = FileSystem.join(Yak.DEPLOY_ROOT, "spitfire.yaml")
     description = yaml.load('\n'.join(description))
     if FileSystem.exists(yamu):
@@ -146,6 +168,26 @@ def build():
 
     # Straight to service root instead - kind of hackish...
     FileSystem.writefile(yamu, yaml.dump(mama))
+
+
+  # ============================
+  # Build tests
+  # ============================
+    list = FileList("tests", filter="*.js,*.html")
+    deepcopy(list, Yak.BUILD_ROOT + '/tests', replace=sed)
+
+    # Can't access from raw github using IE (mimetype mismatch, bitch)
+    list = [
+      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h-matchers.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-array.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-function.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-string.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-object.js",
+      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-date.js",
+      "https://raw.github.com/webitup/es5-shim/master/es5-shim.js"
+    ]
+    deepcopy(list, Yak.BUILD_ROOT + '/tests/es5/');
 
 
   # # Build a loader bundling labjs - XXX beware! This won't get strict unless minified
@@ -163,21 +205,6 @@ def build():
     # PH.addlinksreplace(sed)
     # PH.addpackagereplace(sed)
 
-    list = FileList("tests", filter="*.js,*.html")
-    deepcopy(list, Yak.BUILD_ROOT + '/tests', replace=sed)
-
-    # Can't access from raw github using IE (mimetype mismatch, bitch)
-    list = [
-      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h-matchers.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-array.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-function.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-string.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-object.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-date.js",
-      "https://raw.github.com/webitup/es5-shim/master/es5-shim.js"
-    ]
-    deepcopy(list, Yak.BUILD_ROOT + '/tests/es5/');
 
       # minify(burne, burne.sub(r"(.*).js$", "-min.js"), strict=True)
 # .sub(r'(<textarea.*>).*(</textarea>)', r'\1Bar\2', s)

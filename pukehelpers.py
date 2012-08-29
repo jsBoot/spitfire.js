@@ -93,7 +93,7 @@ def stater(path):
   stats(list, title = "Other")
 
 def deployer(withversion):
-  list = FileList(Yak.BUILD_ROOT)
+  list = FileList(Yak.BUILD_ROOT, exclude="*.DS_Store")
   if withversion:
     deepcopy(list, FileSystem.join(Yak.DEPLOY_ROOT, Yak.PACKAGE['NAME'], Yak.PACKAGE['VERSION']))
   else:
