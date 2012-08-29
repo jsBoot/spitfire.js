@@ -39,7 +39,8 @@ Technology
 We use puke (https://github.com/webitup/puke), a (inhouse) versatile python build system.
 
 We also depend on airstrip.js (https://github.com/jsBoot/airstrip) in order to 
-provide dependencies - though you don't require to set it up yourself.
+provide dependencies at build time - though you don't require to set it up yourself and won't depend
+on it at runtime.
 
 Dependencies are listed in YAML.
 
