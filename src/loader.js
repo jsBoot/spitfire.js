@@ -231,7 +231,7 @@ http://es5.github.com/#x15.4.4.13
     var h = document.getElementsByTagName('head')[0];
     var s = document.createElement('link');
     s.setAttribute('type', 'text/css');
-    s.setAttribute('rel', 'alternate stylesheet');
+    s.setAttribute('rel', 'stylesheet');
     if (media)
       s.setAttribute('media', media);
     s.setAttribute('href', url);
