@@ -235,7 +235,10 @@ http://es5.github.com/#x15.4.4.13
     if (media)
       s.setAttribute('media', media);
     s.setAttribute('href', url);
-    h.appendChild(s);
+    if (h.firstChild)
+      h.insertBefore(s, h.firstChild);
+    else
+      h.appendChild(s);
   };
 
   /**
