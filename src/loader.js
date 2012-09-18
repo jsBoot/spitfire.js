@@ -226,19 +226,28 @@ http://es5.github.com/#x15.4.4.13
     return m;
   };
 
+  var idx = 1;
+  var hook = null;
   pvLoader.prototype.style = function(url, media) {
     // XXX See gulliver - this may fail
     var h = document.getElementsByTagName('head')[0];
     var s = document.createElement('link');
     s.setAttribute('type', 'text/css');
     s.setAttribute('rel', 'stylesheet');
+    s.setAttribute('data-spitfire-index', idx);
     if (media)
       s.setAttribute('media', media);
     s.setAttribute('href', url);
-    if (h.firstChild)
-      h.insertBefore(s, h.firstChild);
-    else
+
+    if (!hook)
+      hook = h.firstChild;
+    // && h.firstChild.nextSibling;
+    if (!hook || !hook.nextSibling)
       h.appendChild(s);
+    else
+      h.insertBefore(s, hook.nextSibling);
+    hook = s;
+    idx++;
   };
 
   /**
