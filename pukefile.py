@@ -85,11 +85,13 @@ def build():
   # ============================
   # Get the external shims
   # ============================
+    allshims = FileList("src/burnscars", filter="*.js", exclude="*xxx*")
     for (k, elem) in {'json': 'json3', 'xhr': 'xmlhttprequest', 'console': 'console'}.items():
       candidate = ''
       for i in yam[elem]:
         if (i.find('trunk') == -1) or istrunk:
           candidate = remoty + '/' + i
+          allshims.merge(candidate)
           break
       combine(['src/strict.js', candidate], '%s/burnscars/%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
       sed.add('{SPIT-%s}' % k.upper(), elem)
@@ -113,6 +115,10 @@ def build():
     description.append("loader: '%s/loader.js'" % spitroot)
     description.append("spitfire: '%s/spitfire.js'" % spitroot)
     description.append("xhr: '%s/burnscars/xmlhttprequest.js'" % spitroot)
+
+    # All in one shim
+    combine(allshims, Yak.BUILD_ROOT + '/burnscars.js', replace=sed)
+    description.append("burnscars: '%s/burnscars.js'" % spitroot)
 
   # ============================
   # Build tainted loaders
