@@ -57,6 +57,7 @@ def build():
     remoty = Yak.LINKS["STATIC_YAML"].split('/')
     remoty.pop()
     remoty = '/'.join(remoty)
+    # Python doesn't support SNI :(((( - SUCKS!
     # https://github.com/kennethreitz/requests/issues/749
     yammy = http.get(Yak.LINKS["STATIC_YAML"], verify=False)
     yam = yaml.load(yammy.text)
@@ -120,6 +121,7 @@ def build():
     description.append("gulliver: '%s/gulliver.js'" % spitroot)
     description.append("loader: '%s/loader.js'" % spitroot)
     description.append("spitfire: '%s/spitfire.js'" % spitroot)
+    # ???
     description.append("xhr: '%s/burnscars/xmlhttprequest.js'" % spitroot)
 
     # All in one shim
@@ -196,8 +198,7 @@ def build():
       "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-function.js",
       "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-string.js",
       "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-object.js",
-      "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-date.js",
-      "https://raw.github.com/kriskowal/es5-shim/master/es5-shim.js"
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-date.js"
     ]
     deepcopy(list, Yak.BUILD_ROOT + '/tests/es5/');
 

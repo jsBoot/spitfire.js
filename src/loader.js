@@ -27,14 +27,13 @@ https://github.com/bestiejs/
 http://es5.github.com/#x15.4.4.13
  */
 
-'use strict';
-
 
 /**
  * @kind module
  * @name Spitfire
  */
 (function() {
+  'use strict';
   /**
    * Provides a crude "script loader" abstraction on top of whatever
    * loader library is detected.

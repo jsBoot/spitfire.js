@@ -11,9 +11,8 @@
  * @location {PUKE-PACKAGE-GIT-ROOT}/shimer.js{PUKE-PACKAGE-GIT-REV}
  */
 
-'use strict';
-
 (function() {
+  'use strict';
   /**
    * =========================
    * AMD / noAMD dummy pattern
@@ -169,11 +168,6 @@
 
   var es5Tests = arrayTests || functionTests || objectTests || dateTests || stringTests;
 
-  root.add({
-    test: es5Tests,
-    uri: '{SPIT-ES5-SHIM}'
-  }, root.SAFE);
-
   // Although in ES5-SHIM, most modern browsers unfortunately want this
   /*  root.add({
       test: !es5Tests && (!String.prototype.trim ||
@@ -285,23 +279,6 @@
   }, root.SAFE);
 
   // ==========
-  // JSON
-  // ==========
-  root.add({
-    test: !window.JSON,
-    uri: '{SPIT-JSON3}'
-  }, root.SAFE);
-
-  // ==========
-  // XHR
-  // ==========
-
-  root.add({
-    test: !window.XMLHttpRequest,
-    uri: '{SPIT-XMLHTTPREQUEST}'
-  }, root.SAFE);
-
-  // ==========
   // Events
   // ==========
   root.add({
@@ -323,6 +300,36 @@
   root.add({
     test: !navigator.geolocation,
     uri: 'geolocation'
+  }, root.SAFE);
+
+  /**
+   * Provided by third-party
+   */
+
+  // ==========
+  // ES5
+  // ==========
+  root.add({
+    test: es5Tests,
+    uri: '{SPIT-ES5-SHIM}'
+  }, root.SAFE);
+
+
+  // ==========
+  // JSON
+  // ==========
+  root.add({
+    test: !window.JSON,
+    uri: '{SPIT-JSON3}'
+  }, root.SAFE);
+
+  // ==========
+  // XHR
+  // ==========
+
+  root.add({
+    test: !window.XMLHttpRequest,
+    uri: '{SPIT-XMLHTTPREQUEST}'
   }, root.SAFE);
 
   // ==========

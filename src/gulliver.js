@@ -14,9 +14,9 @@
 
 // Adapted from getify JSLabs' gister at https://gist.github.com/603980
 
-'use strict';
-
 (function() {
+  'use strict';
+
   this.gulliver = function(spitfireLoaded, uri, name) {
     var oDOC = document;
     var head = oDOC.head || oDOC.getElementsByTagName('head');
