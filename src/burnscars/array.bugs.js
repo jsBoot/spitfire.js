@@ -2,6 +2,8 @@
 
 'use strict';
 
+// XXX Awaiting pull request to be accepted
+
 // @patch IE7
 if ([].unshift('test') == undefined)
   (function() {

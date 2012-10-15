@@ -2,6 +2,7 @@ var spitfireBaseUrl = '../';
 var useSpitfire = !!location.href.match(/use-spitfire/);
 var useSpitfireFull = !!location.href.match(/use-spitfire-full/);
 var useES5 = !!location.href.match(/use-es5/);
+var useES5Full = !!location.href.match(/use-es5-full/);
 var useMin = !!location.href.match(/use-min/);
 var suffix = useMin ? '-min.js' : '.js';
 
@@ -71,7 +72,9 @@ var code = function(ld){
     ld.script(spitfireBaseUrl + 'shimer' + suffix);
   }
   if(useES5)
-    ld.script('es5/es5-shim' + suffix);
+    ld.script(spitfireBaseUrl + 'burnscars/es5-shim' + suffix);
+  if(useES5Full)
+    ld.script(spitfireBaseUrl + 'burnscars/es5-sham' + suffix);
 
 
   ld.wait();

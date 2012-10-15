@@ -86,15 +86,21 @@ def build():
   # Get the external shims
   # ============================
     allshims = FileList("src/burnscars", filter="*.js", exclude="*xxx*")
-    for (k, elem) in {'json': 'json3', 'xhr': 'xmlhttprequest', 'console': 'console'}.items():
+    for (k, elem) in {
+      'json3': 'json3',
+      'xmlhttprequest': 'xmlhttprequest',
+      'es5-shim': 'es5',
+      'es5-sham': 'es5',
+      'console': 'console'
+    }.items():
       candidate = ''
       for i in yam[elem]:
-        if (i.find('trunk') == -1) or istrunk:
+        if ((i.find('trunk') == -1) or istrunk) and (i.find(k) != -1):
           candidate = remoty + '/' + i
           allshims.merge(candidate)
           break
-      combine(['src/strict.js', candidate], '%s/burnscars/%s.js' % (Yak.BUILD_ROOT, elem), replace=sed)
-      sed.add('{SPIT-%s}' % k.upper(), elem)
+      combine(['src/strict.js', candidate], '%s/burnscars/%s.js' % (Yak.BUILD_ROOT, k), replace=sed)
+      sed.add('{SPIT-%s}' % k.upper(), k)
 
   # ============================
   # Get local shims and vanilla flavors
@@ -184,14 +190,14 @@ def build():
 
     # Can't access from raw github using IE (mimetype mismatch, bitch)
     list = [
-      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/helpers/h-matchers.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-array.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-function.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-string.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-object.js",
-      "https://raw.github.com/webitup/es5-shim/master/tests/spec/s-date.js",
-      "https://raw.github.com/webitup/es5-shim/master/es5-shim.js"
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/helpers/h.js",
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/helpers/h-matchers.js",
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-array.js",
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-function.js",
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-string.js",
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-object.js",
+      "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-date.js",
+      "https://raw.github.com/kriskowal/es5-shim/master/es5-shim.js"
     ]
     deepcopy(list, Yak.BUILD_ROOT + '/tests/es5/');
 

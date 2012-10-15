@@ -13,301 +13,7 @@
 
 'use strict';
 
-// Need TypeError for almost everything
-if (typeof TypeError == 'undefined')
-  TypeError = Error || function() {};
-
-//
-// ======
-// Utils - useful for Array shims
-// ======
-// Currently at risk
-// XXX to be deleted once done?
-
-// ES5 9.4
-// http://es5.github.com/#x9.4
-// http://jsperf.com/to-integer
-var toInteger = function(n) {
-  n = +n;
-  if (n !== n) { // isNaN
-    n = 0;
-  } else if (n !== 0 && n !== (1 / 0) && n !== -(1 / 0)) {
-    n = (n > 0 || -1) * Math.floor(Math.abs(n));
-  }
-  return n;
-};
-
-// ES5 9.9
-// http://es5.github.com/#x9.9
-var toObject = (function() {
-  var prepareString = 'a'[0] != 'a';
-  return function(o) {
-    if (o == null) { // this matches both null and undefined
-      throw new TypeError("can't convert " + o + ' to object');
-    }
-    // If the implementation doesn't support by-index access of
-    // string characters (ex. IE < 9), split the string
-    if (prepareString && typeof o == 'string' && o) {
-      return o.split('');
-    }
-    return Object(o);
-  };
-})();
-
 (function() {
-  var mandatory = [
-    // ==========
-    // Arrays
-    // ==========
-    // Bugs
-    // XXX to be ported to ES5
-    {
-      test: ([].unshift('test') == undefined),
-      uri: 'array.bugs'
-    },
-    // Functionality
-    {
-      test: !Array.prototype.every,
-      uri: 'array.every'
-    },
-    {
-      test: !Array.prototype.filter,
-      uri: 'array.filter'
-    },
-    {
-      test: !Array.prototype.forEach,
-      uri: 'array.foreach'
-    },
-    {
-      test: !Array.prototype.indexOf || (['b', 'a'].indexOf('a', 2) != -1),
-      uri: 'array.indexof'
-    },
-    {
-      test: !Array.isArray,
-      uri: 'array.isarray'
-    },
-    {
-      test: !Array.prototype.lastIndexOf || (['a', 'b'].lastIndexOf('a', -3) != -1),
-      uri: 'array.lastindexof'
-    },
-    {
-      test: !Array.prototype.map,
-      uri: 'array.map'
-    },
-    {
-      test: !Array.prototype.reduce,
-      uri: 'array.reduce'
-    },
-    {
-      test: !Array.prototype.reduceRight,
-      uri: 'array.reduceright'
-    },
-    {
-      test: !Array.prototype.some,
-      uri: 'array.some'
-    },
-    // ];
-
-
-    // ==========
-    // Objects
-    // ==========
-    // var es5 = [
-    {
-      test: !Object.getPrototypeOf,
-      uri: 'object.getprototypeof'
-    },
-    {
-      test: !Object.getOwnPropertyDescriptor,
-      uri: 'object.getownpropertydescriptor'
-    },
-    {
-      test: !Object.getOwnPropertyNames,
-      uri: 'object.getownpropertynames'
-    },
-    {
-      test: !Object.create,
-      uri: 'object.create'
-    },
-    {
-      test: !Object.defineProperty,
-      uri: 'object.defineproperty'
-    },
-    {
-      test: !Object.defineProperties,
-      uri: 'object.defineproperties'
-    },
-    {
-      test: !Object.isExtensible,
-      uri: 'object.isextensible'
-    },
-    {
-      test: !Object.keys,
-      uri: 'object.keys'
-    },
-
-    // ==========
-    // Strings
-    // ==========
-    {
-      test: !String.prototype.trim || '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
-          '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' +
-          '\u2029\uFEFF'.trim(),
-      uri: 'string.trim'
-    },
-
-    // ==========
-    // Functions
-    // ==========
-    {
-      test: !Function.prototype.bind,
-      uri: 'function.bind'
-    },
-
-    // ==========
-    // JSON
-    // ==========
-    {
-      test: !window.JSON,
-      uri: '{SPIT-JSON}'
-    },
-
-    // ==========
-    // XHR
-    // ==========
-    {
-      test: !window.XMLHttpRequest,
-      uri: '{SPIT-XHR}'
-    },
-
-    // ==========
-    // Events
-    // ==========
-    {
-      test: !window.addEventListener,
-      uri: 'events'
-    },
-
-    // ==========
-    // Localstorage
-    // ==========
-    {
-      test: !window.localStorage,
-      uri: 'localstorage'
-    },
-
-    // ==========
-    // Geolocation
-    // ==========
-    {
-      test: !navigator.geolocation,
-      uri: 'geolocation'
-    },
-
-    // ==========
-    // Console
-    // ==========
-    {
-
-      test: !window['console'] /*@cc_on || @_jscript_version <= 9 @*/ || !(function() {
-        var ok = true;
-        var props = [
-          'log', 'debug', 'info', 'warn', 'error', 'assert' /*, 'dir', 'dirxml', 'exception', 'time',
-          'timeEnd', 'table',
-          'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile', 'profileEnd',
-          'count'*/
-        ];
-        for (var x = 0; x < props.length; x++)
-          ok &= !!window.console[props[x]];
-        return ok;
-      })(),
-      uri: '{SPIT-CONSOLE}'
-    }
-
-  ];
-
-  var unsafe = [
-    {
-      test: !Function.isgenerator,
-      uri: 'function.isgenerator'
-    },
-
-    {
-      test: !Object.preventExtensions,
-      uri: 'object.preventextensions'
-    },
-
-    {
-      test: !Object.isSealed,
-      uri: 'object.issealed'
-    },
-
-    {
-      test: !Object.isFrozen,
-      uri: 'object.isfrozen'
-    },
-
-    {
-      test: !Object.seal,
-      uri: 'object.seal'
-    },
-
-    {
-      test: !Object.freeze,
-      uri: 'object.freeze'
-    },
-
-    // ==========
-    // Date
-    // ==========
-    {
-      test: (!Date.now) || (!Date.prototype.toJSON) ||
-          (!Date.parse || Date.parse('+275760-09-13T00:00:00.000Z') !== 8.64e15) ||
-          (!Date.prototype.toISOString || (new Date(-62198755200000).toISOString().indexOf('-000001') === -1)),
-      uri: 'date'
-    }
-  ];
-
-
-  // detect a Rhino bug and patch it
-  if (Object.freeze) {
-    try {
-      Object.freeze(function() {});
-    } catch (exception) {
-      (function() {
-        Object.freeze = (function freeze(freezeObject) {
-          return function freeze(object) {
-            if (typeof object == 'function') {
-              return object;
-            } else {
-              return freezeObject(object);
-            }
-          };
-        })(Object.freeze);
-      })();
-    }
-  }
-
-  // IE at large doesn't support additional arguments on settimeout.
-  // This can't be shimed independtly considering we work synchronously for now with loader
-  // AND XXX BEWARE - this means that setTimeout can't be used in following code
-  // BEFORE this specific setTimeout runs out
-  setTimeout(function(a) {
-    if (!a) {
-      var deref = window.setTimeout;
-      window.setTimeout = function(callback, delay) {
-        var a = Array.prototype.slice.call(arguments);
-        a.shift();
-        a.shift();
-        var cl = function() {
-          callback.apply(this, a);
-        }
-        deref(cl, delay);
-      };
-    }
-  }, 1, true);
-
-
   /**
    * =========================
    * AMD / noAMD dummy pattern
@@ -336,39 +42,331 @@ var toObject = (function() {
    * =========================
    */
 
-  root.UNSAFE = 'unsafe';
-  root.XHR = 'xhr';
-  root.JSON = 'json';
+  var shimsTest = {};
+  var toBeLoaded = [];
+
+  root.add = function(testObject, category) {
+    if (!(category in shimsTest))
+      shimsTest[category] = [];
+    shimsTest[category].push(testObject);
+  };
 
   root.use = function(extra) {
-    switch (extra) {
-      // Force loading of patched XHR/JSON - usually, if you are going to do that
-      // you should rather compile it inside your library instead...
-      case this.JSON:
-        mandatory.push({test: true, uri: '{SPIT-JSON}'});
-        break;
-      case this.XHR:
-        mandatory.push({test: true, uri: '{SPIT-XHR}'});
-        break;
-      // Use the "unsafe" class of shims - don't provide functionality, just fill-in the voids
-      // Note this will DEFINITELY break feature detection though - this is generally a bad idea
-      case this.UNSAFE:
-        for (var x = 0; x < unsafe.length; x++)
-          mandatory.push(unsafe[x]);
-        break;
-      default:
-        break;
-    }
+    if (!extra || !(extra in shimsTest))
+      throw 'INVALID_CATEGORY';
+    for (var x = 0; x < shimsTest[extra].length; x++)
+      toBeLoaded.push(shimsTest[extra][x]);
   };
 
   root.boot = function(useFull) {
     var uris = [];
-    for (var x = 0, shim; x < mandatory.length, shim = mandatory[x]; x++) {
-      if (shim.test)
-        uris.push('burnscars/' + shim.uri + (useFull ? '.js' : '-min.js'));
+    for (var x = 0, shim; x < toBeLoaded.length, shim = toBeLoaded[x]; x++) {
+      if (shim.test) {
+        if (shim.patch)
+          shim.patch();
+        else
+          uris.push('burnscars/' + shim.uri + (useFull ? '.js' : '-min.js'));
+      }
     }
     return uris;
   };
+
+
+  /**
+   * Additional XHR special category
+   * @type {String}
+   */
+  root.XHR = 'xhr';
+  root.add({test: true, uri: '{SPIT-XMLHTTPREQUEST}'}, root.XHR);
+
+  /**
+   * Additional JSON special category
+   * @type {String}
+   */
+  root.JSON = 'json';
+  root.add({test: true, uri: '{SPIT-JSON3}'}, root.JSON);
+
+  /**
+   * Unsafe category (shams)
+   * @type {String}
+   */
+  root.UNSAFE = 'unsafe';
+  root.add({
+    test: !Function.isgenerator,
+    uri: 'function.isgenerator'
+  }, root.UNSAFE);
+  root.add({
+    test:
+        !Object.preventExtensions ||
+        !Object.isSealed ||
+        !Object.isFrozen ||
+        !Object.seal ||
+        !Object.freeze,
+    uri: '{SPIT-ES5-SHAM}'
+  }, root.UNSAFE);
+
+  /**
+   * Safe category (always loaded)
+   * @type {String}
+   */
+  root.SAFE = 'safe';
+  // ==========
+  // Arrays
+  // ==========
+  // XXX Awaiting pull request to be accepted into es5
+  root.add({
+    test: ([].unshift('test') == undefined),
+    uri: 'array.bugs'
+  }, root.SAFE);
+
+  /**
+   * ES5 provided shims
+   */
+  var arrayTests =
+      ([1, 2].splice(0).length != 2) ||
+      !Array.isArray ||
+      !Array.prototype.forEach ||
+      !Array.prototype.map ||
+      !Array.prototype.filter ||
+      !Array.prototype.every ||
+      !Array.prototype.some ||
+      !Array.prototype.reduce ||
+      !Array.prototype.reduceRight ||
+      !Array.prototype.indexOf || ([0, 1].indexOf(1, 2) != -1) ||
+      !Array.prototype.lastIndexOf || ([0, 1].lastIndexOf(0, -3) != -1);
+
+  var functionTests = !Function.prototype.bind;
+  var objectTests = !Object.keys;
+  var dateTests = !Date.now ||
+      !Date.prototype.toISOString || !Date.parse ||
+      /*      isNaN(Date.parse("2000-01-01T00:00:00.000Z")) ||
+      (Date.parse('+275760-09-13T00:00:00.000Z') !== 8.64e15) ||*/
+      (new Date(-62198755200000).toISOString().indexOf('-000001') === -1) ||
+      (function() {
+        var dateToJSONIsSupported = false;
+        try {
+          dateToJSONIsSupported = (
+              Date.prototype.toJSON &&
+              new Date(NaN).toJSON() === null &&
+              new Date(-62198755200000).toJSON().indexOf('-000001') !== -1 &&
+              Date.prototype.toJSON.call({ // generic
+                toISOString: function() {
+                  return true;
+                }
+              })
+              );
+        } catch (e) {
+        }
+        return !dateToJSONIsSupported;
+      })();
+
+  var stringTests = !!'0'.split(void 0, 0).length ||
+      (''.substr && '0b'.substr(-1) !== 'b') ||
+      !String.prototype.trim ||
+          '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+          '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' +
+          '\u2029\uFEFF'.trim();
+
+  var es5Tests = arrayTests || functionTests || objectTests || dateTests || stringTests;
+
+  root.add({
+    test: es5Tests,
+    uri: '{SPIT-ES5-SHIM}'
+  }, root.SAFE);
+
+  // Although in ES5-SHIM, most modern browsers unfortunately want this
+  /*  root.add({
+      test: !es5Tests && (!String.prototype.trim ||
+          '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+          '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' +
+          '\u2029\uFEFF'.trim()),
+      patch: function(){
+        var ws = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+            '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028' +
+            '\u2029\uFEFF';
+        ws = '[' + ws + ']';
+        var trimBeginRegexp = new RegExp('^' + ws + ws + '*'),
+            trimEndRegexp = new RegExp(ws + ws + '*$');
+        String.prototype.trim = function trim() {
+          if (this === undefined || this === null) {
+            throw new TypeError("can't convert " + this + ' to object');
+          }
+          return String(this).replace(trimBeginRegexp, '').replace(trimEndRegexp, '');
+        };
+      }
+  }, root.SAFE);
+  */
+  // WebKit modern bugs... patched by ES5-shim, but we want it in there to avoid it
+  /*  root.add({
+    test: !!'0'.split(void 0, 0).length,
+    patch: function(){
+      var string_split = String.prototype.split;
+      String.prototype.split = function(separator, limit) {
+          if(separator === void 0 && limit === 0)return [];
+          return string_split.apply(this, arguments);
+      }
+    }
+  }, root.SAFE);
+ */
+
+  // Present in ES5-SHAM, which we don't always want while this is useful
+  root.add({
+    test: Object.freeze && (function() {
+      try {
+        Object.freeze(function() {});
+      } catch (exception) {
+        return true;
+      }
+      return false;
+    })(),
+    patch: function() {
+      Object.freeze = (function freeze(freezeObject) {
+        return function freeze(object) {
+          if (typeof object == 'function') {
+            return object;
+          } else {
+            return freezeObject(object);
+          }
+        };
+      })(Object.freeze);
+    }
+  }, root.SAFE);
+
+  // Needed about everywhere
+  root.add({
+    test: (typeof TypeError == 'undefined'),
+    patch: function() {
+      TypeError = Error || function() {};
+    }
+  }, root.SAFE);
+
+  /**
+   * Standalone, other tests
+   */
+
+  // ==========
+  // Objects - although these are available in es5-sham,
+  // they are bundled with other, riskier shams, so let's keep it
+  // separate for now
+  // ==========
+  root.add({
+    test: !Object.getPrototypeOf,
+    uri: 'object.getprototypeof'
+  }, root.SAFE);
+
+  root.add({
+    test: !Object.getOwnPropertyDescriptor,
+    uri: 'object.getownpropertydescriptor'
+  }, root.SAFE);
+
+  root.add({
+    test: !Object.getOwnPropertyNames,
+    uri: 'object.getownpropertynames'
+  }, root.SAFE);
+
+  root.add({
+    test: !Object.create,
+    uri: 'object.create'
+  }, root.SAFE);
+
+  root.add({
+    test: !Object.defineProperty,
+    uri: 'object.defineproperty'
+  }, root.SAFE);
+
+  root.add({
+    test: !Object.defineProperties,
+    uri: 'object.defineproperties'
+  }, root.SAFE);
+
+  root.add({
+    test: !Object.isExtensible,
+    uri: 'object.isextensible'
+  }, root.SAFE);
+
+  // ==========
+  // JSON
+  // ==========
+  root.add({
+    test: !window.JSON,
+    uri: '{SPIT-JSON3}'
+  }, root.SAFE);
+
+  // ==========
+  // XHR
+  // ==========
+
+  root.add({
+    test: !window.XMLHttpRequest,
+    uri: '{SPIT-XMLHTTPREQUEST}'
+  }, root.SAFE);
+
+  // ==========
+  // Events
+  // ==========
+  root.add({
+    test: !window.addEventListener,
+    uri: 'events'
+  }, root.SAFE);
+
+  // ==========
+  // Localstorage
+  // ==========
+  root.add({
+    test: !window.localStorage,
+    uri: 'localstorage'
+  }, root.SAFE);
+
+  // ==========
+  // Geolocation
+  // ==========
+  root.add({
+    test: !navigator.geolocation,
+    uri: 'geolocation'
+  }, root.SAFE);
+
+  // ==========
+  // Console
+  // ==========
+  root.add({
+    test: !window['console'] /*@cc_on || @_jscript_version <= 9 @*/ || !(function() {
+      var ok = true;
+      var props = [
+        'log', 'debug', 'info', 'warn', 'error', 'assert' /*, 'dir', 'dirxml', 'exception', 'time',
+          'timeEnd', 'table',
+          'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile', 'profileEnd',
+          'count'*/
+      ];
+      for (var x = 0; x < props.length; x++)
+        ok &= !!window.console[props[x]];
+      return ok;
+    })(),
+    uri: '{SPIT-CONSOLE}'
+  }, root.SAFE);
+
+  // Use all safe shims by default
+  root.use(root.SAFE);
+
+
+  // IE at large doesn't support additional arguments on settimeout.
+  // This can't be shimed independtly considering we work synchronously for now with loader
+  // AND XXX BEWARE - this means that setTimeout can't be used in following code
+  // BEFORE this specific setTimeout runs out
+  setTimeout(function(a) {
+    if (!a) {
+      var deref = window.setTimeout;
+      window.setTimeout = function(callback, delay) {
+        var a = Array.prototype.slice.call(arguments);
+        a.shift();
+        a.shift();
+        var cl = function() {
+          callback.apply(this, a);
+        }
+        deref(cl, delay);
+      };
+    }
+  }, 1, true);
+
 }).apply(this);
 
 
