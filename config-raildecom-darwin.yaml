@@ -1,0 +1,10 @@
+##################
+# Example separate file overriding configuration
+##################
+
+# Raildecom workin
+yank:
+  paths:
+    deploy: '${HOME}/workspace/webitup/deploy/static/lib/webitup'
+  links:
+      airstrip: 'https://static.sn.ackitup.net/airstrip.yaml'

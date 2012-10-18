@@ -1,0 +1,14 @@
+##################
+# Example separate file overriding configuration
+##################
+
+config-dmp-darwin:
+  root: "${HOME}/buildd/stage.webitup.org"
+  paths:
+    deploy: "${HOME}/buildd/deploy.webitup.org/web/static/lib/webitup"
+
+  links:
+      # Where to find airstraip dependency
+      airstrip: 'http://static.loft.sn.ackitup.net:4242/airstrip.yaml'
+
+

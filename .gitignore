@@ -1,5 +1,4 @@
 *.DS_Store*
 /.pukecache/
 *.pyc
-/dist/
 /build/

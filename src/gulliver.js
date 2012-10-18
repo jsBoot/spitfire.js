@@ -2,14 +2,14 @@
  * @name {PUKE-PACKAGE-NAME}
  * @homepage {PUKE-PACKAGE-HOME}
  * @version {PUKE-PACKAGE-VERSION}
- * @author {PUKE-PACKAGE-AUTHOR}
+ * @author {PUKE-RIGHTS-AUTHOR}
  * @file This is the *most minimal* bootstrapper possible.
  * It is meant to serve as a loader for an (actually useful) bootstrapper.
  * Don't use directly unless you know what you freaking do.
  * Bad things can still happen here, and nasty bugs are lurking.
- * @license {PUKE-PACKAGE-LICENSE}.
- * @copyright {PUKE-PACKAGE-COPYRIGHT}
- * @location {PUKE-PACKAGE-GIT-ROOT}/gulliver.js{PUKE-PACKAGE-GIT-REV}
+ * @license {PUKE-RIGHTS-LICENSE}.
+ * @copyright {PUKE-RIGHTS-COPYRIGHT}
+ * @location {PUKE-GIT-ROOT}/gulliver.js{PUKE-GIT-REVISION}
  */
 
 // Adapted from getify JSLabs' gister at https://gist.github.com/603980

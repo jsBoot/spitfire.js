@@ -1,0 +1,73 @@
+##################
+# Package metadata. Unless you are forking, this shouldn't change.
+# These are used to fill templated variables inside files (eg: {PUKE-FOO-BAR})
+# and in some cases to construct build / deploy paths
+##################
+baseYank:
+  package:
+    # Code name (eg: {PUKE-PACKAGE-NAME})
+      name: spitfire.js
+    # Version  (eg: {PUKE-PACKAGE-VERSION})
+      version: '0.2'
+    # Link to the product page (eg: {PUKE-PACKAGE-HOME})
+      home: 'http://spitfire.jsboot.com'
+  rights:
+    # License link (eg: {PUKE-RIGHTS-LICENSE})
+      license: '<a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>'
+    # Copyright to be replaced in files (eg: {PUKE-RIGHTS-COPYRIGHT})
+      copyright: 'All rights reserved <a href="http://www.webitup.fr">© Web It Up</a>'
+    # Author (eg: {PUKE-RIGHTS-AUTHOR})
+      author: '<a href="mailto:dev@webitup.fr">Mangled Deutz & Raildecom</a>'
+  git:
+    # Repository base url (eg: {PUKE-GIT-ROOT})
+      root: 'https://github.com/jsBoot/spitfire.js/blob/master/src'
+
+##################
+# Platform dependent stuff
+# These specify build- / run- time paths.
+# You should override them either by adding a config-USERNAME-UNAME node in this file
+# or by creating a config-USERNAME-UNAME.yaml file and adding a "userYank" node in it.
+##################
+defaultYank:
+  # Base root path against which relative paths may be resolved
+  # ROOT: '${HOME}/buildd'
+  root: './build'
+
+  # Specific paths - if using a relative path, will be resolved against "root"
+  # You may mix env variables as well (${HOME}) - see puke documentation for more
+  paths:
+      tmp: 'tmp'
+      build: 'build'
+      deploy: 'dist'
+      doc: 'doc'
+
+  links:
+      # Where to find airstraip dependency
+      airstrip: 'https://static.sn.ackitup.net/airstrip.yaml'
+
+  settings:
+      # Instruct puke to copy trunk versions of the shims - only of use for me:
+      # VARIANT: "bleed"
+      variant: "bleednot"
+
+
+##################
+# Example usernodes overriding configuration, in main file
+##################
+
+# Integration
+config-jenkins-linux:
+  # ROOT: '/opt/puke/jenkins-roxee'
+  paths:
+    deploy: '/var/www/deploy/static/lib/webitup'
+  # DOC_ROOT: '/var/www/deploy/static/doc/spitfire'
+  links:
+      airstrip: 'https://static.sn.ackitup.net/airstrip.yaml'
+
+# Roxee box
+config-roxee-Linux:
+  paths:
+    deploy: '/home/roxee/www/static/lib/webitup'
+    # DOC_ROOT: '/home/roxee/doc/spitfire'
+  links:
+      airstrip: 'https://static.roxee.net/airstrip.yaml'

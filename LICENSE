@@ -1,9 +1,9 @@
-Large portions of the code in here comes from https://github.com/kriskowal/es5-shim released under the MIT license (Copyright 2009, 2010 Kristopher Michael Kowal. All rights reserved.).
+Portions of the code in here comes from https://github.com/kriskowal/es5-shim released under the MIT license (Copyright 2009, 2010 Kristopher Michael Kowal. All rights reserved.).
 
 Other code use various open licences (public domain, BSD, MIT - see individual files).
+These (json3, xmlhttprequest and others) are fetched at buildtime and included in the resulting output. You should review their license individually and decide if that's ok for you.
 
-
-We release additions and modifications under the MIT license, as follow:
+We release our own code under the MIT license, as follow:
 
 Copyright (C) 2012 WebItUp. All rights reserved.
 
