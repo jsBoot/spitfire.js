@@ -173,11 +173,15 @@ The loader API is largely inspired by labjs.
 About the tests
 -------------
 
-Uses jasmine. Bundles in es5-shim tests as well.
+Uses jasmine.
 
-Navigate your browser to All.html.
+Bundles in es5-shim tests as well.
 
-It will default to use loader-lab, unless you add an hashtag in the url to specify another loader
+You need to build (puke all) to have the tests deployed.
+
+Navigate your browser to lib/tests/All.html
+
+It will default to use loader-lab, unless you add params in the url to specify another loader
 (eg: #loader-require).
 
 The following additional fragments options are supported in the url:
@@ -185,6 +189,8 @@ The following additional fragments options are supported in the url:
 - use shimer with unsafe shims: #use-spitfire-full
 - to use ES5-shim only: #use-es5
 - to use minified versions of the shims: #use-min
+
+You can combine any of these (though use-spitfire implies use-es5).
 
 About the bugs
 -------------
