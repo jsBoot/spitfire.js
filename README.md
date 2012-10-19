@@ -1,103 +1,36 @@
 spitfire.js
 ===========
 
-Yet another pile of shims.
+Javascript shim / loader framework.
 
-Background
+Making things behave since 1976.
+
+Overview
 -------------
 
 There exist numerous projects providing "shims" for various "aspects" of the modern web.
 
-Though, these are usually provided in a rather monolithic/standalone/raw form, and there are few
-"shims frameworks" that would provide a from the get-go working solution to shim multiple aspects 
-at once.
-
-Furthermore, we wanted something that would conditionally load shims, based on tests, something that
-wouldn't make assumptions on the loader being used, and something where shims are granular.
-
-Content
--------------
-
-We provide very few new shims, but rather a slick solution that:
-- select and maintains (from upstream) the best shims
-- provides a detection mechanism and return a list of needed shims
-- focuses on the basics (pretty much ES5 and a couple of others)
-
-Note that for now it doesn't provide monolithic files: depending on the browser (say, IE), MANY files 
-may be loaded at runtime to patch the holes.
-
-Content:
-- shims: most of these are not original, and come from well known and well maintained projects
-- loader: a loader *interface*, that can use various backends (require, labjs, headjs, yahoo are supported for now)
-- shimer: a tester that decides whether a shim is needed or not
-- gulliver: a minimalist loader that is meant to load a unique file (async, obviously)
-- a suite of tests using jasmine (fetches es5-shim tests as well)
-
-Technology
--------------
-
-We use puke (https://github.com/webitup/puke), a (inhouse) versatile python build system.
-
-We also depend on airstrip.js (https://github.com/jsBoot/airstrip) in order to 
-provide dependencies at build time - though you don't require to set it up yourself and won't depend
-on it at runtime.
-
-Dependencies are listed in YAML.
-
-
-How to build
--------------
-
-- clone: `git clone https://github.com/jsBoot/spitfire.js`
-- install puke: `pip install puke`
-- build it as-is: `cd spitfire.js; puke all`
-
-
-Build result
--------------
-
-Inside the build/dist directory, you will find:
-
-A manifest file (spitfire.yaml) to be used by other projects / build systems, listing relative
-urls to the productions.
-
-Inside the build/dist/spitfire.js/VERSION/, the various productions:
-- shimer.js
-- loader.js (and loader-X.js)
-- gulliver.js
-- spitfire.js (and spitfire-X.js)
-- tests
-- "burnscars" (directory containing independent shims)
-
-What you want to use
--------------
-
-... depends on how you want to integrate.
-
-If you are starting from scratch, then you should use spitfire-X.js, where X is your favorite loader
-(we recommend either lab or require).
-
-If you already have a loader in place, then use spitfire.js instead (shimer + loader abstraction).
-
-If you don't think you need the loader abstraction either, then all you need is shimer.js - but read
-below to understand the API and in-and-outs.
-
+Now, these are fragmented in multiple projects, and usually provided in a monolithic/raw form.
+We wanted a solution "ready-to-go", providing a very simple javascript file and API able to runtime detect browsers bugs and missing features, and load the best, appropriate "shims", ideally free from the chosen loader backend (require, lab).
 
 The 10 seconds API
 -------------
+
+Get the content of the "lib" folder, and make it available on your server as "/whatever/lib". Include "spitfire-lab-min.js" in your page.
+
 
 ```
 <!doctype html>
 <html>
 <head>
-  <script src="//base-url-to-spitfire-dist/spitfire-lab.js"></script>
+  <script src="//base-url-to-spitfire-lib-folder/spitfire-lab-min.js"></script>
   <script type="text/javascript">
-    var basePath = '//base-url-to-spitfire-dist/';
-    var shimsToLoad = Spitfire.boot();
-    for(var x = 0; x < shimsToLoad.length; x++)
-      Spitfire.loader.script(basePath + shimsToLoad[x]);
-    Spitfire.wait(function(){
-      // Ready to enjoy ES5
+    var shims = Spitfire.boot();
+    var baseUri = Spitfire.loader.base('spitfire-lab');
+    for(var x = 0; x < shims.length; x++)
+      Spitfire.loader.script(baseUri + '/' + shims[x]);
+    Spitfire.loader.wait(function(){
+      // Ready to enjoy ES5, console, json, xhr...
       console.warn(" [spitfire.js] all shims loaded");
     });
   </script>
@@ -107,104 +40,140 @@ The 10 seconds API
 </html>
 ```
 
-shimer.js API
+Now, you can enjoy in any browser (at least, that's the purpose):
+- es5 support (partial, but most of the useful stuff)
+- proper Date support
+- json
+- XMLHttpRequest
+- console
+- localStorage
+- geolocation API
+- others coming
+
+
+Advanced API: Spitfire
 -------------
 
+```javascript
+// Add a new shim, always to be used
+Spitfire.add({
+  test: !Function.something,
+  uri: 'path_to_shim.js'
+}, Spitfire.SAFE);
+
+// Add a new shim with an inline patch, to be used if a specific category is requested
+Spitfire.add({
+  test: !Function.somethingElse,
+  patch: function(){
+    Function.somethingElse = function(){
+      console.warn("Haha!");
+    };
+  }
+}, 'SomeCategory');
+
+// Ask for a specific category
+Spitfire.use('SomeCategory');
+
+// Use UNSAFE shims (shims that do not provide actual functionality, just named props)
+Spitfire.use(Spitfire.UNSAFE);
+// Enforce JSON replacement shim instead of native implementation, no matter what
+Spitfire.use(Spitfire.JSON);
+// Enforce XHR replacement shim instead of native implementation, no matter what
+Spitfire.use(Spitfire.XHR);
+
+// To use non-minified versions of the shims, pass true
+var shims = Spitfire.boot(true);
+
+// Load your shims, then, the way you want
 ```
-// If you want to ENFORCE loading patched XHR and JSON (eg: not only for the browsers that don't define the objects)
-// Spitfire.use(Spitfire.XHR);
-// Spitfire.use(Spitfire.JSON);
 
-// If you want shims that just *define* things without providing actual functionality (DANGEROUS)
-// Spitfire.use(Spitfire.UNSAFE);
-
-// Get the lists of required shims for that browser
-// Note the urls are relative to the url of the spitfire.js path
-var toBeLoaded = Spitfire.boot();
-
-// To get NOT minified shims urls instead
-// var toBeLoaded = Spitfire.boot(true);
-
-```
-
-If you are using AMD (at the time shimer.js is loaded), just require it instead.
-
-Once you get the list of needed shims, it's up to you to decide how you are going to load them.
-You obviously can do that your own way, or use the provided loader (see below).
-
-Coverage: for now, we try to cover everything ES5 (specifically arrays and objects methods),
-plus XHR, JSON, Date, console, localstorage and geolocation.
-
-
-
-loader-X.js API:
+Advanced API: Spitfire/loader
 -------------
+```javascript
+var baseUri = Spitfire.loader.base('spitfire');
+for(var x = 0; x < shims.length; x++)
+  Spitfire.loader.script(baseUri + '/' + shims);
 
-The "loader" provides a uniform abstraction on-top of other backend loaders. Right now,
-the following flavors are implemented:
-- requirejs
-- labjs
-- headjs
-- yepnope
-- yahoo base
+// Use the bundled loader to load other resources (API similar to labjs)
 
-loader.js doesn't contain any actual loader, just the API and abstractions.
+Spitfire.loader.script('something.js')
+  .script('other.js')
+  .wait(function(){
+    // other will be executed before last 
+  })
+  .script('last.js')
+  .style('stylesheet.css')
+  .wait(function(){
+    // Everything loaded
+  });
 
-loader-X.js does bundle the "X" loader as well (eg: "requirejs").
-
-So, it's up to you to decide if you need the actual loader itself, or if you already got it by
-other means.
-
-The API goes like:
-```
-/** Script loading */
-// Load two scripts in parallel
-Spitfire.loader.script("some_url");
-Spitfire.loader.script("some_other_url");
-// This will wait until both scripts are evaluated
-Spitfire.loader.wait();
-// Load a third script, probably depending on the two firsts
-Spitfire.loader.script("some_other_other_url");
-Spitfire.loader.wait(function(){
-  // Do something and have the guarantee that every three scripts are there
-});
-
-/** Stylesheet loading */
-Spitfire.loader.style("some_css_url", "media");
-
-/** Experimental */
-// Get a different loading queue
-var newQueue = Spitfire.loader.fork();
-
-// Get the url of a specific document script
-var url = Spitfire.loader.resolve("somenametomatch");
+var ld = Spitfire.loader.fork;
+ld.script('to_be_loaded_separately.js');
 
 ```
 
-gulliver.js API:
+See the jsdoc documentation for more.
+
+
+Advanced API: gulliver.js
 -------------
 
 Gulliver is a MINIMALIST loader (under 1kB), meant for ealy stage boot.
 If you don't understand what all that means, and the implications, you probably don't need it.
 
 How to use:
+
+
+Advanced embedding strategies
+-------------
+
+If you prefer to use modules (and requirejs), just embed instead "spitfire-require-min.js".
+
+You can also use "spitfire-yahoo-min.js", "spitfire-head-min.js", or "spitfire-yepnope-min.js" for alternative loaders.
+
+The API is exactly the same - but the bundled loader differ.
+Note that if "require" exists in the global scope, we switch to a module API instead - you must then require 'Spitfire' and 'Spitfire/loader' instead of namespaces.
+
+If you prefer to use your own copy of your favorite loader (assuming its supported - that is: labjs, requires, yahoo loader, yepnope and headjs), just embed the "spitfire-min.js" file which just contains the API and wrapper, and no actual loader backend.
+
+If you don't care at all about the loader API, just embed "shimer-min.js" to get the Spitfire module/namespace with no loader (it's then your responsibility to load the uris).
+
+If you are looking for a as-slick-as-possible minimal bootstrap loader, take a look at gulliver (see documentation).
+
 ```
 gulliver(function(){
   // The targetted script has been loaded
-}, "uri_of_the_target_script_to_load", "name_of_the_gulliver_script");
+}, "uri_of_the_target_script_to_load");
 
 ```
 
+If you want don't care about conditional testing or loading at all, and just want a shim-it-all file, use the burnscars-min.js file directly. 
 
-spitfire-X.js API:
+
+About the shims
 -------------
 
-This is just a bundle containing shimer, loader, and possibly a backend as well (eg: require).
-This is the recommended file to use.
+Very few original code is provided here.
 
+Most of the actual shiming code is provided by third-party library and sources, namely:
+- es5-shim: https://github.com/kriskowal/es5-shim/
+- json3: http://bestiejs.github.com/json3/
+- geolocation: http://www.calormen.com/polyfill/geo.js
+- XMLHttpRequest
+- Console
+- localStorage
+- http://developer.mozilla.org
+- others
 
-tests
+See the pukefile and individual burnscars/ files for information.
+All of them use a MIT compatible license, or public domain.
+
+The loader API is largely inspired by labjs.
+
+About the tests
 -------------
+
+Uses jasmine. Bundles in es5-shim tests as well.
 
 Navigate your browser to All.html.
 
@@ -212,17 +181,63 @@ It will default to use loader-lab, unless you add an hashtag in the url to speci
 (eg: #loader-require).
 
 The following additional fragments options are supported in the url:
-- use shimer: #use-spitfire
+- use shimer as well: #use-spitfire
 - use shimer with unsafe shims: #use-spitfire-full
-- to use ES5-shim instead: #use-es5
+- to use ES5-shim only: #use-es5
 - to use minified versions of the shims: #use-min
 
-Credits
+About the bugs
 -------------
 
-Some of the shims here are sourced or served as an inspiration (credits in the individual files
-usually):
-- es5-shim: https://github.com/kriskowal/es5-shim/
-- json3: http://bestiejs.github.com/json3/
-- geolocation: http://www.calormen.com/polyfill/geo.js
-- http://developer.mozilla.org
+Yahoo loader doesn't behave.
+If you really use it, speak-up so we consider to fix.
+
+How to contribute
+-------------
+
+Issues, or forks + pull requests.
+
+Be sure to add tests for what you want "shimed".
+
+If the problem is an ES5 feature / bug, get upstream instead. Same goes for console, XHR, and JSON3.
+
+Versioning and API
+-------------
+
+We use semantic versioning (semver), and the uri by default contain only the MAJOR.MINOR part of the version.
+
+Existing shims fixing / enhancing will trigger a REVISION bump.
+
+New shims will trigger a MINOR bump.
+
+Changes to the Spitfire API will trigger a MAJOR bump.
+
+Build system change and undocumented features change will NOT trigger a version bump.
+
+
+Server availability
+-------------
+
+Spitfire will be made available, prebuilt, under a jsboot domain - though, unless you use the jsBoot stack, you should rather use it on your own server infrastructure...
+
+
+Technology
+-------------
+
+We use puke (https://github.com/webitup/puke), a (inhouse) versatile python build system.
+
+We also depend on airstrip.js (https://github.com/jsBoot/airstrip) in order to 
+provide dependencies at build time - though you don't need to build it yourself and won't depend
+on it at runtime (airstrip provides access to the third-party libraries that are copied in the build result).
+
+How to build it yourself
+-------------
+
+- you need a working python + pip environment
+- install puke: `pip install puke`
+- clone: `git clone https://github.com/jsBoot/spitfire.js`
+- build it as-is: `cd spitfire.js; puke all`
+
+You can customize the build directories output by customizing a config-USERNAME-OSNAME.yaml (see that file for inspiration).
+
+

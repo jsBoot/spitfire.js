@@ -1,19 +1,36 @@
 /**
- * @name {PUKE-PACKAGE-NAME}
- * @homepage {PUKE-PACKAGE-HOME}
- * @version {PUKE-PACKAGE-VERSION}
+ * @file
+ * @summary Set of browser features tests, shims, and minimalistic testing API.
+ *
+ * @see http://afarkas.github.com/webshim/demos/demos/json-storage.html
+ * @see http://code.google.com/p/html5-shims/wiki/LinksandResources
+ * @see https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
+ * @see https://github.com/bestiejs/
+ * @see http://es5.github.com/#x15.4.4.13
+ *
  * @author {PUKE-RIGHTS-AUTHOR}
- * @file This file runs a set of tests and proposes "solutions"
- * (eg: shims to load) in order to obtain a minimal common platform.
- * It doesn't do any loading itself.
+ * @version {PUKE-PACKAGE-VERSION}
+ *
  * @license {PUKE-RIGHTS-LICENSE}.
  * @copyright {PUKE-RIGHTS-COPYRIGHT}
- * @location {PUKE-GIT-ROOT}/shimer.js{PUKE-GIT-REVISION}
+ * @name {PUKE-GIT-ROOT}/shimer.js{PUKE-GIT-REVISION}
  */
 
 (function() {
   'use strict';
   /**
+   * The idea here is to provide tests to detect browsers missing features
+   * and bugs, and propose "shims" uris to be loaded.
+   * To some extent, this ressembles modernizr - except it focuses on core
+   * features (eg: ES5 language features), and does provide accompanying shims.
+   * Currently provided are large parts of ES5, JSON, XHR, geolocation, console
+   * and localStorage.
+   *
+   * @module Spitfire
+   * @summary Provides shiming test/patching environment.
+   */
+
+  /*
    * =========================
    * AMD / noAMD dummy pattern
    * Asynchronous module loaders, CommonJS environments, web
@@ -35,7 +52,7 @@
     // Export for browsers and JavaScript engines.
     root = this.Spitfire || (this.Spitfire = {});
   }
-  /**
+  /*
    * =========================
    * End of dummy pattern
    * =========================
@@ -44,19 +61,116 @@
   var shimsTest = {};
   var toBeLoaded = [];
 
+  /**
+   * This describes what a test object should look like.
+   * This is NOT an actual, instanciable class.
+   * @todo Tests should be functions instead of booleans
+   * @class module:Spitfire.Test
+   * @abstract
+   * @extends {Object}
+   */
+
+  /**
+   * Whether or not the environment needs to shim that functionality.
+   * @member module:Spitfire.Test.test
+   * @type {Boolean}
+   */
+
+  /**
+   * Optional uri to the file providing the actual shim.
+   * This can be left undefined if a functional patch is provided.
+   * @see module:Spitfire.Test.patch
+   * @member module:Spitfire.Test.uri
+   * @type {String}
+   */
+
+  /**
+   * An optional function providing the actual shim.
+   * If specified, will be favored over the uri.
+   * @member module:Spitfire.Test.patch
+   * @type {Function}
+   */
+
+
+  /**
+   * Adds a newly created test to a shim category.
+   * Said category can then be "use"-d to request this to be shimed.
+   * Predefined categories are specified by this.SAFE (always loaded) and this.UNSAFE.
+   *
+   * @function module:Spitfire.add
+   * @summary Adds a test.
+   * @see module:Spitfire.use
+   * @see module:Spitfire.Test
+   * @see module:Spitfire.SAFE
+   * @see module:Spitfire.UNSAFE
+   * @example
+   * // Provide a conditional shim to be loaded as part of the SAFE batch
+   *  Spitfire.add({
+   *    test: !Function.prototype.bind,
+   *    uri: 'relative_shim_uri_to_bind.js'
+   *  }, Spitfire.SAFE);
+   * @example
+   * // Provide an always-loaded shim, in its own category
+   *  Spitfire.add({
+   *    test: true,
+   *    uri: 'json3.js'
+   *  }, Spitfire.JSON);
+   * @summary Allows to add a test in a category
+   * @param   {module:Spitfire.Test} testObject The test object.
+   * @param   {String} category The category to which this shim belong.
+   * @returns {undefined}
+   */
   root.add = function(testObject, category) {
     if (!(category in shimsTest))
       shimsTest[category] = [];
     shimsTest[category].push(testObject);
   };
 
-  root.use = function(extra) {
-    if (!extra || !(extra in shimsTest))
+  /**
+   * For a given category, request that patchable shims are executed
+   * and that loadable shims uris be returned once "boot" is called.
+   * Note that the SAFE category is ALWAYS requested.
+   * Predefined categories consist of UNSAFE, XHR, and JSON
+   *
+   * @function module:Spitfire.use
+   * @example
+   *   Spitfire.use(Spitfire.UNSAFE);
+   *   var uris = Spitfire.boot();
+   * @see module:Spitfire.boot
+   * @see module:Spitfire.UNSAFE
+   * @see module:Spitfire.XHR
+   * @see module:Spitfire.JSON
+   * @summary Requests a category of shims
+   * @throws INVALID_CATEGORY if the requested category does not have any associated
+   * tests.
+   * @param   {String} cat Category to load.
+   * @returns {undefined}
+   */
+  root.use = function(cat) {
+    if (!cat || !(cat in shimsTest))
       throw 'INVALID_CATEGORY';
-    for (var x = 0; x < shimsTest[extra].length; x++)
-      toBeLoaded.push(shimsTest[extra][x]);
+    for (var x = 0; x < shimsTest[cat].length; x++)
+      toBeLoaded.push(shimsTest[cat][x]);
   };
 
+  /**
+   * Once categories have been requested via the "use" method, calling boot
+   * evaluate every test and returns the list of uris to load.
+   * Shims directly providing functionality via "patch" are executed before this
+   * returns.
+   * Note that the SAFE category is ALWAYS loaded.
+   *
+   * @function module:Spitfire.boot
+   * @example
+   *   Spitfire.use(Spitfire.UNSAFE);
+   * // Just do it...
+   *   var uris = Spitfire.boot();
+   * @summary Give uris to shims.
+   * @see module:Spitfire.use
+   * @param   {Boolean} [useFull=false] If true, request non-minified versions of the shims.
+   * Useful for debugging only.
+   * @returns Array<String> An array of uris to load in order to obtain the shims.
+   */
   root.boot = function(useFull) {
     var uris = [];
     for (var x = 0, shim; x < toBeLoaded.length, shim = toBeLoaded[x]; x++) {
@@ -72,26 +186,45 @@
 
 
   /**
-   * Additional XHR special category
+   * Enforces the loading of a shimed XHR, enforcing identical functionality
+   * in any browser, regardless of the current support.
+   * This is useful if you want to be DEAD SURE it will behave the same.
+   * Know that XHR is very buggy and present numerous and wide discrepancies
+   * between browsers, or even browsers versions - not only in IE.
+   *
+   * @member module:Spitfire.XHR
+   * @constant
    * @type {String}
    */
   root.XHR = 'xhr';
   root.add({test: true, uri: '{SPIT-XMLHTTPREQUEST}'}, root.XHR);
 
   /**
-   * Additional JSON special category
+   * Enforces the loading of a shimed JSON, enforcing identical functionality
+   * in any browser, regardless of the current support.
+   * This is useful if you want to be DEAD SURE it will behave the same.
+   * JSON and related functions are very buggy and have wide discrepancies between browsers.
+   *
+   * @member module:Spitfire.JSON
+   * @constant
    * @type {String}
    */
   root.JSON = 'json';
   root.add({test: true, uri: '{SPIT-JSON3}'}, root.JSON);
 
   /**
-   * Unsafe category (shams)
+   * Requests that "unsafe" shims are loaded.
+   * These are shims that don't actually provide real functionality, just create named methods
+   * to allow for ES5 code to actually *run* without errors.
+   * The drawback is that it will break feature detection in third-party libraries without
+   * actually providing functionality... Careful with that.
+   * @member module:Spitfire.UNSAFE
+   * @constant
    * @type {String}
    */
   root.UNSAFE = 'unsafe';
   root.add({
-    test: !Function.isgenerator,
+    test: !Function.isGenerator,
     uri: 'function.isgenerator'
   }, root.UNSAFE);
   root.add({
@@ -105,7 +238,10 @@
   }, root.UNSAFE);
 
   /**
-   * Safe category (always loaded)
+   * This is the safe category, that should be used for any shim that is slick, does provide
+   * complete functionality for a given section.
+   * @member module:Spitfire.SAFE
+   * @constant
    * @type {String}
    */
   root.SAFE = 'safe';

@@ -11,6 +11,7 @@ def default():
   executeTask("build")
   executeTask("tests")
   executeTask("deploy")
+  executeTask("doc")
 
 @task("All")
 def all():
@@ -27,6 +28,14 @@ def all():
 def clean():
   PH.cleaner()
 
+@task("jsDocking")
+def doc():
+  list = FileList(Yak.build_root, filter = "*gulliver.js,*loader.js,*shimer.js")
+  # jsdoc3(list, Yak.doc_root + "/jsdoc3.json")
+  d = FileSystem.abspath(Yak.doc_root)
+  jsdoc3(list, "%s/gristaupe.json" % d)
+  jsdoc3(list, "%s/html" % d, template = "templates/default")
+
 @task("Lint")
 def lint():
   PH.linter("src")
@@ -41,11 +50,9 @@ def deploy():
 
 @task("Minting")
 def mint():
-  PH.minter(Yak.build_root)
   # Yahoo and yep don't support strict
-  list = FileList(Yak.build_root, filter = "*yahoo*,*yepnope*", exclude = "*-min.js")
-  for burne in list.get():
-    minify(burne, re.sub(r"(.*).js$", r"\1-min.js", burne), strict = False)
+  PH.minter(Yak.build_root, filter = "*yahoo.js,*yepnope.js", strict = False)
+  PH.minter(Yak.build_root, excluding = "*yahoo*,*yepnope*")
 
 @task("Stats report deploy")
 def stats():
@@ -79,7 +86,7 @@ def tests():
           sed.add('{SPIT-JAS}', remoty + '/' + i)#.replace('.js', '-min.js'))
 
 
-    list = FileList("tests", filter="*.js,*.html")
+    list = FileList("src/tests", filter="*.js,*.html", exclude="*xxx*")
     deepcopy(list, Yak.build_root + '/tests', replace=sed)
 
     # Can't access from raw github using IE (mimetype mismatch, bitch)
@@ -143,7 +150,7 @@ def build():
   # ============================
   # Get local shims and vanilla flavors
   # ============================
-    deepcopy(FileList("src/burnscars", filter="*.js,*.html"), Yak.build_root + '/burnscars', replace=sed)
+    deepcopy(FileList("src/burnscars", filter="*.js,*.html", exclude="*xxx*"), Yak.build_root + '/burnscars', replace=sed)
     deepcopy("src/shimer.js", Yak.build_root, replace=sed)
     deepcopy("src/loader.js", Yak.build_root, replace=sed)
     deepcopy("src/gulliver.js", Yak.build_root, replace=sed)
@@ -152,18 +159,12 @@ def build():
   # ============================
   # Prep-up the manifest
   # ============================
-    spitroot = Yak.package['name'] + "/" + Yak.package['version']
-    description = []
-    description.append("shimer: '%s/shimer.js'" % spitroot)
-    description.append("gulliver: '%s/gulliver.js'" % spitroot)
-    description.append("loader: '%s/loader.js'" % spitroot)
-    description.append("spitfire: '%s/spitfire.js'" % spitroot)
-    # ???
-    description.append("xhr: '%s/burnscars/xmlhttprequest.js'" % spitroot)
+    shortversion = Yak.package['version'].split('-').pop(0).split('.')
+    shortversion = shortversion[0] + "." + shortversion[1]
+    spitroot = Yak.package['name'] + "/" + shortversion
 
     # All in one shim
     combine(allshims, Yak.build_root + '/burnscars.js', replace=sed)
-    description.append("burnscars: '%s/burnscars.js'" % spitroot)
 
   # ============================
   # Build tainted loaders
@@ -175,7 +176,6 @@ def build():
           candidate = remoty + '/' + i
           break
       combine(['src/strict.js', candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.build_root, elem), replace=sed)
-      description.append("loader-%s: '%s/loader-%s.js'" % (elem, spitroot, elem))
 
     # YepNope and Yahoo are crap and don't support strict mode
     candidate = ''
@@ -185,7 +185,6 @@ def build():
         candidate = remoty + '/' + i
         break
     combine([candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.build_root, elem), replace=sed)
-    description.append("loader-%s: '%s/loader-%s.js'" % (elem, spitroot, elem))
 
     candidate = ''
     elem = 'yepnope'
@@ -194,7 +193,6 @@ def build():
         candidate = remoty + '/' + i
         break
     combine([candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.build_root, elem), replace=sed)
-    description.append("loader-%s: '%s/loader-%s.js'" % (elem, spitroot, elem))
 
 
   # ============================
@@ -202,23 +200,42 @@ def build():
   # ============================
     for elem in ['lab', 'head', 'require', 'yepnope', 'yahoo']:
       combine(['%s/loader-%s.js' % (Yak.build_root, elem), '%s/shimer.js' % Yak.build_root], '%s/spitfire-%s.js' % (Yak.build_root, elem), replace=sed)
-      description.append("spitfire-%s: '%s/spitfire-%s.js'" % (elem, spitroot, elem))
-
-
 
   # ============================
   # Build manifest itself
   # ============================
-    yamu = FileSystem.join(Yak.deploy_root, "spitfire.yaml")
-    description = yaml.load('\n'.join(description))
+    description = {}
+    # Separate components
+    description["shimer"] = '%s/shimer.js' % spitroot;
+    description["gulliver"] = '%s/gulliver.js' % spitroot;
+    description["loader"] = '%s/loader.js' % spitroot;
+    # Tainted loaders
+    for elem in ['lab', 'head', 'require', 'yahoo', 'yepnope']:
+      description["loader-%s" % elem] = "%s/loader-%s.js" % (spitroot, elem)
+
+    # Standalone shims that can be used bundled by build systems
+    description["xhr"] = '%s/burnscars/xmlhttprequest.js' % spitroot;
+    description["json"] = '%s/burnscars/json3.js' % spitroot;
+    description["es5"] = '%s/burnscars/es5-shim.js' % spitroot;
+    # All-in-one shim
+    description["burnscars"] = '%s/burnscars.js' % spitroot;
+
+    # The actual spitfire (loader + shimer)
+    description["spitfire"] = '%s/spitfire.js' % spitroot;
+    # And the tainted versions
+    for elem in ['lab', 'head', 'require', 'yahoo', 'yepnope']:
+      description["spitfire-%s" % elem] = "%s/spitfire-%s.js" % (spitroot, elem)
+
+
+    yamu = FileSystem.join(Yak.deploy_root, "spitfire.json")
     if FileSystem.exists(yamu):
-      mama = yaml.load(FileSystem.readfile(yamu))
-      mama[Yak.package['version']] = description
+      mama = json.loads(FileSystem.readfile(yamu))
+      mama[shortversion] = description
     else:
-      mama = {Yak.package['version']: description}
+      mama = {shortversion: description}
 
     # Straight to service root instead - kind of hackish...
-    FileSystem.writefile(yamu, yaml.dump(mama))
+    FileSystem.writefile(yamu, json.dumps(mama, indent=4))
 
 
 

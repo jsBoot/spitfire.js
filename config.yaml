@@ -8,12 +8,12 @@ baseYank:
     # Code name (eg: {PUKE-PACKAGE-NAME})
       name: spitfire.js
     # Version  (eg: {PUKE-PACKAGE-VERSION})
-      version: '0.2'
-    # Link to the product page (eg: {PUKE-PACKAGE-HOME})
-      home: 'http://spitfire.jsboot.com'
+      version: '1.0.0-rc1'
   rights:
     # License link (eg: {PUKE-RIGHTS-LICENSE})
       license: '<a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>'
+      type: 'MIT'
+      url: 'http://en.wikipedia.org/wiki/MIT_License'
     # Copyright to be replaced in files (eg: {PUKE-RIGHTS-COPYRIGHT})
       copyright: 'All rights reserved <a href="http://www.webitup.fr">© Web It Up</a>'
     # Author (eg: {PUKE-RIGHTS-AUTHOR})
@@ -31,14 +31,13 @@ baseYank:
 defaultYank:
   # Base root path against which relative paths may be resolved
   # ROOT: '${HOME}/buildd'
-  root: './build'
+  root: './'
 
   # Specific paths - if using a relative path, will be resolved against "root"
   # You may mix env variables as well (${HOME}) - see puke documentation for more
   paths:
-      tmp: 'tmp'
-      build: 'build'
-      deploy: 'dist'
+      build: 'tmp'
+      deploy: 'lib'
       doc: 'doc'
 
   links:
@@ -52,7 +51,7 @@ defaultYank:
 
 
 ##################
-# Example usernodes overriding configuration, in main file
+# Private for contributors and wiu deployment needs
 ##################
 
 # Integration
@@ -71,3 +70,19 @@ config-roxee-Linux:
     # DOC_ROOT: '/home/roxee/doc/spitfire'
   links:
       airstrip: 'https://static.roxee.net/airstrip.yaml'
+
+config-dmp-darwin:
+  root: "${HOME}/buildd/stage.webitup.org"
+  paths:
+    deploy: "${HOME}/buildd/deploy.webitup.org/web/static/lib/webitup"
+
+  links:
+      airstrip: 'http://static.loft.sn.ackitup.net:4242/airstrip.yaml'
+
+# Raildecom workin
+yank:
+  paths:
+    deploy: '${HOME}/workspace/webitup/deploy/static/lib/webitup'
+  links:
+      airstrip: 'https://static.sn.ackitup.net/airstrip.yaml'
+

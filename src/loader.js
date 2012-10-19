@@ -1,52 +1,40 @@
 /**
- * @name {PUKE-PACKAGE-NAME}
- * @homepage {PUKE-PACKAGE-HOME}
- * @version {PUKE-PACKAGE-VERSION}
+ * The sole purpose of this file is to wrap any "loader" library
+ * behind a unified interface.
+ * See links for approaches to embeded loader.
+ * This must work without any shim support, in most browsers.
+ *
+ * @file
+ * @summary "Any" script loader wrapper.
+ * @see https://gist.github.com/603980
+ * @see http://www.dustindiaz.com/scriptjs/
+ *
  * @author {PUKE-RIGHTS-AUTHOR}
- * @file The sole purpose of this file is to wrap any "loader" library
- * behind a unified interface - to be used internally by jsboot.
+ * @version {PUKE-PACKAGE-VERSION}
+ *
  * @license {PUKE-RIGHTS-LICENSE}.
  * @copyright {PUKE-RIGHTS-COPYRIGHT}
- * @location {PUKE-GIT-ROOT}/loader.js{PUKE-GIT-REVISION}
+ * @name {PUKE-GIT-ROOT}/loader.js{PUKE-GIT-REVISION}
  */
-
-// Approaches for embeded loader:
-// https://gist.github.com/603980
-// http://www.dustindiaz.com/scriptjs/
-
-/*
-Random shims of interest
-http://afarkas.github.com/webshim/demos/demos/json-storage.html
-http://code.google.com/p/html5-shims/wiki/LinksandResources
-https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
- */
-
-/*
-Random code of interest
-https://github.com/bestiejs/
-http://es5.github.com/#x15.4.4.13
- */
-
 
 /**
- * @kind module
- * @name Spitfire
+ * Provides a crude "script loader" abstraction on top of whatever
+ * loader library is detected.
+ * Currently supports labjs and requirejs (headjs and yahoo are provided as well,
+ * with fewer test and possibly degraded performance / functionality).
+ * The API itself ressembles a lot that of LABJS.
+ *
+ * @module Spitfire/loader
+ * @summary Wrapper script "loader" singleton.
+ * @todo implement http://yepnopejs.com/
+ * @todo implement http://code.google.com/p/jsload/
  */
+
 (function() {
   'use strict';
-  /**
-   * Provides a crude "script loader" abstraction on top of whatever
-   * loader library is detected.
-   * Currently supports labjs, requirejs (headjs and yahoo as well).
-   * @namespace Spitfire.loader
-   * @memberof Spitfire
-   */
   // Get a backend
   var backend;
 
-  /**
-   * Head and yahoo are provided for tests only.
-   */
   // http://headjs.com/#api
   if (typeof head != 'undefined')
     backend = function() {
@@ -82,9 +70,6 @@ http://es5.github.com/#x15.4.4.13
       };
     };
 
-  /**
-   * Officially supported are require and lab
-   */
   // http://requirejs.org/
   if (typeof requirejs != 'undefined')
     backend = function() {
@@ -127,10 +112,6 @@ http://es5.github.com/#x15.4.4.13
     };
   };*/
 
-  // Maybe implement these
-  // http://yepnopejs.com/
-  // http://code.google.com/p/jsload/
-
   if (!pvLoader)
     pvLoader = function() {
       var linger = null;
@@ -165,6 +146,24 @@ http://es5.github.com/#x15.4.4.13
         });
       };
 
+      /**
+       * Allows to request the loading of a given script specified by an uri.
+       * The loading is always parallelized (if the underlying library supports it)
+       * though the evaluation is parallelized between calls to wait.
+       * Only javascript files can be loaded this way.
+       *
+       * @function module:Spitfire/loader.script
+       * @summary Main loader function.
+       * @see module:Spitfire/loader.wait
+       * @example
+       *   loader.script("someuri.js");
+       *   loader.script("otheruri.js");
+       * @example
+       *   loader.script("someuri.js").script("otheruri.js");
+       *
+       * @param   {String} uri [description].
+       * @returns {module:Spitfire/loader} Returns the loader so that calls can be chained.
+       */
       this.script = function(uri) {
         if (linger)
           clearTimeout(linger);
@@ -177,6 +176,33 @@ http://es5.github.com/#x15.4.4.13
         return this;
       };
 
+      /**
+       * This method allows to specify "groups" of scripts that will be evaluated
+       * after each other.
+       * There is no guarantee of any sort on the evaluation order inside a group.
+       * Note that some backend libraries don't support this properly and instead
+       * this blocks *loading* to guarantee the execution order (which is bad).
+       *
+       * @function module:Spitfire/loader.wait
+       * @summary Wait for previous scripts to evaluate.
+       * @see module:Spitfire/loader.script
+       * @example
+       *   loader.script("someuri.js");
+       *   loader.script("otheruri.js");
+       *   loader.wait(function(){
+       *   // both scripts have been executed
+       *   });
+       * @example
+       *   loader.script("uri.js")
+       *     .wait()
+       *     .script("another.js")// when another executes, uri has been executed
+       *     .wait(function(){
+       *       // both have been executed
+       *   });
+       * @param   {Function} [callback] Function to be called when all previous scripts
+       * have evaluated.
+       * @returns {module:Spitfire/loader} Returns the loader so that calls can be chained.
+       */
       this.wait = function(callback) {
         // Grab the last waiting stack, if any
         var me = toLoad.length ? toLoad[toLoad.length - 1] : false;
@@ -201,15 +227,34 @@ http://es5.github.com/#x15.4.4.13
       };
     };
 
+  /**
+   * Allows to get a new, separate loader instance
+   *
+   * @example
+   * // Two different, unrelated loading queues.
+   *   var ld2 = loader.fork();
+   *   loader.script('some.js').wait();
+   *   ld2.script('some2.js').wait();
+   * @function module:Spitfire/loader.fork
+   * @summary Provides a new loading stack
+   * @returns {module:Spitfire/loader} Returns a new loader instance
+   */
   pvLoader.prototype.fork = function() {
     return new pvLoader();
   };
 
   /**
-   * This is NOT guaranteed to work - the document may NOT be ready at the time this is used...
-   * Correct approach is to timeout and repeat this in case it returns false.
-   */
-  pvLoader.prototype.resolve = function(currentName) {
+  * This is meant as a helper to resolve an uri against that of another script.
+  *
+  * @todo Note this is NOT guaranteed to work - the document may NOT be ready at the time this is used...
+  * Correct approach would be to timeout and repeat this in case it returns false.
+  *
+  * @function module:Spitfire/loader.base
+  * @summary Resolve uris relatively to a name matching another script
+  * @param   {String} currentName Name of the script to use as a basis.
+  * @returns {String} resolved uri
+  */
+  pvLoader.prototype.base = function(currentName) {
     var c = aDoc.getElementsByTagName('script');
     var m;
     var re = new RegExp(currentName);
@@ -227,8 +272,20 @@ http://es5.github.com/#x15.4.4.13
 
   var idx = 1;
   var hook = null;
+  /**
+   * This allows to load stylesheets.
+   * It works by embedding additional link rel into the document head.
+   * Note that the order will be respected, and that they will be appended
+   * AFTER anything already present in the head.
+   *
+   * @function module:Spitfire/loader.style
+   * @todo See gulliver - this may fail in subtle ways
+   * @summary A simple stylesheet loader.
+   * @param   {String} url   Url of the stylesheet.
+   * @param   {String} [media] Optional media that the stylesheet applies for.
+   * @returns {undefined}
+   */
   pvLoader.prototype.style = function(url, media) {
-    // XXX See gulliver - this may fail
     var h = document.getElementsByTagName('head')[0];
     var s = document.createElement('link');
     s.setAttribute('type', 'text/css');
@@ -239,7 +296,7 @@ http://es5.github.com/#x15.4.4.13
     s.setAttribute('href', url);
 
     if (!hook)
-      hook = h.firstChild;
+      hook = h.lastChild;
     // && h.firstChild.nextSibling;
     if (!hook || !hook.nextSibling)
       h.appendChild(s);
@@ -249,7 +306,7 @@ http://es5.github.com/#x15.4.4.13
     idx++;
   };
 
-  /**
+  /*
    * =========================
    * AMD / noAMD dummy pattern
    * Asynchronous module loaders, CommonJS environments, web

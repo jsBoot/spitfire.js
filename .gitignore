@@ -1,4 +1,5 @@
 *.DS_Store*
 /.pukecache/
 *.pyc
-/build/
+/tmp/
+/lib/tests/

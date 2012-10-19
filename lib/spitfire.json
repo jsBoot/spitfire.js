@@ -1,0 +1,22 @@
+{
+    "1.0": {
+        "spitfire-lab": "spitfire.js/1.0/spitfire-lab.js", 
+        "loader-require": "spitfire.js/1.0/loader-require.js", 
+        "loader-yepnope": "spitfire.js/1.0/loader-yepnope.js", 
+        "spitfire-yepnope": "spitfire.js/1.0/spitfire-yepnope.js", 
+        "gulliver": "spitfire.js/1.0/gulliver.js", 
+        "spitfire": "spitfire.js/1.0/spitfire.js", 
+        "loader-lab": "spitfire.js/1.0/loader-lab.js", 
+        "spitfire-require": "spitfire.js/1.0/spitfire-require.js", 
+        "es5": "spitfire.js/1.0/burnscars/es5-shim.js", 
+        "loader": "spitfire.js/1.0/loader.js", 
+        "shimer": "spitfire.js/1.0/shimer.js", 
+        "xhr": "spitfire.js/1.0/burnscars/xmlhttprequest.js", 
+        "json": "spitfire.js/1.0/burnscars/json3.js", 
+        "loader-yahoo": "spitfire.js/1.0/loader-yahoo.js", 
+        "spitfire-yahoo": "spitfire.js/1.0/spitfire-yahoo.js", 
+        "spitfire-head": "spitfire.js/1.0/spitfire-head.js", 
+        "burnscars": "spitfire.js/1.0/burnscars.js", 
+        "loader-head": "spitfire.js/1.0/loader-head.js"
+    }
+}

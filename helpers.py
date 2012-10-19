@@ -63,7 +63,7 @@ def __yankgitdata():
 
 def __preparepaths():
   # Aggregate package name and version to the "root" path, if not the default
-  if Yak.root != './build':
+  if Yak.root != './':
     Yak.root = FileSystem.join(Yak.root, Yak.package['name'], Yak.package['version'])
 
   # Aggregate all inner paths against the declared ROOT, and build-up all the corresponding top level Yak variables
@@ -122,13 +122,23 @@ def replacer(s):
 # Mint every file in the provided path avoiding xxx files, tests, and already mint files themselves (usually the build root)
 excludecrap = '*xxx*'
 
-def minter(path, excluding = ''):
+def minter(path, filter = '', excluding = '', strict = True):
   if excluding:
     excluding = ',%s' % excluding
-  list = FileList(path, filter = "*.js", exclude = "*-min.js,%s%s" % (excludecrap, excluding))
+
+  if not filter:
+    filtre = '*.js'
+  else:
+    filtre = filter
+  list = FileList(path, filter = filtre, exclude = "*-min.js,%s%s" % (excludecrap, excluding))
   for burne in list.get():
-    minify(burne, re.sub(r"(.*).js$", r"\1-min.js", burne))
-  list = FileList(path, filter = "*.css", exclude = "*-min.css,%s%s" % (excludecrap, excluding))
+    minify(burne, re.sub(r"(.*).js$", r"\1-min.js", burne), strict = strict)
+
+  if not filter:
+    filtre = '*.css'
+  else:
+    filtre = filter
+  list = FileList(path, filter = filtre, exclude = "*-min.css,%s%s" % (excludecrap, excluding))
   for burne in list.get():
     minify(burne, re.sub(r"(.*).css$", r"\1-min.css", burne))
 
@@ -165,8 +175,10 @@ def stater(path, excluding = ''):
 
 def deployer(withversion):
   list = FileList(Yak.build_root, exclude="*.DS_Store")
-  if withversion:
-    deepcopy(list, FileSystem.join(Yak.deploy_root, Yak.package['name'], Yak.package['version']))
+  if withversion and (Yak.root != './' or Yak.deploy_root != './lib'):
+    v = Yak.package['version'].split('-').pop(0).split('.')
+    v = v[0] + "." + v[1]
+    deepcopy(list, FileSystem.join(Yak.deploy_root, Yak.package['name'], v))
   else:
     deepcopy(list, Yak.deploy_root)
 
