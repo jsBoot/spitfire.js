@@ -1,38 +1,42 @@
-describe('Function basics test suite', function() {
-  var monade = function(desc, obj, property) {
-    it(desc, function() {
-      runs(function() {
-        expect(property in obj).toBe(true);
-      });
-    }
-    );
-  };
+(function() {
+  /*global it:true, describe:true, runs:true, expect:true*/
+  'use strict';
 
-  describe('Function structure: properties', function() {
-    monade('Function has property constructor', Function, 'constructor');
-    monade('Function has property length', Function, 'length');
-    monade('Function has property prototype', Function, 'prototype');
-  });
+  describe('Function basics test suite', function() {
+    var monade = function(desc, obj, property) {
+      it(desc, function() {
+        runs(function() {
+          expect(property in obj).toBe(true);
+        });
+      }
+      );
+    };
 
-  describe('Function structure: methods', function() {
-    monade('Function has method toString()', Function, 'toString');
-    monade('Function has method call()', Function, 'call');
-    monade('Function has method apply()', Function, 'apply');
-    monade('Function has method bind()', Function, 'bind');
-    monade('Function has method isGenerator()', Function, 'isGenerator');
-  });
+    describe('Function structure: properties', function() {
+      monade('Function has property constructor', Function, 'constructor');
+      monade('Function has property length', Function, 'length');
+      monade('Function has property prototype', Function, 'prototype');
+    });
 
-  describe('Function instance inherits from Function.prototype', function() {
-    var t = new Function('return true;');
-    monade('Function instance has property constructor', t, 'constructor');
-    monade('Function instance has property length', t, 'length');
-    monade('Function instance has method toString()', t, 'toString');
-    monade('Function instance has method call()', t, 'call');
-    monade('Function instance has method apply()', t, 'apply');
-    monade('Function instance has method bind()', t, 'bind');
-    monade('Function instance has method isGenerator()', t, 'isGenerator');
+    describe('Function structure: methods', function() {
+      monade('Function has method toString()', Function, 'toString');
+      monade('Function has method call()', Function, 'call');
+      monade('Function has method apply()', Function, 'apply');
+      monade('Function has method bind()', Function, 'bind');
+      monade('Function has method isGenerator()', Function, 'isGenerator');
+    });
 
-    /*    var s = new Function('return true;');
+    describe('Function instance inherits from Function.prototype', function() {
+      var t = new Function('return true;');
+      monade('Function instance has property constructor', t, 'constructor');
+      monade('Function instance has property length', t, 'length');
+      monade('Function instance has method toString()', t, 'toString');
+      monade('Function instance has method call()', t, 'call');
+      monade('Function instance has method apply()', t, 'apply');
+      monade('Function instance has method bind()', t, 'bind');
+      monade('Function instance has method isGenerator()', t, 'isGenerator');
+
+      /*    var s = new Function('return true;');
     monade("Function instance has property constructor", s, "constructor");
     monade("Function instance has property length", s, "length");
     monade("Function instance has method toString()", s, "toString");
@@ -49,8 +53,8 @@ describe('Function basics test suite', function() {
     monade("Function instance has method apply()", f, "apply");
     monade("Function instance has method bind()", f, "bind");
     monade("Function instance has method isGenerator()", f, "isGenerator");*/
-  });
-  /*
+    });
+    /*
 
 new Function ([arg1[, arg2[, ... argN]],] functionBody)
 
@@ -64,4 +68,5 @@ doesn't create a closure
 modifying Prototype allow for all Function objects to be modified
 
   */
-});
+  });
+})();

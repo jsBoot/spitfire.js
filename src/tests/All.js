@@ -1,5 +1,6 @@
 (function() {
-
+  /*jshint browser:true*/
+  /*global Spitfire:true, jasmine:true, require:true*/
   'use strict';
 
   var spitfireBaseUrl = '../';
@@ -8,6 +9,7 @@
   var useES5 = !!location.href.match(/use-es5/);
   var useES5Full = !!location.href.match(/use-es5-full/);
   var useMin = !!location.href.match(/use-min/);
+  var suffix = useMin ? '-min.js' : '.js';
   var cssSuffix = useMin ? '-min.css' : '.css';
 
   // If you want to use Spitfire, have "use-spitfire" somehow in the url (eg: url#use-*)

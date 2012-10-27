@@ -5,10 +5,10 @@
   <!-- Booting shit -->
   <script type="text/javascript">
   // Bootstrap loader loading with gulliver
-  var suffix = !!location.href.match(/use-min/) ? '-min.js' : '.js';
   var baseLoader = location.href.match(/(loader-[a-z-]+)/);
   baseLoader = baseLoader ? baseLoader.pop() : 'loader-lab';
   gulliver(function(){
+    var suffix = !!location.href.match(/use-min/) ? '-min.js' : '.js';
     // Once gulliver has booted the base loader, go on
     if(typeof require != 'undefined')
       require(['Spitfire/loader'], function(ld){
