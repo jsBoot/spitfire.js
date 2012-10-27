@@ -42,9 +42,13 @@
 
       it('undefined should be read-only (javascript 1.8.5)', function() {
         runs(function() {
-          undefined = 'ass';
-          expect(undefined).toNotBe('ass');
-          undefined = (function() {})();
+          try {
+            undefined = 'ass';
+            expect(undefined).toNotBe('ass');
+            undefined = (function() {})();
+          }catch (e) {
+            expect(true).toBe(true);
+          }
         });
       });
     });
@@ -102,12 +106,16 @@
       });
       it('NaN is read-only', function() {
         runs(function() {
-          NaN = 'ass';
-          expect(NaN).toNotBe('ass');
-          NaN = Number.NaN;
-          Number.NaN = 'ass';
-          expect(Number.NaN).toNotBe('ass');
-          Number.NaN = NaN;
+          try {
+            NaN = 'ass';
+            expect(NaN).toNotBe('ass');
+            NaN = Number.NaN;
+            Number.NaN = 'ass';
+            expect(Number.NaN).toNotBe('ass');
+            Number.NaN = NaN;
+          }catch (e) {
+            expect(true).toBe(true);
+          }
         });
       });
     });
@@ -173,17 +181,21 @@
 
       it('Infinity is read only (1.8.5)', function() {
         runs(function() {
-          Infinity = 'ass';
-          expect(Infinity).toNotBe('ass');
-          Infinity = Number.POSITIVE_INFINITY;
+          try {
+            Number.POSITIVE_INFINITY = 'ass';
+            expect(Number.POSITIVE_INFINITY).toNotBe('ass');
+            Number.POSITIVE_INFINITY = Infinity;
 
-          Number.POSITIVE_INFINITY = 'ass';
-          expect(Number.POSITIVE_INFINITY).toNotBe('ass');
-          Number.POSITIVE_INFINITY = Infinity;
+            Number.NEGATIVE_INFINITY = 'ass';
+            expect(Number.NEGATIVE_INFINITY).toNotBe('ass');
+            Number.NEGATIVE_INFINITY = -Infinity;
 
-          Number.NEGATIVE_INFINITY = 'ass';
-          expect(Number.NEGATIVE_INFINITY).toNotBe('ass');
-          Number.NEGATIVE_INFINITY = -Infinity;
+            Infinity = 'ass';
+            expect(Infinity).toNotBe('ass');
+            Infinity = Number.POSITIVE_INFINITY;
+          }catch (e) {
+            expect(true).toBe(true);
+          }
         });
       });
     });
