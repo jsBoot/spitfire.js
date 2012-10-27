@@ -44,7 +44,8 @@ def lint():
 
 @task("Hint")
 def hint():
-  PH.hinter("src", excluding = "*strict.js")# *tests*,
+  # Tests can't be hinted - too many dirty things in there
+  PH.hinter("src", excluding = "*tests*,*strict.js")
 
 @task("Flint")
 def flint():
@@ -57,8 +58,9 @@ def deploy():
 @task("Minting")
 def mint():
   # Yahoo and yep don't support strict
-  PH.minter(Yak.build_root, filter = "*yahoo.js,*yepnope.js", strict = False)
-  PH.minter(Yak.build_root, excluding = "*yahoo*,*yepnope*")
+  # Minting specs is a bad idea, as some code simpifications defeat some of them
+  PH.minter(Yak.build_root, filter = "*yahoo.js,*yepnope.js", excluding="*/specs/*,*/es5/*", strict = False)
+  PH.minter(Yak.build_root, excluding = "*yahoo*,*yepnope*,*/specs/*,*/es5/*")
 
 @task("Stats report deploy")
 def stats():
