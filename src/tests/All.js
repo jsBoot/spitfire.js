@@ -34,12 +34,12 @@
     // (hence dereference unshimed-yet code...), so, we need to WAIT for the shimer to come in
     // And so is our event testing...
     ld.wait()
-    .script('specs/Events' + suffix)
-    .script('es5/s-array' + suffix)
-    .script('es5/s-function' + suffix)
-    .script('es5/s-string' + suffix)
-    .script('es5/s-object' + suffix)
-    .script('es5/s-date' + suffix);
+    .script('specs/Events.js')
+    .script('es5/s-array.js')
+    .script('es5/s-function.js')
+    .script('es5/s-string.js')
+    .script('es5/s-object.js')
+    .script('es5/s-date.js');
 
     // Once everything is in place, start jasmine
     ld.wait(function() {
@@ -64,12 +64,12 @@
     ld.script('{SPIT-JASHTML}' + suffix)
     .wait();
     ld
-    .script('specs/Function' + suffix)
-    .script('specs/Object' + suffix)
-    .script('specs/Array' + suffix)
-    .script('specs/String' + suffix)
-    .script('specs/Math' + suffix)
-    .script('specs/Globals' + suffix)
+    .script('specs/Function.js')
+    .script('specs/Object.js')
+    .script('specs/Array.js')
+    .script('specs/String.js')
+    .script('specs/Math.js')
+    .script('specs/Globals.js')
 
     .script('es5/h' + suffix)
     .script('es5/h-matchers' + suffix);
