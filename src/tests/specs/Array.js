@@ -127,13 +127,13 @@ describe('Array basics test suite', function() {
         expect([]).toEqual(new Array(0));
         expect(new Array(Math.pow(2, 32) - 1).length).toEqual(Math.pow(2, 32) - 1);
         try {
-          new Array(Math.pow(2, 32));
+          var minify = new Array(Math.pow(2, 32));
           expect(true).toBe(false);
         }catch (e) {
           expect(e instanceof RangeError).toBe(true);
         }
         try {
-          new Array(-1);
+          var minify = new Array(-1);
           expect(true).toBe(false);
         }catch (e) {
           expect(e instanceof RangeError).toBe(true);

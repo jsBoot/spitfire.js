@@ -12,8 +12,6 @@ baseYank:
   rights:
     # License link (eg: {PUKE-RIGHTS-LICENSE})
       license: '<a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>'
-      type: 'MIT'
-      url: 'http://en.wikipedia.org/wiki/MIT_License'
     # Copyright to be replaced in files (eg: {PUKE-RIGHTS-COPYRIGHT})
       copyright: 'All rights reserved <a href="http://www.webitup.fr">© Web It Up</a>'
     # Author (eg: {PUKE-RIGHTS-AUTHOR})
@@ -26,7 +24,7 @@ baseYank:
 # Platform dependent stuff
 # These specify build- / run- time paths.
 # You should override them either by adding a config-USERNAME-UNAME node in this file
-# or by creating a config-USERNAME-UNAME.yaml file and adding a "userYank" node in it.
+# or by creating a config-USERNAME-UNAME.json file and adding a "userYank" node in it.
 ##################
 defaultYank:
   # Base root path against which relative paths may be resolved
@@ -41,8 +39,9 @@ defaultYank:
       doc: 'doc'
 
   links:
-      # Where to find airstraip dependency
-      airstrip: 'https://static.sn.ackitup.net/airstrip.yaml'
+    airstrip:
+        version: '1.0'
+        url: 'https://static.sn.ackitup.net/airstrip.json'
 
   settings:
       # Instruct puke to copy trunk versions of the shims - only of use for me:
@@ -61,7 +60,9 @@ config-jenkins-linux:
     deploy: '/var/www/deploy/static/lib/webitup'
   # DOC_ROOT: '/var/www/deploy/static/doc/spitfire'
   links:
-      airstrip: 'https://static.sn.ackitup.net/airstrip.yaml'
+      airstrip:
+        version: '1.0'
+        url: 'https://static.sn.ackitup.net/airstrip.json'
 
 # Roxee box
 config-roxee-Linux:
@@ -69,7 +70,9 @@ config-roxee-Linux:
     deploy: '/home/roxee/www/static/lib/webitup'
     # DOC_ROOT: '/home/roxee/doc/spitfire'
   links:
-      airstrip: 'https://static.roxee.net/airstrip.yaml'
+      airstrip:
+        version: '1.0'
+        url: 'https://static.roxee.net/airstrip.json'
 
 config-dmp-darwin:
   root: "${HOME}/buildd/stage.webitup.org"
@@ -77,12 +80,16 @@ config-dmp-darwin:
     deploy: "${HOME}/buildd/deploy.webitup.org/web/static/lib/webitup"
 
   links:
-      airstrip: 'http://static.loft.sn.ackitup.net:4242/airstrip.yaml'
+      airstrip:
+        version: '1.0'
+        url: 'http://static.loft.sn.ackitup.net:4242/airstrip.json'
 
 # Raildecom workin
-yank:
+config-raildecom-darwin:
   paths:
     deploy: '${HOME}/workspace/webitup/deploy/static/lib/webitup'
   links:
-      airstrip: 'https://static.sn.ackitup.net/airstrip.yaml'
+      airstrip:
+        version: '1.0'
+        url: 'https://static.sn.ackitup.net/airstrip.json'
 

@@ -21,6 +21,7 @@
 
 
 (function() {
+  /*jshint browser:true */
   'use strict';
 
   /**
@@ -51,10 +52,10 @@
     var head = oDOC.head || oDOC.getElementsByTagName('head');
 
     // loading code borrowed directly from LABjs itself
-    setTimeout(function() {
+    var tout = function() {
       if ('item' in head) { // check if ref is still a live node list
         if (!head[0]) { // append_to node not yet ready
-          setTimeout(arguments.callee, 25);
+          setTimeout(tout, 25);
           return;
         }
         head = head[0]; // reassign from live node list ref to pure node ref --
@@ -62,7 +63,7 @@
       }
       // Get gulliver itself to guess options
       var scripts = oDOC.getElementsByTagName('script');
-      var re = new RegExp('(.*)\/' + (name || 'gulliver') + '((?:-min)?\.js)');
+      var re = new RegExp('(.*)\\/' + (name || 'gulliver') + '((?:-min)?\\.js)');
       for (var x = 0, baseGulliPath; x < scripts.length; x++) {
         baseGulliPath = scripts[x];
         if (baseGulliPath.src && (baseGulliPath = baseGulliPath.src.match(re))) {
@@ -84,10 +85,12 @@
       };
       scriptElem.src = uri;
       head.insertBefore(scriptElem, head.firstChild);
-    }, 0);
+    };
+
+    setTimeout(tout, 0);
 
     // required: shim for FF <= 3.5 not having document.readyState
-    if (oDOC.readyState == null && oDOC.addEventListener) {
+    if ((oDOC.readyState === null) && oDOC.addEventListener) {
       var handler;
       oDOC.readyState = 'loading';
       oDOC.addEventListener('DOMContentLoaded', handler = function() {

@@ -2,15 +2,15 @@
 # Example separate file overriding configuration
 ##################
 
-config-USER-UNAME:
+userYank:
   root: "${HOME}/something"
   paths:
     build: "temp_dir_under_root"
     deploy: "${HOME}/other_absolute_path"
 
-  links:
-      # Where to find airstrip dependency
-      # Just in case you run your own node
-      # airstrip: 'http://static.loft.sn.ackitup.net:4242/airstrip.yaml'
+  # links:
+      # airstrip:
+      #   version: 1.0
+      #   url: 'http://static.loft.sn.ackitup.net:4242/airstrip.yaml'
 
 

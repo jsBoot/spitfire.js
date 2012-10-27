@@ -1,6 +1,6 @@
-'use strict';
-
 (function() {
+  /*jshint browser:true, proto:true, camelcase:false */
+  'use strict';
   // ES5 15.2.3.6
   // http://es5.github.com/#x15.2.3.6
 
@@ -26,12 +26,12 @@
     } catch (exception) {
       // returns falsy
     }
-  }
+  };
 
   // check whether defineProperty works if it's given. Otherwise,
   // shim partially.
+  var definePropertyFallback;
   if (Object.defineProperty) {
-    var definePropertyFallback;
     var definePropertyWorksOnDom = typeof document == 'undefined' ||
         doesDefinePropertyWork(document.createElement('div'));
     if (!doesDefinePropertyWork({}) ||

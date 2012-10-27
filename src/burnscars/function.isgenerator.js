@@ -1,8 +1,7 @@
-'use strict';
-
 if (!Function.prototype.isGenerator)
   (function() {
-    Function.prototype.isGenerator = function(o) {
+    'use strict';
+    Function.prototype.isGenerator = function(/*o*/) {
       // Yeah, not actually a shim, righty?
       return false;
     };

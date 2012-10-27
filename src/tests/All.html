@@ -1,32 +1,23 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Jasmine -->
-  <link rel="stylesheet" type="text/css" href="{SPIT-JASCSS}"></link>
-
-  <script src="../gulliver.js"></script>
-  <!--
-  <script src="../loader-require.js"></script>
-  <script src="All.js"></script>
-  -->
+  <script src="../gulliver-min.js"></script>
   <!-- Booting shit -->
   <script type="text/javascript">
-  // Bootstrap loader loading with gulliver - typically, this should be aggregated to gulliver itself,
+  // Bootstrap loader loading with gulliver
+  var suffix = !!location.href.match(/use-min/) ? '-min.js' : '.js';
   var baseLoader = location.href.match(/(loader-[a-z-]+)/);
   baseLoader = baseLoader ? baseLoader.pop() : 'loader-lab';
-  var selfName = 'gulliver';
   gulliver(function(){
     // Once gulliver has booted the base loader, go on
     if(typeof require != 'undefined')
       require(['Spitfire/loader'], function(ld){
-        ld.script('All.js');
+        ld.script('All' + suffix);
       });
     else
-      Spitfire.loader.script('All.js');
-  }, baseLoader, selfName);
+      Spitfire.loader.script('All' + suffix);
+  }, baseLoader);
   </script>
-  <!--
--->
 </head>
 <body>
 </body>

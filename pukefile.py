@@ -4,6 +4,7 @@
 global PH
 import helpers as PH
 import re
+import json
 
 @task("Default task")
 def default():
@@ -11,16 +12,17 @@ def default():
   executeTask("build")
   executeTask("tests")
   executeTask("deploy")
-  executeTask("doc")
 
 @task("All")
 def all():
   # Cache.clean()
   executeTask("lint")
+  executeTask("hint")
   executeTask("build")
   executeTask("tests")
   executeTask("mint")
   executeTask("deploy")
+  executeTask("doc")
   executeTask("stats")
 
 
@@ -39,6 +41,10 @@ def doc():
 @task("Lint")
 def lint():
   PH.linter("src")
+
+@task("Hint")
+def hint():
+  PH.hinter("src", excluding = "*strict.js")# *tests*,
 
 @task("Flint")
 def flint():
@@ -67,23 +73,23 @@ def tests():
     PH.replacer(sed)
 
     # Get the remoty shims first
-    remoty = Yak.links["airstrip"].split('/')
+    remoty = Yak.links["airstrip"]["url"].split('/')
     remoty.pop()
     remoty = '/'.join(remoty)
 
     # Python doesn't support SNI :(((( - SUCKS!
     # https://github.com/kennethreitz/requests/issues/749
-    yam = yaml.load(http.get(Yak.links["airstrip"], verify=False).text)
+    yam = json.loads(http.get(Yak.links["airstrip"]["url"], verify=False).text)[Yak.links["airstrip"]["version"]]
 
     # Prep-up the jasmine links
     for i in yam['jasmine']:
-      if (i.find('trunk') == -1) or Yak.istrunk:
+      if (Yak.istrunk and i.find('trunk') != -1) or ((not Yak.istrunk) and i.find('stable') != -1):
         if i.find('.css') != -1:
-          sed.add('{SPIT-JASCSS}', remoty + '/' + i)#.replace('.css', '-min.css'))
+          sed.add('{SPIT-JASCSS}', remoty + '/' + i.replace('.css', ''))#.replace('.css', '-min.css'))
         elif i.find('.html') != -1:
-          sed.add('{SPIT-JASHTML}', remoty + '/' + i)#.replace('.js', '-min.js'))
+          sed.add('{SPIT-JASHTML}', remoty + '/' + i.replace('.js', ''))#.replace('.js', '-min.js'))
         else:
-          sed.add('{SPIT-JAS}', remoty + '/' + i)#.replace('.js', '-min.js'))
+          sed.add('{SPIT-JAS}', remoty + '/' + i.replace('.js', ''))#.replace('.js', '-min.js'))
 
 
     list = FileList("src/tests", filter="*.js,*.html", exclude="*xxx*")
@@ -111,10 +117,10 @@ def build():
     PH.replacer(sed)
 
     # Get the remoty shims first
-    remoty = Yak.links["airstrip"].split('/')
+    remoty = Yak.links["airstrip"]["url"].split('/')
     remoty.pop()
     remoty = '/'.join(remoty)
-    yam = yaml.load(http.get(Yak.links["airstrip"], verify=False).text)
+    yam = json.loads(http.get(Yak.links["airstrip"]["url"], verify=False).text)[Yak.links["airstrip"]["version"]]
 
     # Allow to test separate loaders as well
     # print yam
@@ -140,9 +146,9 @@ def build():
     }.items():
       candidate = ''
       for i in yam[elem]:
-        if ((i.find('trunk') == -1) or Yak.istrunk) and (i.find(k) != -1):
+        if (Yak.istrunk and i.find('trunk') != -1) or ((not Yak.istrunk) and i.find('stable') != -1) and (i.find(k) != -1):
           candidate = remoty + '/' + i
-          allshims.merge(candidate)
+          allshims.merge([candidate])
           break
       combine(['src/strict.js', candidate], '%s/burnscars/%s.js' % (Yak.build_root, k), replace=sed)
       sed.add('{SPIT-%s}' % k.upper(), k)
@@ -172,7 +178,7 @@ def build():
     for elem in ['lab', 'head', 'require']:
       candidate = ''
       for i in yam[elem]:
-        if (i.find('trunk') == -1) or Yak.istrunk:
+        if (Yak.istrunk and i.find('trunk') != -1) or ((not Yak.istrunk) and i.find('stable') != -1):
           candidate = remoty + '/' + i
           break
       combine(['src/strict.js', candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.build_root, elem), replace=sed)
@@ -181,7 +187,7 @@ def build():
     candidate = ''
     elem = 'yahoo'
     for i in yam[elem]:
-      if (i.find('trunk') == -1) or Yak.istrunk:
+      if (Yak.istrunk and i.find('trunk') != -1) or ((not Yak.istrunk) and i.find('stable') != -1):
         candidate = remoty + '/' + i
         break
     combine([candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.build_root, elem), replace=sed)
@@ -189,7 +195,7 @@ def build():
     candidate = ''
     elem = 'yepnope'
     for i in yam[elem]:
-      if (i.find('trunk') == -1) or Yak.istrunk:
+      if (Yak.istrunk and i.find('trunk') != -1) or ((not Yak.istrunk) and i.find('stable') != -1):
         candidate = remoty + '/' + i
         break
     combine([candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.build_root, elem), replace=sed)
@@ -227,15 +233,7 @@ def build():
       description["spitfire-%s" % elem] = "%s/spitfire-%s.js" % (spitroot, elem)
 
 
-    yamu = FileSystem.join(Yak.deploy_root, "spitfire.json")
-    if FileSystem.exists(yamu):
-      mama = json.loads(FileSystem.readfile(yamu))
-      mama[shortversion] = description
-    else:
-      mama = {shortversion: description}
-
-    # Straight to service root instead - kind of hackish...
-    FileSystem.writefile(yamu, json.dumps(mama, indent=4))
+    PH.describe(shortversion, "spitfire", description)
 
 
 
