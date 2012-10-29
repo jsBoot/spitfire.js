@@ -107,7 +107,7 @@
 
     describe('Supports deref', function() {
       try {
-        eval('[key, val] = (function(){return [\'a\', \'b\'];})();');
+        eval('var key; var val; [key, val] = (function(){return [\'a\', \'b\'];})();');
         it('Supports deref', function() {runs(function() {expect(true).toBe(true);});});
       }catch (e) {
         it('Doesn\'t support deref', function() {runs(function() {expect(true).toBe(false);});});

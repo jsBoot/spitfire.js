@@ -1,0 +1,177 @@
+<!doctype html public "✰">
+<!--[if lt IE 7]> <html lang="en-us" class="no-js ie6"> <![endif]-->
+<!--[if IE 7]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
+<!--[if IE 8]>    <html lang="en-us" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>   <html lang="en-us" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-us" class="no-js "> <!--<![endif]-->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE6">
+  <title dir="ltr">Third-party libraries manager (a.k.a. airstrip)</title>
+  <meta name="description" content="JSBoot static base">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Web It Up">
+  <link rel="shortcut icon" href="favicon.ico">
+
+  <!--[if lt IE 9]>
+  <script src="{AIRSTRIP-BASE}/lib/shims/ie7/ie9-stable-min.js"></script>
+  <![endif]-->
+
+  <style type="text/css" media="all">
+    @import url({AIRSTRIP-BASE}/lib/frameworks/normalize/normalize-stable-min.css);
+    @import url({AIRSTRIP-BASE}/lib/frameworks/h5bp/html5-css-stable-min.css);
+    /* Bootstrap already do provide these */
+    @import url({AIRSTRIP-BASE}/lib/frameworks/bootstrap/stable/css/bootstrap.core-stable-min.css);
+    @import url({AIRSTRIP-BASE}/lib/frameworks/bootstrap/stable/css/bootstrap.responsive-stable-min.css);
+
+    body {
+      padding-top: 60px !important;
+    }
+
+    #very-outdated-browser, #outdated-browser, #unsupported-browser{
+      background-color: red;
+      border: 1px solid gray;
+      width: 90%;
+      margin: auto;
+      text-align: center;
+      padding: 10px;
+    }
+
+    #outdated-browser{
+      background-color: orange;
+    }
+
+    .ie6 #outdated-browser {
+      display: none;
+    }
+
+    /**
+     * no-js style handling
+     */
+    .no-js body > *{
+      display: none;
+    }
+
+    .no-js header{
+      display: block !important;
+    }
+
+    .no-js noscript{
+      display: block !important;
+    }
+  </style>
+
+  <!--
+   * @file
+   * @summary Spitfire test page
+   *
+   * @author {PUKE-RIGHTS-AUTHOR}
+   * @version {PUKE-PACKAGE-VERSION}
+   *
+   * @license {PUKE-RIGHTS-LICENSE}.
+   * @copyright {PUKE-RIGHTS-COPYRIGHT}
+   * @name {PUKE-GIT-ROOT}/tests/index.html{PUKE-GIT-REVISION}
+  -->
+
+</head>
+<body>
+  <noscript>
+    <p id="unsupported-browser">
+      You need to enable javascript to use this product.
+    </p>
+  </noscript>
+  <!--[if lt IE 7]>
+    <p id="very-outdated-browser">Your browser is very outdated, and will likely not work well with our product. You really <a href="http://browsehappy.com/">should consider upgrading</a>, or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this product.</p>.</p>
+  <![endif]-->
+  <!--[if lt IE 9]>
+    <p id="outdated-browser">Your browser is outdated. We will try our best, but you <a href="http://browsehappy.com/">should consider upgrading</a>, or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this product.</p>.</p>
+  <![endif]-->
+
+  <header class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="#">Spitfire.js</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="?">LabJS</a></li>
+            <li><a href="?loader-require">require.js</a></li>
+            <li><a href="?loader-yepnope">yepnope</a></li>
+            <li><a href="?loader-head">head.js</a></li>
+            <li><a href="?loader-yahoo">YUI base</a></li>
+          </ul>
+        </div>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="?use-nomin">No minification</a></li>
+            <li><a href="?use-spitfire">+ Spitfire</a></li>
+            <li><a href="?use-spitfire-full">+ Spitfire (full)</a></li>
+            <li><a href="?use-es5">+ ES5-Shim</a></li>
+            <li><a href="?use-es5-full">+ ES5-Shim (full)</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Spitfire tests</h1>
+
+    <h2>Abstract</h2>
+    <section>
+      This is meant to test basic functionality in the browser (and spitfire should provide
+      shims for these). By default, no shims are loaded.<br />
+      In order to use a different loader than the default one (labjs), click any other loader.<br />
+      In order to use spitfire/es5/-full to test *with* shim, click the appropriate menu entry.<br />
+      You can combine multiple parameters manually obviously.
+    </section>
+
+    <h2>Tests</h2>
+    <article id="jasmine">
+    </article>
+
+    <footer>
+      <p>&copy; WebItUp 2012</p>
+    </footer>
+
+  </div>
+
+  <script src="../gulliver-min.js"></script>
+  <!-- Booting shit -->
+  <script type="text/javascript">
+  // Bootstrap loader loading with gulliver
+  var baseLoader = location.href.match(/(loader-[a-z-]+)/);
+  baseLoader = baseLoader ? baseLoader.pop() : 'loader-lab';
+  gulliver(function(){
+    var suffix = !!location.href.match(/use-min/) ? '-min.js' : '.js';
+    // Once gulliver has booted the base loader, go on
+    if(typeof require != 'undefined')
+      require(['Spitfire/loader'], function(ld){
+        ld./*script('{AIRSTRIP-BASE}/lib/frameworks/jquery/jquery-stable-min.js').
+          wait().
+          script('{AIRSTRIP-BASE}/lib/frameworks/bootstrap/bootstrap.core-stable-min.js').*/
+          script('All' + suffix);
+      });
+    else{
+      Spitfire.loader./*script('{AIRSTRIP-BASE}/lib/frameworks/jquery/jquery-stable-min.js').
+        wait().
+        script('{AIRSTRIP-BASE}/lib/frameworks/bootstrap/bootstrap.core-stable-min.js').*/
+        script('All' + suffix);
+    }
+  }, baseLoader);
+  </script>
+
+  <!-- Prompt IE <= 6 users to install Chrome Frame directly. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+  <![endif]-->
+
+</body>
+</html>
+

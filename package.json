@@ -37,6 +37,7 @@
          }
   ],
   "dependencies": {
+    "airstrip": "1.0"
   },
 
   "homepage": "http://spitfire.jsboot.com",

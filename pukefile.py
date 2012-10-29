@@ -78,6 +78,7 @@ def tests():
     remoty = Yak.links["airstrip"]["url"].split('/')
     remoty.pop()
     remoty = '/'.join(remoty)
+    sed.add('{AIRSTRIP-BASE}', remoty)
 
     # Python doesn't support SNI :(((( - SUCKS!
     # https://github.com/kennethreitz/requests/issues/749

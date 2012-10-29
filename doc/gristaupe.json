@@ -1,0 +1,598 @@
+{
+    "file": [
+        {
+            "description": "This is the *most minimal* bootstrapper possible.\nIt is meant to serve as a loader for an (actually useful) bootstrapper.\nDon't use directly unless you know what you freaking do.\nBad things can still happen here, and nasty bugs are lurking.\nCode adapted from getify JSLabs' gister.\nThis must work without any shim support, in most browsers.",
+            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74",
+            "kind": "file",
+            "preserveName": true,
+            "summary": "Tiny bootstrapper for companion script.",
+            "author": [
+                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz & Raildecom</a>",
+                "Getify"
+            ],
+            "version": "1.0.0-rc1",
+            "license": "<a href=\"http://en.wikipedia.org/wiki/MIT_License\">MIT</a>.",
+            "copyright": "All rights reserved <a href=\"http://www.webitup.fr\">© Web It Up</a>",
+            "see": [
+                "https://gist.github.com/603980"
+            ],
+            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74"
+        },
+        {
+            "description": "The sole purpose of this file is to wrap any \"loader\" library\nbehind a unified interface.\nSee links for approaches to embeded loader.\nThis must work without any shim support, in most browsers.",
+            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74",
+            "kind": "file",
+            "preserveName": true,
+            "summary": "\"Any\" script loader wrapper.",
+            "see": [
+                "https://gist.github.com/603980",
+                "http://www.dustindiaz.com/scriptjs/"
+            ],
+            "author": [
+                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz & Raildecom</a>"
+            ],
+            "version": "1.0.0-rc1",
+            "license": "<a href=\"http://en.wikipedia.org/wiki/MIT_License\">MIT</a>.",
+            "copyright": "All rights reserved <a href=\"http://www.webitup.fr\">© Web It Up</a>",
+            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74"
+        },
+        {
+            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74",
+            "kind": "file",
+            "preserveName": true,
+            "summary": "Set of browser features tests, shims, and minimalistic testing API.",
+            "see": [
+                "http://afarkas.github.com/webshim/demos/demos/json-storage.html",
+                "http://code.google.com/p/html5-shims/wiki/LinksandResources",
+                "https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills",
+                "https://github.com/bestiejs/",
+                "http://es5.github.com/#x15.4.4.13"
+            ],
+            "author": [
+                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz & Raildecom</a>"
+            ],
+            "version": "1.0.0-rc1",
+            "license": "<a href=\"http://en.wikipedia.org/wiki/MIT_License\">MIT</a>.",
+            "copyright": "All rights reserved <a href=\"http://www.webitup.fr\">© Web It Up</a>",
+            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74"
+        }
+    ],
+    "function": [
+        {
+            "description": "The purpose is to provide a *minimal* loader, which only purpose is to\nload a single (other!) file / library / loader.\nSaid script should reside alongside gulliver - its uri will be resolved\nrelatively to that of the gulliver script itself (assuming its name hasn't been\nchanged, or that the optional \"name\" param matches its new name).\nNote that using it separately is not so much of a hot idea (you are better of\nlinking a complete loader instead...).\nThis might be useful inline though.",
+            "kind": "function",
+            "name": "gulliver",
+            "summary": "Gulliver is a very tiny loader.",
+            "examples": [
+                "  gulliver(function(){\n    console.log('Library loaded');\n  }, 'somelibrary.js');"
+            ],
+            "params": [
+                {
+                    "type": {
+                        "names": [
+                            "Function"
+                        ]
+                    },
+                    "optional": null,
+                    "nullable": null,
+                    "variable": null,
+                    "description": "A function to call once the script is loaded.",
+                    "name": "callback"
+                },
+                {
+                    "type": {
+                        "names": [
+                            "String"
+                        ]
+                    },
+                    "optional": null,
+                    "nullable": null,
+                    "variable": null,
+                    "description": "Uri of the script to load, relatively to gulliver itself.",
+                    "name": "uri"
+                },
+                {
+                    "type": {
+                        "names": [
+                            "String"
+                        ]
+                    },
+                    "optional": true,
+                    "nullable": null,
+                    "variable": null,
+                    "defaultvalue": "gulliver",
+                    "description": "\"Name\" of the gulliver script itself to resolve\nthe loaded script path and port hash options.",
+                    "name": "name"
+                }
+            ],
+            "returns": [
+                {
+                    "type": {
+                        "names": [
+                            "undefined"
+                        ]
+                    },
+                    "optional": null,
+                    "nullable": null,
+                    "variable": null
+                }
+            ],
+            "longname": "gulliver"
+        }
+    ],
+    "module": [
+        {
+            "description": "Provides a crude \"script loader\" abstraction on top of whatever\nloader library is detected.\nCurrently supports labjs and requirejs (headjs and yahoo are provided as well,\nwith fewer test and possibly degraded performance / functionality).\nThe API itself ressembles a lot that of LABJS.",
+            "kind": "module",
+            "name": "Spitfire/loader",
+            "summary": "Wrapper script \"loader\" singleton.",
+            "todo": [
+                "implement http://yepnopejs.com/",
+                "implement http://code.google.com/p/jsload/"
+            ],
+            "longname": "module:Spitfire/loader",
+            "function": [
+                {
+                    "description": "Allows to request the loading of a given script specified by an uri.\nThe loading is always parallelized (if the underlying library supports it)\nthough the evaluation is parallelized between calls to wait.\nOnly javascript files can be loaded this way.",
+                    "kind": "function",
+                    "name": "script",
+                    "summary": "Main loader function.",
+                    "see": [
+                        "module:Spitfire/loader.wait"
+                    ],
+                    "examples": [
+                        "  loader.script(\"someuri.js\");\n  loader.script(\"otheruri.js\");",
+                        "  loader.script(\"someuri.js\").script(\"otheruri.js\");"
+                    ],
+                    "params": [
+                        {
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "[description].",
+                            "name": "uri"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "type": {
+                                "names": [
+                                    "module:Spitfire/loader"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Returns the loader so that calls can be chained."
+                        }
+                    ],
+                    "longname": "module:Spitfire/loader.script",
+                    "scope": "static"
+                },
+                {
+                    "description": "This method allows to specify \"groups\" of scripts that will be evaluated\nafter each other.\nThere is no guarantee of any sort on the evaluation order inside a group.\nNote that some backend libraries don't support this properly and instead\nthis blocks *loading* to guarantee the execution order (which is bad).",
+                    "kind": "function",
+                    "name": "wait",
+                    "summary": "Wait for previous scripts to evaluate.",
+                    "see": [
+                        "module:Spitfire/loader.script"
+                    ],
+                    "examples": [
+                        "  loader.script(\"someuri.js\");\n  loader.script(\"otheruri.js\");\n  loader.wait(function(){\n  // both scripts have been executed\n  });",
+                        "  loader.script(\"uri.js\")\n    .wait()\n    .script(\"another.js\")// when another executes, uri has been executed\n    .wait(function(){\n      // both have been executed\n  });"
+                    ],
+                    "params": [
+                        {
+                            "type": {
+                                "names": [
+                                    "Function"
+                                ]
+                            },
+                            "optional": true,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Function to be called when all previous scripts\nhave evaluated.",
+                            "name": "callback"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "type": {
+                                "names": [
+                                    "module:Spitfire/loader"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Returns the loader so that calls can be chained."
+                        }
+                    ],
+                    "longname": "module:Spitfire/loader.wait",
+                    "scope": "static"
+                },
+                {
+                    "description": "Allows to get a new, separate loader instance",
+                    "examples": [
+                        "// Two different, unrelated loading queues.\n  var ld2 = loader.fork();\n  loader.script('some.js').wait();\n  ld2.script('some2.js').wait();"
+                    ],
+                    "kind": "function",
+                    "name": "fork",
+                    "summary": "Provides a new loading stack",
+                    "returns": [
+                        {
+                            "type": {
+                                "names": [
+                                    "module:Spitfire/loader"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Returns a new loader instance"
+                        }
+                    ],
+                    "longname": "module:Spitfire/loader.fork",
+                    "scope": "static"
+                },
+                {
+                    "description": "This is meant as a helper to resolve an uri against that of another script.",
+                    "todo": [
+                        "Note this is NOT guaranteed to work - the document may NOT be ready at the time this is used...\nCorrect approach would be to timeout and repeat this in case it returns false."
+                    ],
+                    "kind": "function",
+                    "name": "base",
+                    "summary": "Resolve uris relatively to a name matching another script",
+                    "params": [
+                        {
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Name of the script to use as a basis.",
+                            "name": "currentName"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "resolved uri"
+                        }
+                    ],
+                    "longname": "module:Spitfire/loader.base",
+                    "scope": "static"
+                },
+                {
+                    "description": "This allows to load stylesheets.\nIt works by embedding additional link rel into the document head.\nNote that the order will be respected, and that they will be appended\nAFTER anything already present in the head.",
+                    "kind": "function",
+                    "name": "style",
+                    "todo": [
+                        "See gulliver - this may fail in subtle ways"
+                    ],
+                    "summary": "A simple stylesheet loader.",
+                    "params": [
+                        {
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Url of the stylesheet.",
+                            "name": "url"
+                        },
+                        {
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "optional": true,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Optional media that the stylesheet applies for.",
+                            "name": "media"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "type": {
+                                "names": [
+                                    "undefined"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null
+                        }
+                    ],
+                    "longname": "module:Spitfire/loader.style",
+                    "scope": "static"
+                }
+            ]
+        },
+        {
+            "description": "The idea here is to provide tests to detect browsers missing features\nand bugs, and propose \"shims\" uris to be loaded.\nTo some extent, this ressembles modernizr - except it focuses on core\nfeatures (eg: ES5 language features), and does provide accompanying shims.\nCurrently provided are large parts of ES5, JSON, XHR, geolocation, console\nand localStorage.",
+            "kind": "module",
+            "name": "Spitfire",
+            "summary": "Provides shiming test/patching environment.",
+            "longname": "module:Spitfire",
+            "class": [
+                {
+                    "description": "This describes what a test object should look like.\nThis is NOT an actual, instanciable class.",
+                    "todo": [
+                        "Tests should be functions instead of booleans"
+                    ],
+                    "kind": "class",
+                    "name": "Test",
+                    "virtual": true,
+                    "augments": [
+                        "Object"
+                    ],
+                    "longname": "module:Spitfire.Test",
+                    "scope": "static",
+                    "member": [
+                        {
+                            "description": "Whether or not the environment needs to shim that functionality.",
+                            "kind": "member",
+                            "name": "test",
+                            "type": {
+                                "names": [
+                                    "Boolean"
+                                ]
+                            },
+                            "longname": "module:Spitfire.Test.test",
+                            "scope": "static"
+                        },
+                        {
+                            "description": "Optional uri to the file providing the actual shim.\nThis can be left undefined if a functional patch is provided.",
+                            "see": [
+                                "module:Spitfire.Test.patch"
+                            ],
+                            "kind": "member",
+                            "name": "uri",
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "longname": "module:Spitfire.Test.uri",
+                            "scope": "static"
+                        },
+                        {
+                            "description": "An optional function providing the actual shim.\nIf specified, will be favored over the uri.",
+                            "kind": "member",
+                            "name": "patch",
+                            "type": {
+                                "names": [
+                                    "Function"
+                                ]
+                            },
+                            "longname": "module:Spitfire.Test.patch",
+                            "scope": "static"
+                        }
+                    ]
+                }
+            ],
+            "function": [
+                {
+                    "description": "Adds a newly created test to a shim category.\nSaid category can then be \"use\"-d to request this to be shimed.\nPredefined categories are specified by this.SAFE (always loaded) and this.UNSAFE.",
+                    "kind": "function",
+                    "name": "add",
+                    "summary": "Allows to add a test in a category",
+                    "see": [
+                        "module:Spitfire.use",
+                        "module:Spitfire.Test",
+                        "module:Spitfire.SAFE",
+                        "module:Spitfire.UNSAFE"
+                    ],
+                    "examples": [
+                        "// Provide a conditional shim to be loaded as part of the SAFE batch\n Spitfire.add({\n   test: !Function.prototype.bind,\n   uri: 'relative_shim_uri_to_bind.js'\n }, Spitfire.SAFE);",
+                        "// Provide an always-loaded shim, in its own category\n Spitfire.add({\n   test: true,\n   uri: 'json3.js'\n }, Spitfire.JSON);"
+                    ],
+                    "params": [
+                        {
+                            "type": {
+                                "names": [
+                                    "module:Spitfire.Test"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "The test object.",
+                            "name": "testObject"
+                        },
+                        {
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "The category to which this shim belong.",
+                            "name": "category"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "type": {
+                                "names": [
+                                    "undefined"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null
+                        }
+                    ],
+                    "longname": "module:Spitfire.add",
+                    "scope": "static"
+                },
+                {
+                    "description": "For a given category, request that patchable shims are executed\nand that loadable shims uris be returned once \"boot\" is called.\nNote that the SAFE category is ALWAYS requested.\nPredefined categories consist of UNSAFE, XHR, and JSON",
+                    "kind": "function",
+                    "name": "use",
+                    "examples": [
+                        "  Spitfire.use(Spitfire.UNSAFE);\n  var uris = Spitfire.boot();"
+                    ],
+                    "see": [
+                        "module:Spitfire.boot",
+                        "module:Spitfire.UNSAFE",
+                        "module:Spitfire.XHR",
+                        "module:Spitfire.JSON"
+                    ],
+                    "summary": "Requests a category of shims",
+                    "exceptions": [
+                        {
+                            "description": "INVALID_CATEGORY if the requested category does not have any associated\ntests."
+                        }
+                    ],
+                    "params": [
+                        {
+                            "type": {
+                                "names": [
+                                    "String"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null,
+                            "description": "Category to load.",
+                            "name": "cat"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "type": {
+                                "names": [
+                                    "undefined"
+                                ]
+                            },
+                            "optional": null,
+                            "nullable": null,
+                            "variable": null
+                        }
+                    ],
+                    "longname": "module:Spitfire.use",
+                    "scope": "static"
+                },
+                {
+                    "description": "Once categories have been requested via the \"use\" method, calling boot\nevaluate every test and returns the list of uris to load.\nShims directly providing functionality via \"patch\" are executed before this\nreturns.\nNote that the SAFE category is ALWAYS loaded.",
+                    "kind": "function",
+                    "name": "boot",
+                    "examples": [
+                        "  Spitfire.use(Spitfire.UNSAFE);\n// Just do it...\n  var uris = Spitfire.boot();"
+                    ],
+                    "summary": "Give uris to shims.",
+                    "see": [
+                        "module:Spitfire.use"
+                    ],
+                    "params": [
+                        {
+                            "type": {
+                                "names": [
+                                    "Boolean"
+                                ]
+                            },
+                            "optional": true,
+                            "nullable": null,
+                            "variable": null,
+                            "defaultvalue": "false",
+                            "description": "If true, request non-minified versions of the shims.\nUseful for debugging only.",
+                            "name": "useFull"
+                        }
+                    ],
+                    "returns": [
+                        {
+                            "description": "Array<String> An array of uris to load in order to obtain the shims."
+                        }
+                    ],
+                    "longname": "module:Spitfire.boot",
+                    "scope": "static"
+                }
+            ],
+            "constant": [
+                {
+                    "description": "Enforces the loading of a shimed XHR, enforcing identical functionality\nin any browser, regardless of the current support.\nThis is useful if you want to be DEAD SURE it will behave the same.\nKnow that XHR is very buggy and present numerous and wide discrepancies\nbetween browsers, or even browsers versions - not only in IE.",
+                    "kind": "constant",
+                    "name": "XHR",
+                    "type": {
+                        "names": [
+                            "String"
+                        ]
+                    },
+                    "longname": "module:Spitfire.XHR",
+                    "scope": "static"
+                },
+                {
+                    "description": "Enforces the loading of a shimed JSON, enforcing identical functionality\nin any browser, regardless of the current support.\nThis is useful if you want to be DEAD SURE it will behave the same.\nJSON and related functions are very buggy and have wide discrepancies between browsers.",
+                    "kind": "constant",
+                    "name": "JSON",
+                    "type": {
+                        "names": [
+                            "String"
+                        ]
+                    },
+                    "longname": "module:Spitfire.JSON",
+                    "scope": "static"
+                },
+                {
+                    "description": "Requests that \"unsafe\" shims are loaded.\nThese are shims that don't actually provide real functionality, just create named methods\nto allow for ES5 code to actually *run* without errors.\nThe drawback is that it will break feature detection in third-party libraries without\nactually providing functionality... Careful with that.",
+                    "kind": "constant",
+                    "name": "UNSAFE",
+                    "type": {
+                        "names": [
+                            "String"
+                        ]
+                    },
+                    "longname": "module:Spitfire.UNSAFE",
+                    "scope": "static"
+                },
+                {
+                    "description": "This is the safe category, that should be used for any shim that is slick, does provide\ncomplete functionality for a given section.",
+                    "kind": "constant",
+                    "name": "SAFE",
+                    "type": {
+                        "names": [
+                            "String"
+                        ]
+                    },
+                    "longname": "module:Spitfire.SAFE",
+                    "scope": "static"
+                }
+            ]
+        }
+    ],
+    "package": [
+        {
+            "files": [
+                "/Users/dmp/dev/jsboot/spitfire.js/tmp/gulliver.js",
+                "/Users/dmp/dev/jsboot/spitfire.js/tmp/loader.js",
+                "/Users/dmp/dev/jsboot/spitfire.js/tmp/shimer.js"
+            ],
+            "kind": "package",
+            "longname": "package:undefined"
+        }
+    ]
+}

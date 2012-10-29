@@ -91,12 +91,12 @@
 
     // required: shim for FF <= 3.5 not having document.readyState
     if ((oDOC.readyState === null) && oDOC.addEventListener) {
-      var handler;
-      oDOC.readyState = 'loading';
-      oDOC.addEventListener('DOMContentLoaded', handler = function() {
+      var handler = function() {
         oDOC.removeEventListener('DOMContentLoaded', handler, false);
         oDOC.readyState = 'complete';
-      }, false);
+      };
+      oDOC.readyState = 'loading';
+      oDOC.addEventListener('DOMContentLoaded', handler, false);
     }
   };
 }).apply(this);

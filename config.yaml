@@ -84,6 +84,13 @@ config-dmp-darwin:
         version: '1.0'
         url: 'http://static.loft.sn.ackitup.net:4242/airstrip.json'
 
+config-release-darwin:
+  links:
+      airstrip:
+        version: '1.0'
+        url: 'http://static.loft.sn.ackitup.net:4242/airstrip.json'
+
+
 # Raildecom workin
 config-raildecom-darwin:
   paths:

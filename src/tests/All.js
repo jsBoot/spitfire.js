@@ -8,9 +8,12 @@
   var useSpitfireFull = !!location.href.match(/use-spitfire-full/);
   var useES5 = !!location.href.match(/use-es5/);
   var useES5Full = !!location.href.match(/use-es5-full/);
-  var useMin = !!location.href.match(/use-min/);
-  var suffix = useMin ? '-min.js' : '.js';
-  var cssSuffix = useMin ? '-min.css' : '.css';
+  var noMin = !!location.href.match(/use-nomin/);
+  var suffix = !noMin ? '-min.js' : '.js';
+  var cssSuffix = !noMin ? '-min.css' : '.css';
+
+  // Remove the nojs className
+  document.getElementsByTagName('html')[0].className = '';
 
   // If you want to use Spitfire, have "use-spitfire" somehow in the url (eg: url#use-*)
   // If you want the extra (unsafe!) shims as well, use-spitfire-full
@@ -26,7 +29,7 @@
       // If we want the full shims from spitfire
       if (useSpitfireFull)
         spit.use(spit.UNSAFE);
-      var shims = spit.boot(!useMin);
+      var shims = spit.boot(noMin);
       for (var x = 0; x < shims.length; x++)
         ld.script(spitfireBaseUrl + shims[x]);
     }
@@ -45,12 +48,14 @@
     ld.wait(function() {
       var jasmineEnv = jasmine.getEnv();
       jasmineEnv.updateInterval = 1000;
-      var trivialReporter = new jasmine.TrivialReporter();
+
+      var trivialReporter = new jasmine.HtmlReporter();
       jasmineEnv.addReporter(trivialReporter);
       jasmineEnv.specFilter = function(spec) {
         return trivialReporter.specFilter(spec);
       };
       jasmineEnv.execute();
+      document.getElementById('jasmine').appendChild(document.getElementById('HTMLReporter'));
     });
   };
 
