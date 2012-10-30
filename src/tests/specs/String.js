@@ -52,8 +52,7 @@
         runs(function() {
           expect(exp[0]).toEqual('a');
         });
-      }
-      );
+      });
 
 
       monade('String instance has method charAt()', new String('a'), 'charAt');
