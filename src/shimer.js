@@ -17,8 +17,6 @@
  */
 
 (function() {
-  /*jshint browser:true */
-  /*global define:true, exports:true*/
   'use strict';
 
   /**

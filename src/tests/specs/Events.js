@@ -1,6 +1,5 @@
 (function() {
   /*global it:true, xit:true, describe:true, expect:true*/
-  /*jshint browser:true*/
   'use strict';
 
   describe('Events', function() {

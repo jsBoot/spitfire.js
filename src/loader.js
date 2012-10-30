@@ -31,8 +31,7 @@
  */
 
 (function() {
-  /*jshint browser:true */
-  /*global define:true, exports:true, head:true, YUI:true, yepnope:true, requirejs:true, $LAB:true*/
+  /*global head:true, YUI:true, yepnope:true, requirejs:true, $LAB:true*/
   'use strict';
 
   // Get a backend

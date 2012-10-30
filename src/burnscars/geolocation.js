@@ -26,7 +26,6 @@
 // by Joshua Bell - http://calormen.com/polyfill
 
 // PUBLIC DOMAIN
-/*jshint browser:true */
 if (!navigator.geolocation)
   (function() {
     'use strict';

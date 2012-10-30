@@ -21,5 +21,12 @@
   "maxdepth": 6,
   "maxstatements": 50,
   "maxcomplexity": 10,
-  "maxlen": 120
+  "maxlen": 120,
+
+  "browser": true,
+
+  "globals": {
+    "define": true,
+    "exports": true
+  }
 }

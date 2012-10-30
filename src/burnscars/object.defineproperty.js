@@ -1,5 +1,5 @@
 (function() {
-  /*jshint browser:true, proto:true, camelcase:false */
+  /*jshint proto:true, camelcase:false */
   'use strict';
   // ES5 15.2.3.6
   // http://es5.github.com/#x15.2.3.6

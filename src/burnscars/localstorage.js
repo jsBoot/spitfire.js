@@ -2,7 +2,7 @@
 // http://amplifyjs.com/api/store/
 // https://developer.mozilla.org/en/DOM/Storage
 
-/*jshint browser:true, nonstandard:true*/
+/*jshint nonstandard:true*/
 if (!window.localStorage)
   (function() {
     /*jshint regexp:false*/

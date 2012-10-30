@@ -1,6 +1,5 @@
 (function() {
   /*global it:true, describe:true, runs:true, expect:true, FileList:true, File:true*/
-  /*jshint browser:true*/
   'use strict';
 
   // https://github.com/MrSwitch/dropfile#readme

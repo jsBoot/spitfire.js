@@ -1,5 +1,8 @@
-*.DS_Store*
-/.pukecache/
+.DS_Store
+.pukecache/
+*.sublime-project
+*.sublime-workspace
 *.pyc
+/build/
 /tmp/
 /lib/tests/

@@ -1,5 +1,4 @@
 (function() {
-  /*jshint browser:true*/
   /*global Spitfire:true, jasmine:true, require:true*/
   'use strict';
 
