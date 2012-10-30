@@ -1,31 +1,63 @@
 {
-  "bitwise": false,
-  "camelcase": true,
+  /* We DO relax jshint on these - careful! */
+
+  // DONT enforce systematic curly braces around blocks - this is tricky
   "curly": false,
+  // DONT try to enforce use of === and !== - you need to deal with implicit coerce
   "eqeqeq": false,
-  "forin": true,
-  "immed": true,
-  "latedef": true,
-  "newcap": true,
-  "noarg": true,
-  "noempty": true,
-  "nonew": true,
+  // Let us use ++ and -- operators
   "plusplus": false,
-  "quotmark": "single",
+  // Allow bitwise operators
+  "bitwise": false,
+
+
+  /* We are strict on these */
+
+  // Enforce the use of parentheses around immediate function calls
+  "immed": true,
+  // Disallow callee on args - be ECMA strict ready
+  "noarg": true,
+  // Warn about empty blocks
+  "noempty": true,
+  // Requires capitalization of constructors
+  "newcap": true,
+  // Warn about unsafe use of regexp
   "regexp": true,
+  // Prohibit use of undeclared variables
   "undef": true,
-  "unused": true,
-  "strict": true,
+  // Prohibit trailing whitespaces
   "trailing": true,
-  "maxparams": 6,
-  "maxdepth": 6,
+  // Enforce camelCasing of props names
+  "camelcase": true,
+  // Warn about enumerations without hasOwnProperty calls
+  "forin": true,
+  // Warn about late definition of local variables
+  "latedef": true,
+  // Warn about constructors missing a "new"
+  "nonew": true,
+  // String quoting style
+  "quotmark": "single",
+  // Warn about unused variables
+  "unused": true,
+  // Use strict
+  "strict": true,
+  // Maximum number of parameters in a function
+  "maxparams": 4,
+  // Maximum depth
+  "maxdepth": 3,
+  // Maximum number of statements in a block
   "maxstatements": 50,
+  // Maximum function complexity
   "maxcomplexity": 10,
+  // Maximum line length
   "maxlen": 120,
 
+
+  // Spitfire defines "browser" globals (window, document...)
   "browser": true,
 
   "globals": {
+    // AMD
     "define": true,
     "exports": true
   }

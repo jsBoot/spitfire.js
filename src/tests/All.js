@@ -75,8 +75,8 @@
     .script('specs/Math.js')
     .script('specs/Globals.js')
 
-    .script('es5/h' + suffix)
-    .script('es5/h-matchers' + suffix);
+    .script('es5/h.js')
+    .script('es5/h-matchers.js');
 
     // If we are told to use-* a shiming shcript, load it as well
     if (useSpitfire) {

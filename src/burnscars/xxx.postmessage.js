@@ -1,8 +1,5 @@
-/**#nocode+*/
-
-'use strict';
-
 (function() {
+  'use strict';
   /*  var rape = function(frameObj){
     var s = frameObj.contentWindow;
     var fakeWindow = new (function(){
@@ -115,5 +112,3 @@
   }
   //  }
 })();
-
-/**#nocode-*/

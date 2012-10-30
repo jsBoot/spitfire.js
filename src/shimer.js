@@ -519,4 +519,3 @@
 // Check for modernizr once again as well
 // https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
 
-/**#nocode-*/

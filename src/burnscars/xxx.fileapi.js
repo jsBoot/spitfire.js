@@ -1,8 +1,5 @@
-/**#nocode+*/
-
-'use strict';
-
 (function() {
+  'use strict';
   try {
     new Blob();
   }catch (e) {
@@ -44,5 +41,3 @@
     // XXX write a constructor and use the original blob on it
   }
 })();
-
-/**#nocode-*/

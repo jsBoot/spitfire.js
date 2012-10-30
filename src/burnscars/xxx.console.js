@@ -1,5 +1,3 @@
-/**#nocode+*/
-
 var ids = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'];
 if (typeof XMLHttpRequest === 'undefined') {
   for (var i = 0; i < ids.length; i++) {
@@ -78,4 +76,3 @@ XMLHttpRequest.DONE = 4;
 // assuming we can spoof in firebuglite
 
 
-/**#nocode-*/
