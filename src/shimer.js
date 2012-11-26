@@ -246,19 +246,12 @@
    * @type {String}
    */
   root.SAFE = 'safe';
-  // ==========
-  // Arrays
-  // ==========
-  // XXX Awaiting pull request to be accepted into es5
-  root.add({
-    test: ([].unshift('test') === undefined),
-    uri: 'array.bugs'
-  }, root.SAFE);
 
   /**
    * ES5 provided shims
    */
   var arrayTests =
+      ([].unshift('test') === undefined) ||
       ([1, 2].splice(0).length != 2) ||
       !Array.isArray ||
       !Array.prototype.forEach ||
