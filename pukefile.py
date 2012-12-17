@@ -223,9 +223,10 @@ def build():
       description["loader-%s" % elem] = "%s/loader-%s.js" % (spitroot, elem)
 
     # Standalone shims that can be used bundled by build systems
-    description["xhr"] = '%s/burnscars/xmlhttprequest.js' % spitroot;
     description["json"] = '%s/burnscars/json3.js' % spitroot;
+    description["xhr"] = '%s/burnscars/xmlhttprequest.js' % spitroot;
     description["es5"] = '%s/burnscars/es5-shim.js' % spitroot;
+    description["console"] = '%s/burnscars/console.js' % spitroot;
     # All-in-one shim
     description["burnscars"] = '%s/burnscars.js' % spitroot;
 
