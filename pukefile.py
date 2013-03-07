@@ -215,23 +215,23 @@ def build():
   # ============================
     description = {}
     # Separate components
-    description["shimer"] = '%s/shimer.js' % spitroot;
-    description["gulliver"] = '%s/gulliver.js' % spitroot;
-    description["loader"] = '%s/loader.js' % spitroot;
+    description["shimer"] = '%s/shimer.js' % spitroot
+    description["gulliver"] = '%s/gulliver.js' % spitroot
+    description["loader"] = '%s/loader.js' % spitroot
     # Tainted loaders
     for elem in ['lab', 'head', 'require', 'yahoo', 'yepnope']:
       description["loader-%s" % elem] = "%s/loader-%s.js" % (spitroot, elem)
 
     # Standalone shims that can be used bundled by build systems
-    description["json"] = '%s/burnscars/json3.js' % spitroot;
-    description["xhr"] = '%s/burnscars/xmlhttprequest.js' % spitroot;
-    description["es5"] = '%s/burnscars/es5-shim.js' % spitroot;
-    description["console"] = '%s/burnscars/console.js' % spitroot;
+    description["json"] = '%s/burnscars/json3.js' % spitroot
+    description["xhr"] = '%s/burnscars/xmlhttprequest.js' % spitroot
+    description["es5"] = '%s/burnscars/es5-shim.js' % spitroot
+    description["console"] = '%s/burnscars/console.js' % spitroot
     # All-in-one shim
-    description["burnscars"] = '%s/burnscars.js' % spitroot;
+    description["burnscars"] = '%s/burnscars.js' % spitroot
 
     # The actual spitfire (loader + shimer)
-    description["spitfire"] = '%s/spitfire.js' % spitroot;
+    description["spitfire"] = '%s/spitfire.js' % spitroot
     # And the tainted versions
     for elem in ['lab', 'head', 'require', 'yahoo', 'yepnope']:
       description["spitfire-%s" % elem] = "%s/spitfire-%s.js" % (spitroot, elem)

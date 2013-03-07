@@ -17,6 +17,7 @@
  */
 
 (function() {
+  /*jshint evil:true*/
   'use strict';
 
   /**
@@ -466,7 +467,7 @@
   // Console
   // ==========
   root.add({
-    test: !window.console /*@cc_on || @_jscript_version <= 9 @*/ || !(function() {
+    test: !window.console || eval('/*@cc_on @_jscript_version <= 9@*/') || !(function() {
       var ok = true;
       var props = [
         'log', 'debug', 'info', 'warn', 'error', 'assert' /*, 'dir', 'dirxml', 'exception', 'time',
@@ -484,6 +485,43 @@
   // Use all safe shims by default
   root.use(root.SAFE);
 
+  // ==========
+  // Request animation frame
+  // ==========
+
+  root.add({
+    test: !window.requestAnimationFrame || !window.cancelAnimationFrame,
+    uri: 'animationframe'
+  }, root.SAFE);
+
+  root.add({
+    test: !Array.from || !Array.of,
+    uri: 'es6.array'
+  }, root.SAFE);
+
+  root.add({
+    // XXX incomplete
+    test: !Math.acosh || !Math.asinh || !Math.atanh || !Math.cosh || !Math.sinh || !Math.tanh ||
+        !Math.expm1,
+    uri: 'es6.math'
+  }, root.SAFE);
+
+  root.add({
+    test: !Number.isFinite || !Number.isInteger || !Number.isNaN || !Number.toInteger,
+    uri: 'es6.number'
+  }, root.SAFE);
+
+  root.add({
+    test: !Object.getOwnPropertyDescriptors || !Object.getPropertyDescriptor ||
+        !Object.getPropertyNames || !Object.is || !Object.isnt,
+    uri: 'es6.object'
+  }, root.SAFE);
+
+  root.add({
+    test: !String.prototype.repeat || !String.prototype.startsWith ||
+        !String.prototype.endsWith || !String.prototype.contains,
+    uri: 'es6.string'
+  }, root.SAFE);
 
   // IE at large doesn't support additional arguments on settimeout.
   // This can't be shimed independtly considering we work synchronously for now with loader
