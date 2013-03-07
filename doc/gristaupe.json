@@ -2,25 +2,25 @@
     "file": [
         {
             "description": "This is the *most minimal* bootstrapper possible.\nIt is meant to serve as a loader for an (actually useful) bootstrapper.\nDon't use directly unless you know what you freaking do.\nBad things can still happen here, and nasty bugs are lurking.\nCode adapted from getify JSLabs' gister.\nThis must work without any shim support, in most browsers.",
-            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74",
+            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#52-3657ff5469197138e12e590799bc63fccad52efb",
             "kind": "file",
             "preserveName": true,
             "summary": "Tiny bootstrapper for companion script.",
             "author": [
-                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz & Raildecom</a>",
+                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz &amp; Raildecom</a>",
                 "Getify"
             ],
-            "version": "1.0.0-rc1",
+            "version": "1.0.0-rc2",
             "license": "<a href=\"http://en.wikipedia.org/wiki/MIT_License\">MIT</a>.",
             "copyright": "All rights reserved <a href=\"http://www.webitup.fr\">© Web It Up</a>",
             "see": [
                 "https://gist.github.com/603980"
             ],
-            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74"
+            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#52-3657ff5469197138e12e590799bc63fccad52efb"
         },
         {
             "description": "The sole purpose of this file is to wrap any \"loader\" library\nbehind a unified interface.\nSee links for approaches to embeded loader.\nThis must work without any shim support, in most browsers.",
-            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74",
+            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#52-3657ff5469197138e12e590799bc63fccad52efb",
             "kind": "file",
             "preserveName": true,
             "summary": "\"Any\" script loader wrapper.",
@@ -29,15 +29,15 @@
                 "http://www.dustindiaz.com/scriptjs/"
             ],
             "author": [
-                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz & Raildecom</a>"
+                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz &amp; Raildecom</a>"
             ],
-            "version": "1.0.0-rc1",
+            "version": "1.0.0-rc2",
             "license": "<a href=\"http://en.wikipedia.org/wiki/MIT_License\">MIT</a>.",
             "copyright": "All rights reserved <a href=\"http://www.webitup.fr\">© Web It Up</a>",
-            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74"
+            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#52-3657ff5469197138e12e590799bc63fccad52efb"
         },
         {
-            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74",
+            "name": "https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#52-3657ff5469197138e12e590799bc63fccad52efb",
             "kind": "file",
             "preserveName": true,
             "summary": "Set of browser features tests, shims, and minimalistic testing API.",
@@ -49,12 +49,12 @@
                 "http://es5.github.com/#x15.4.4.13"
             ],
             "author": [
-                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz & Raildecom</a>"
+                "<a href=\"mailto:dev@webitup.fr\">Mangled Deutz &amp; Raildecom</a>"
             ],
-            "version": "1.0.0-rc1",
+            "version": "1.0.0-rc2",
             "license": "<a href=\"http://en.wikipedia.org/wiki/MIT_License\">MIT</a>.",
             "copyright": "All rights reserved <a href=\"http://www.webitup.fr\">© Web It Up</a>",
-            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#43-88a0411a8b50372c707cf56cbe40d13d775c6e74"
+            "longname": "https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#52-3657ff5469197138e12e590799bc63fccad52efb"
         }
     ],
     "function": [

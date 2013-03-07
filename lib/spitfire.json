@@ -14,6 +14,7 @@
         "xhr": "spitfire.js/1.0/burnscars/xmlhttprequest.js", 
         "json": "spitfire.js/1.0/burnscars/json3.js", 
         "loader-yahoo": "spitfire.js/1.0/loader-yahoo.js", 
+        "console": "spitfire.js/1.0/burnscars/console.js", 
         "spitfire-yahoo": "spitfire.js/1.0/spitfire-yahoo.js", 
         "spitfire-head": "spitfire.js/1.0/spitfire-head.js", 
         "burnscars": "spitfire.js/1.0/burnscars.js", 

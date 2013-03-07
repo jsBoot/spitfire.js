@@ -8,14 +8,14 @@ baseYank:
     # Code name (eg: {PUKE-PACKAGE-NAME})
       name: spitfire.js
     # Version  (eg: {PUKE-PACKAGE-VERSION})
-      version: '1.0.0-rc1'
+      version: '1.0.0-rc2'
   rights:
     # License link (eg: {PUKE-RIGHTS-LICENSE})
       license: '<a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>'
     # Copyright to be replaced in files (eg: {PUKE-RIGHTS-COPYRIGHT})
       copyright: 'All rights reserved <a href="http://www.webitup.fr">© Web It Up</a>'
     # Author (eg: {PUKE-RIGHTS-AUTHOR})
-      author: '<a href="mailto:dev@webitup.fr">Mangled Deutz & Raildecom</a>'
+      author: '<a href="mailto:dev@webitup.fr">Mangled Deutz &amp; Raildecom</a>'
   git:
     # Repository base url (eg: {PUKE-GIT-ROOT})
       root: 'https://github.com/jsBoot/spitfire.js/blob/master/src'
