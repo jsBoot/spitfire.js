@@ -43,7 +43,8 @@ def lint():
 
 @task("Hint")
 def hint():
-  help.hinter("src")
+  # XXX tests are borked for now
+  help.hinter("src", excluding = "*tests*")
 
 @task("Flint")
 def flint():
@@ -51,7 +52,9 @@ def flint():
 
 @task("Minting")
 def mint():
-  help.minter(Yak.paths['build'], strict = True)
+  help.minter(Yak.paths['build'], filter = "*yahoo.js,*yepnope.js", strict = False)
+  help.minter(Yak.paths['build'], excluding = "*yahoo*,*yepnope*,*/specs/*,*/es5/*")
+
   # Some dirty code might not pass strict
   # help.minter(Yak.paths['build'], strict = False)
 
@@ -70,6 +73,18 @@ def tests():
   list = FileList(Yak.paths['tests'], filter="*.js,*.html", exclude="*xxx*")
   deepcopy(list, Yak.paths['build'] + '/tests', replace=sed)
 
+  # Can't access from raw github using IE (mimetype mismatch, bitch)
+  list = [
+    "https://raw.github.com/kriskowal/es5-shim/master/tests/helpers/h.js",
+    "https://raw.github.com/kriskowal/es5-shim/master/tests/helpers/h-matchers.js",
+    "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-array.js",
+    "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-function.js",
+    "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-string.js",
+    "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-object.js",
+    "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-date.js"
+  ]
+  deepcopy(list, Yak.build_root + '/tests/es5/');
+
 
 @task("Build package")
 def build():
@@ -84,10 +99,7 @@ def build():
 
 @task("Deploy package")
 def deploy():
-  # Libraries usually have a versioned path (True)
-  # help.deployer(True)
-  # Sites or apps dont
-  help.deployer(Yak.paths['build'], False)
+  help.deployer(Yak.paths['build'], True)
   # In case you wanna deploy dependencies as well
   help.deployer('dependencies', False)
 
