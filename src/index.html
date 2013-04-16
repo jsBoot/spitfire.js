@@ -1,0 +1,102 @@
+<!doctype html public "✰">
+<!--[if lt IE 7]> <html lang="en-us" class="no-js ie6"> <![endif]-->
+<!--[if IE 7]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
+<!--[if IE 8]>    <html lang="en-us" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>   <html lang="en-us" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-us" class="no-js "> <!--<![endif]-->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Spitfire.js</title>
+  <meta name="description" content="Javascript shim / loader framework. Making things behave since 1976.">
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="WebItUp">
+
+  <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="miniboot.ico">
+
+  <!--
+  This is a placeholder stylesheet meant to
+  provide *default* styles to be displayed while the app boots-up
+  -->
+  <style type="text/css">
+    /* This is meant only to style no-javascript browsers error */
+    noscript > p{
+      padding: 8px 35px 8px 14px;
+      margin-bottom: 18px;
+      color: #c09853;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+      background-color: #fcf8e3;
+      border: 1px solid #fbeed5;
+      -webkit-border-radius: 4px;
+         -moz-border-radius: 4px;
+              border-radius: 4px;
+      color: #b94a48;
+      background-color: #f2dede;
+      border-color: #eed3d7;
+      text-align: center;
+    }
+
+    /* Match the product background-color */
+    body {
+      background-color: #444444;
+    }
+
+    /* Placeholders should be hidden once we remove the no-js class */
+    body > p{
+      display: none;
+    }
+
+    /* Show the throbber until the app finishes booting and remove the no-js class */
+    .no-js body > p{
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      margin-top: -90px;
+      left: 50%;
+      margin-left: -78px;
+      display: block;
+    }
+
+  </style>
+
+  <!-- XXX Require IE7 and other deps -->
+  <!--[if lt IE 9]>
+  <script src="{AIRSTRIP-BASE}/lib/shims/ie7/ie9-stable-min.js"></script>
+  <![endif]-->
+  <!-- Tests to be done on this -->
+  <!-- Prompt IE <= 6 users to install Chrome Frame directly. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+  <![endif]-->
+
+</head>
+<body id="approot">
+  <!-- Browsers with no javascript support will see this -->
+  <noscript>
+    <p>
+      <strong>You must activate Javascript, then reload, in order to use this application.</strong>
+    </p>
+  </noscript>
+
+  <!-- oldIES get here -->
+  <!--[if lt IE 7]>
+    <p class="alert alert-error" id="very-outdated-browser">
+      <strong>
+      Your browser is obsolete. You should <a href="http://browsehappy.com/">update it</a>, or <a href="//www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>.
+      </strong>
+    </p>
+  <![endif]-->
+
+  <!-- Throbber image displayed while the application boots-up -->
+  <p>
+    Throbber
+  </p>
+
+  <!-- jsBoot loader inclusion point -->
+  <script type="text/javascript" src="there.is.only.jsboot.js"></script>
+  <!-- Application script bootstrapper -->
+  <script type="text/javascript" src="minboot.js"></script>
+</body>
+</html>

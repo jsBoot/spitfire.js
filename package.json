@@ -1,26 +1,22 @@
 {
   "name": "Spitfire.js",
-  "version": "1.0.0-rc1",
+  "version": "0.0.1",
 
-  "description": "A shims and loaders wrapper library.\nSpitfire provides tests and implementation for a number of patchable browser features, along with a minimalistic API to add more tests.",
-  "keywords": ["shims", "loader", "es5"],
+  "description": "Javascript shim / loader framework. Making things behave since 1976.",
+  "keywords": ["shim", "loader", "framework"],
+  "author": "WebItUp",
   "maintainers": [
     {
       "name": "Mangled Deutz",
       "email": "dev@webitup.fr",
-      "web": "http://www.webitup.fr"
+      "url": "http://www.webitup.fr"
     }
   ],
   "contributors":[
     {
       "name": "Mangled Deutz",
       "email": "dev@webitup.fr",
-      "web": "http://www.webitup.fr"
-    },
-    {
-      "name": "Raildecom",
-      "email": "dev@webitup.fr",
-      "web": "http://www.webitup.fr"
+      "url": "http://www.webitup.fr"
     }
   ],
   "bugs": "https://github.com/jsBoot/spitfire.js/issues",
@@ -37,15 +33,20 @@
          }
   ],
   "dependencies": {
-    "Airstrip.js": "1.0.x"
   },
 
   "homepage": "http://spitfire.jsboot.com",
 
   "directories": {
     "src": "src",
+    "tests": "src/tests",
+    "build": ".build",
+    "tmp": ".tmp",
     "doc": "doc",
-    "test": "lib/tests",
-    "lib": "lib"
+    "dist": "dist"
+  },
+
+  "config": {
+    "suffix": "-min"
   }
-}}
+}

@@ -1,8 +1,20 @@
+# System
 .DS_Store
+
+# Build systems
 .pukecache/
+*/.sass-cache/*
+
+# IDE
 *.sublime-project
 *.sublime-workspace
-*.pyc
-/build/
-/tmp/
-/lib/tests/
+
+# Build scories
+*.py[co]
+*/build/*
+*/tmp/*
+*/dist/*
+*.egg
+*.egg-info
+*xxx*
+
