@@ -96,10 +96,93 @@ def build():
   help.replacer(sed)
   deepcopy(FileList("src", exclude = "*tests*"), Yak.paths['build'], replace = sed)
 
+  # ============================
+  # Get the external shims
+  # ============================
+  allshims = FileList("src/burnscars", filter="*.js")
+
+  for elem in ['json3', 'xmlhttprequest', 'es5', 'console', 'stacktrace']:
+    candidate = ''
+    l = FileList(FileSystem.join('dependencies', elem), exclude = '*-min.js')
+    for i in l.get():
+      v = i.split('/')
+      v.pop()
+      v = v.pop()
+      # Broken because of json3 lack of master
+      if Yak.config['use-trunk']:
+        if v == 'master':
+          candidate = i
+      else:
+        if not v == 'master':
+          candidate = i
+
+    if not candidate:
+      candidate = l.get().pop()
+
+    # Copy raw into burnscars
+    combine([candidate], '%s/burnscars/%s.js' % (Yak.paths['build'], elem), replace=sed)
+    # Add to the allshims list
+    allshims.merge(candidate)
+
+  # ============================
+  # Build all-in-one shim
+  # ============================
+  combine(allshims, Yak.paths['build'] + '/burnscars.js', replace=sed)
+
+
+  # ============================
+  # Build the stylesheet shim
+  # ============================
+  styles = []
+  for elem in ['normalize', 'h5bp']:
+    style = FileList(FileSystem.join('dependencies', elem), exclude = '*-min.js')
+    for i in style.get():
+      v = i.split('/')
+      v.pop()
+      v = v.pop()
+      # Broken because of json3 lack of master
+      if Yak.config['use-trunk']:
+        if v == 'master':
+          styles.append(i)
+      else:
+        if not v == 'master':
+          styles.append(i)
+
+  combine(styles, '%s/burnscars/reset.css' % Yak.paths['build'])
+
+  # ============================
+  # Build spitfire
+  # ============================
+  combine(["src/loader.js", "src/shimer.js"], Yak.paths['build'] + '/spitfire.js', replace=sed)
+
+  # ============================
+  # Build tainted loaders
+  # ============================
+  for elem in ['labjs', 'headjs', 'requirejs', 'yui3', 'yepnopejs']:
+    candidate = ''
+    l = FileList(FileSystem.join('dependencies', elem), exclude = '*-min.js')
+    for i in l.get():
+      v = i.split('/')
+      v.pop()
+      v = v.pop()
+      if Yak.config['use-trunk']:
+        if v == 'master':
+          candidate = i
+      else:
+        if not v == 'master':
+          candidate = i
+
+    combine([candidate, 'src/loader.js'], '%s/loader-%s.js' % (Yak.paths['build'], elem), replace=sed)
+    combine([candidate, '%s/spitfire.js' % Yak.paths['build']], '%s/spitfire-%s.js' % (Yak.paths['build'], elem), replace=sed)
+
+
+
+
+
 
 @task("Deploy package")
 def deploy():
   help.deployer(Yak.paths['build'], True)
   # In case you wanna deploy dependencies as well
-  help.deployer('dependencies', False)
+  help.deployer('dependencies', False, "dependencies")
 

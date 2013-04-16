@@ -195,15 +195,15 @@ class Helpers:
   @staticmethod
   def replacer(s):
     for (key, value) in Yak.package.items():
-      s.add('{PUKE-PACKAGE-%s}' % key.replace('_', '-').upper(), value)
+      s.add('{PUKE-PACKAGE-%s}' % key.replace('_', '-').upper(), str(value))
     for (key, value) in Yak.rights.items():
-      s.add('{PUKE-RIGHTS-%s}' % key.replace('_', '-').upper(), value)
+      s.add('{PUKE-RIGHTS-%s}' % key.replace('_', '-').upper(), str(value))
     for (key, value) in Yak.git.items():
-      s.add('{PUKE-GIT-%s}' % key.replace('_', '-').upper(), value)
+      s.add('{PUKE-GIT-%s}' % key.replace('_', '-').upper(), str(value))
     for (key, value) in Yak.paths.items():
-      s.add('{PUKE-%s-ROOT}' % key.replace('_', '-').upper(), value)
+      s.add('{PUKE-%s-ROOT}' % key.replace('_', '-').upper(), str(value))
     for (key, value) in Yak.config.items():
-      s.add('{PUKE-CONFIG-%s}' % key.replace('_', '-').upper(), value)
+      s.add('{PUKE-CONFIG-%s}' % key.replace('_', '-').upper(), str(value))
     return s
 
 
