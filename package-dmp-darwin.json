@@ -1,1 +1,7 @@
-{}
+{
+  "config":{
+    "suffix": "",
+    "use-trunk": true
+  }
+
+}

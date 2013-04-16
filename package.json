@@ -1,9 +1,9 @@
 {
   "name": "Spitfire.js",
-  "version": "0.0.1",
+  "version": "1.0.0-rc3",
 
   "description": "Javascript shim / loader framework. Making things behave since 1976.",
-  "keywords": ["shim", "loader", "framework"],
+  "keywords": ["shim", "loader", "framework", "es5"],
   "author": "WebItUp",
   "maintainers": [
     {
@@ -15,6 +15,11 @@
   "contributors":[
     {
       "name": "Mangled Deutz",
+      "email": "dev@webitup.fr",
+      "url": "http://www.webitup.fr"
+    },
+    {
+      "name": "Raildecom",
       "email": "dev@webitup.fr",
       "url": "http://www.webitup.fr"
     }
@@ -47,6 +52,7 @@
   },
 
   "config": {
-    "suffix": "-min"
+    "suffix": "-min",
+    "use-trunk": false
   }
 }
