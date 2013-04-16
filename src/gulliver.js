@@ -48,8 +48,7 @@
    */
 
   this.gulliver = function(callback, uri, name) {
-    var oDOC = document;
-    var head = oDOC.head || oDOC.getElementsByTagName('head');
+    var head = document.head || document.getElementsByTagName('head');
 
     // loading code borrowed directly from LABjs itself
     var tout = function() {
@@ -62,7 +61,7 @@
         // avoids nasty IE bug where changes to DOM invalidate live node lists
       }
       // Get gulliver itself to guess options
-      var scripts = oDOC.getElementsByTagName('script');
+      var scripts = document.getElementsByTagName('script');
       var re = new RegExp('(.*)\\/' + (name || 'gulliver') + '((?:-min)?\\.js)');
       for (var x = 0, baseGulliPath; x < scripts.length; x++) {
         baseGulliPath = scripts[x];
@@ -72,7 +71,7 @@
           break;
         }
       }
-      var scriptElem = oDOC.createElement('script'),
+      var scriptElem = document.createElement('script'),
           scriptdone = false;
       scriptElem.onload = scriptElem.onreadystatechange = function() {
         if ((scriptElem.readyState && scriptElem.readyState !== 'complete' &&
@@ -90,13 +89,13 @@
     setTimeout(tout, 0);
 
     // required: shim for FF <= 3.5 not having document.readyState
-    if ((oDOC.readyState === null) && oDOC.addEventListener) {
+    if ((document.readyState === null) && document.addEventListener) {
       var handler = function() {
-        oDOC.removeEventListener('DOMContentLoaded', handler, false);
-        oDOC.readyState = 'complete';
+        document.removeEventListener('DOMContentLoaded', handler, false);
+        document.readyState = 'complete';
       };
-      oDOC.readyState = 'loading';
-      oDOC.addEventListener('DOMContentLoaded', handler, false);
+      document.readyState = 'loading';
+      document.addEventListener('DOMContentLoaded', handler, false);
     }
   };
 }).apply(this);
