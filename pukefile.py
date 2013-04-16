@@ -83,7 +83,7 @@ def tests():
     "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-object.js",
     "https://raw.github.com/kriskowal/es5-shim/master/tests/spec/s-date.js"
   ]
-  deepcopy(list, Yak.build_root + '/tests/es5/');
+  deepcopy(list, Yak.paths['build'] + '/tests/es5/');
 
 
 @task("Build package")
@@ -102,7 +102,7 @@ def build():
   allshims = FileList("src/burnscars", filter="*.js")
 
   for elem in ['json3', 'xmlhttprequest', 'es5', 'console', 'stacktrace']:
-    candidate = ''
+    candidate = []
     l = FileList(FileSystem.join('dependencies', elem), exclude = '*-min.js')
     for i in l.get():
       v = i.split('/')
@@ -111,16 +111,18 @@ def build():
       # Broken because of json3 lack of master
       if Yak.config['use-trunk']:
         if v == 'master':
-          candidate = i
+          candidate.append(i)
       else:
         if not v == 'master':
-          candidate = i
+          candidate.append(i)
 
+    # json3 no master fuckerage
     if not candidate:
-      candidate = l.get().pop()
+      candidate = [l.get().pop()]
 
+    for item in candidate:
+      combine([item], '%s/burnscars/%s' % (Yak.paths['build'], item.split('/').pop()), replace=sed)
     # Copy raw into burnscars
-    combine([candidate], '%s/burnscars/%s.js' % (Yak.paths['build'], elem), replace=sed)
     # Add to the allshims list
     allshims.merge(candidate)
 
@@ -148,7 +150,7 @@ def build():
         if not v == 'master':
           styles.append(i)
 
-  combine(styles, '%s/burnscars/reset.css' % Yak.paths['build'])
+  combine(styles, '%s/burnscars.css' % Yak.paths['build'])
 
   # ============================
   # Build spitfire

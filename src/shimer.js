@@ -17,7 +17,8 @@
  */
 
 (function() {
-  /*jshint evil:true*/
+  /*jshint evil:true, maxstatements:50*/
+  /*global define:false, exports:false*/
   'use strict';
 
   /**

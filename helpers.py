@@ -55,7 +55,8 @@ class Helpers:
       },
       "rights": {
         "license": '<a href="%s">%s</a>' % (r["licenses"][0]["url"], r["licenses"][0]["type"]),
-        "copyright": 'All rights reserved <a href="http://www.webitup.fr">copyright %s</a>' % r["author"]
+        "copyright": 'All rights reserved <a href="http://www.webitup.fr">copyright %s</a>' % r["author"],
+        "author": r["author"]
       },
       "git": {
         "root": '%s/blob/master/src' % clean
@@ -183,7 +184,7 @@ class Helpers:
   @staticmethod
   def cleaner():
     for (key, path) in Yak.paths.items():
-      if not path == "src":
+      if not key == "src" and not key == "tests":
         resp = prompt('Delete %s? y/[N]' % path, 'N')
         if resp == 'y':
           try:

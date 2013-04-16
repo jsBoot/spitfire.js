@@ -31,7 +31,8 @@
  */
 
 (function() {
-  /*global head:true, YUI:true, yepnope:true, requirejs:true, $LAB:true*/
+  /*global head:false, YUI:false, yepnope:false, requirejs:false, $LAB:false,
+    define:false, exports:false*/
   'use strict';
 
   // Get a backend
