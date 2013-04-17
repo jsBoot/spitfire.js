@@ -12,9 +12,10 @@
 
 # Build scories
 *.py[co]
-*/build/*
-*/tmp/*
+build/
+.build/
+.tmp/
+tmp/*
 *.egg
 *.egg-info
 *xxx*
-
