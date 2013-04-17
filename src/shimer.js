@@ -200,7 +200,7 @@
    * @type {String}
    */
   root.XHR = 'xhr';
-  root.add({test: true, uri: '{SPIT-XMLHTTPREQUEST}'}, root.XHR);
+  root.add({test: true, uri: 'xmlhttprequest'}, root.XHR);
 
   /**
    * Enforces the loading of a shimed JSON, enforcing identical functionality
@@ -213,7 +213,7 @@
    * @type {String}
    */
   root.JSON = 'json';
-  root.add({test: true, uri: '{SPIT-JSON3}'}, root.JSON);
+  root.add({test: true, uri: 'json3'}, root.JSON);
 
   /**
    * Requests that "unsafe" shims are loaded.
@@ -237,7 +237,7 @@
         !Object.isFrozen ||
         !Object.seal ||
         !Object.freeze,
-    uri: '{SPIT-ES5-SHAM}'
+    uri: 'es5-sham'
   }, root.UNSAFE);
 
   /**
@@ -443,7 +443,7 @@
   // ==========
   root.add({
     test: es5Tests,
-    uri: '{SPIT-ES5-SHIM}'
+    uri: 'es5-shim'
   }, root.SAFE);
 
 
@@ -452,7 +452,7 @@
   // ==========
   root.add({
     test: !window.JSON,
-    uri: '{SPIT-JSON3}'
+    uri: 'json3'
   }, root.SAFE);
 
   // ==========
@@ -461,7 +461,7 @@
 
   root.add({
     test: !window.XMLHttpRequest,
-    uri: '{SPIT-XMLHTTPREQUEST}'
+    uri: 'xmlhttprequest'
   }, root.SAFE);
 
   // ==========
@@ -480,7 +480,7 @@
         ok &= !!window.console[props[x]];
       return ok;
     })(),
-    uri: '{SPIT-CONSOLE}'
+    uri: 'console'
   }, root.SAFE);
 
   // Use all safe shims by default

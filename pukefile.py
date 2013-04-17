@@ -9,6 +9,7 @@ import json
 @task("Default task")
 def default():
   executeTask("build")
+  executeTask("tests")
   executeTask("deploy")
 
 @task("All")
@@ -31,11 +32,13 @@ def clean():
 
 @task("jsDocking")
 def doc():
-  list = FileList(Yak.paths['build'], filter = "*.js")
-  # jsdoc3(list, Yak.doc_root + "/jsdoc3.json")
-  d = FileSystem.abspath(Yak.paths["doc"])
-  jsdoc3(list, "%s/gristaupe.json" % d)
-  jsdoc3(list, "%s/html" % d, template = "templates/default")
+  # list = FileList(Yak.paths['build'], filter = "*.js")
+  # # jsdoc3(list, Yak.doc_root + "/jsdoc3.json")
+  # d = FileSystem.abspath(Yak.paths["doc"])
+  # jsdoc3(list, "%s/gristaupe.json" % d)
+  # jsdoc3(list, "%s/html" % d, template = "templates/default")
+  console.error('Documentation is failing for some dull java reason')
+  pass
 
 @task("Lint")
 def lint():
@@ -52,8 +55,8 @@ def flint():
 
 @task("Minting")
 def mint():
-  help.minter(Yak.paths['build'], filter = "*yahoo.js,*yepnope.js", strict = False)
-  help.minter(Yak.paths['build'], excluding = "*yahoo*,*yepnope*,*/specs/*,*/es5/*")
+  help.minter(Yak.paths['build'], filter = "*yui*,*yepnope*", strict = False)
+  help.minter(Yak.paths['build'], excluding = "*yui*,*yepnope*,*/specs/*,*/es5/*")
 
   # Some dirty code might not pass strict
   # help.minter(Yak.paths['build'], strict = False)
@@ -70,7 +73,7 @@ def tests():
   sed = Sed()
   help.replacer(sed)
 
-  list = FileList(Yak.paths['tests'], filter="*.js,*.html", exclude="*xxx*")
+  list = FileList(Yak.paths['tests'], filter="*.js,*.html,*.css", exclude="*xxx*")
   deepcopy(list, Yak.paths['build'] + '/tests', replace=sed)
 
   # Can't access from raw github using IE (mimetype mismatch, bitch)
@@ -186,5 +189,5 @@ def build():
 def deploy():
   help.deployer(Yak.paths['build'], True)
   # In case you wanna deploy dependencies as well
-  help.deployer('dependencies', False, "dependencies")
+  help.deployer('dependencies', True, "dependencies")
 

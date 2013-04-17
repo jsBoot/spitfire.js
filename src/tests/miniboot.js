@@ -5,22 +5,19 @@
   var spitfireBaseUrl = '../';
   var useSpitfire = !!location.href.match(/use-spitfire/);
   var useSpitfireFull = !!location.href.match(/use-spitfire-full/);
+  var useMonolith = !!location.href.match(/use-monolith/);
   var useES5 = !!location.href.match(/use-es5/);
   var useES5Full = !!location.href.match(/use-es5-full/);
-  var noMin = !!location.href.match(/use-nomin/);
-  var suffix = !noMin ? '-min.js' : '.js';
-  var cssSuffix = !noMin ? '-min.css' : '.css';
-
-  // Remove the nojs className
-  document.getElementsByTagName('html')[0].className = '';
+  var useMin = !!location.href.match(/use-min/);
+  var suffix = useMin ? '-min.js' : '.js';
 
   // If you want to use Spitfire, have "use-spitfire" somehow in the url (eg: url#use-*)
   // If you want the extra (unsafe!) shims as well, use-spitfire-full
   // If you want to use ES5, have "use-es5"
-  var finishUp = function(ld, spit) {
-    if (!ld)
-      ld = Spitfire.loader;
-    ld = ld.fork();
+  var finishUp = function(loader, spit) {
+    if (!loader)
+      loader = Spitfire.loader;
+    loader = loader.fork();
 
     if (useSpitfire) {
       if (!spit)
@@ -28,14 +25,18 @@
       // If we want the full shims from spitfire
       if (useSpitfireFull)
         spit.use(spit.UNSAFE);
-      var shims = spit.boot(noMin);
+      var shims = spit.boot(!useMin);
       for (var x = 0; x < shims.length; x++)
-        ld.script(spitfireBaseUrl + shims[x]);
+        loader.script(spitfireBaseUrl + shims[x]);
+    }
+
+    if(useMonolith){
+      loader.script('../burnscars' + suffix);
     }
     // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe statements
     // (hence dereference unshimed-yet code...), so, we need to WAIT for the shimer to come in
     // And so is our event testing...
-    ld.wait()
+    loader.wait()
     .script('specs/Events.js')
     .script('es5/s-array.js')
     .script('es5/s-function.js')
@@ -43,8 +44,11 @@
     .script('es5/s-object.js')
     .script('es5/s-date.js');
 
+    var h = document.getElementsByTagName('html')[0];
+    h.className = h.className.replace(/miniboot/, '');
+
     // Once everything is in place, start jasmine
-    ld.wait(function() {
+    loader.wait(function() {
       var jasmineEnv = jasmine.getEnv();
       jasmineEnv.updateInterval = 1000;
 
@@ -58,17 +62,16 @@
     });
   };
 
-  var code = function(ld) {
+  var code = function(loader) {
     // Specs
     // For some hard to understand reason, we can't use the stack used *outside*
-    ld = ld.fork();
-    ld.style('{SPIT-JASCSS}' + cssSuffix);
-    ld.script('{SPIT-JAS}' + suffix)
+    loader = loader.fork();
+    loader.style('../dependencies/jasmine/1.3.1/jasmine.css');
+    loader.script('../dependencies/jasmine/1.3.1/jasmine' + suffix)
     .wait();
-    ld.script('{SPIT-JASHTML}' + suffix)
+    loader.script('../dependencies/jasmine/1.3.1/jasmine-html' + suffix)
     .wait();
-    ld
-    .script('specs/Function.js')
+    loader.script('specs/Function.js')
     .script('specs/Object.js')
     .script('specs/Array.js')
     .script('specs/String.js')
@@ -79,26 +82,22 @@
     .script('es5/h-matchers.js');
 
     // If we are told to use-* a shiming shcript, load it as well
-    if (useSpitfire) {
-      ld.script(spitfireBaseUrl + 'shimer' + suffix);
-    }
+    if (useSpitfire)
+      loader.script(spitfireBaseUrl + 'shimer' + suffix);
     if (useES5)
-      ld.script(spitfireBaseUrl + 'burnscars/es5-shim' + suffix);
+      loader.script(spitfireBaseUrl + 'burnscars/es5-shim' + suffix);
     if (useES5Full)
-      ld.script(spitfireBaseUrl + 'burnscars/es5-sham' + suffix);
-
-
-    ld.wait();
+      loader.wait().script(spitfireBaseUrl + 'burnscars/es5-sham' + suffix);
 
     if (typeof require != 'undefined')
-      ld.wait(function() {
+      loader.wait(function() {
         if (useSpitfire)
           require(['Spitfire/loader', 'Spitfire'], finishUp);
         else
           require(['Spitfire/loader'], finishUp);
       });
     else
-      ld.wait(finishUp);
+      loader.wait(finishUp);
   };
 
   if (typeof require != 'undefined')

@@ -113,12 +113,12 @@ class Helpers:
         print burne
         print re.sub(r"(.*).js$", r"\1-min.js", burne)
         minify(str(burne), re.sub(r"(.*).js$", r"\1-min.js", burne), strict = strict)
-      filtre = '*.css'
-      list = FileList(path, filter = filtre, exclude = "*-min.css,%s" % excluding)
-      for burne in list.get():
-        print burne
-        print re.sub(r"(.*).js$", r"\1-min.js", burne)
-        minify(str(burne), re.sub(r"(.*).css$", r"\1-min.css", burne))
+      # filtre = '*.css'
+      # list = FileList(path, filter = filtre, exclude = "*-min.css,%s" % excluding)
+      # for burne in list.get():
+      #   print burne
+      #   print re.sub(r"(.*).js$", r"\1-min.js", burne)
+      #   minify(str(burne), re.sub(r"(.*).css$", r"\1-min.css", burne))
     else:
       filtre = filter
       list = FileList(path, filter = filtre, exclude = "*-min.js,%s" % excluding)
@@ -213,7 +213,10 @@ class Helpers:
     list = FileList(src)
     if withversion and Yak.paths['dist'] != 'dist':
       v = Yak.package['version'].split('-').pop(0).split('.')
-      deepcopy(list, FileSystem.join(Yak.paths['dist'], Yak.package['name'], v[0] + "." + v[1]))
+      d = FileSystem.join(Yak.paths['dist'], Yak.package['name'], v[0] + "." + v[1])
+      if destination:
+        d = FileSystem.join(d, destination)
+      deepcopy(list, d)
     else:
       d = Yak.paths['dist']
       if destination:
