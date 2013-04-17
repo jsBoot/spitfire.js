@@ -266,7 +266,7 @@
       if (it && re.test(it)) {
         m = it.split('/');
         m.pop();
-        m = m.join('/');
+        m = m.join('/') || './';
         break;
       }
     }

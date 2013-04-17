@@ -1,9 +1,9 @@
-<!doctype html>
-<!--[if lt IE 7]> <html lang="en-us" class="no-js ie6"> <![endif]-->
-<!--[if IE 7]>    <html lang="en-us" class="no-js ie7"> <![endif]-->
-<!--[if IE 8]>    <html lang="en-us" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>   <html lang="en-us" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-us" class="no-js "> <!--<![endif]-->
+<!DOCTYPE html>
+<!--[if lt IE 7]><html lang="en-us" class="no-js ie6"><![endif]-->
+<!--[if IE 7]><html lang="en-us" class="no-js ie7"><![endif]-->
+<!--[if IE 8]><html lang="en-us" class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html lang="en-us" class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-us" class="no-js "><!--<![endif]-->
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -14,18 +14,17 @@
 
   <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="miniboot.ico">
 
-  <script type="text/javascript">
-    // If we got js, remove the nojs class and activate the throbber
-    var h = document.getElementsByTagName('html')[0];
-    h.className = h.className.replace(/no-js/, 'miniboot');
-  </script>
+  <!--[if lt IE 10]>
+  <script src="dependencies/ie7/2.1(beta4)/ie9-min.js"></script>
+  <![endif]-->
 
-  <!--
-  This is a placeholder stylesheet meant to
-  provide *default* styles to be displayed while the app boots-up
-  -->
   <style type="text/css">
-    /* This is meant only to style no-javascript browsers error */
+    /*
+    This is a placeholder stylesheet meant to
+    provide *default* styles to be displayed while the app boots-up
+    */
+    behavior: url(dependencies/pie/2.0beta1/pie-min.htc);
+
     noscript > p{
       padding: 8px 35px 8px 14px;
       margin-bottom: 18px;
@@ -50,7 +49,7 @@
       display: none;
     }
 
-    /* Show the throbber until the app finishes booting and remove the no-js class */
+    /* Show the throbber until the app finishes booting and remove the miniboot class */
     html.miniboot #throbber{
       display: block;
       position: absolute;
@@ -73,18 +72,6 @@
   </style>
   <link rel="stylesheet" type="text/css" href="miniboot.css">
 
-  <!-- XXX Require IE7 and other deps -->
-  <!--[if lt IE 9]>
-  <script src="{AIRSTRIP-BASE}/lib/shims/ie7/ie9-stable-min.js"></script>
-  <![endif]-->
-  <!-- Tests to be done on this -->
-  <!-- Prompt IE <= 6 users to install Chrome Frame directly. Remove this if you want to support IE 6.
-       chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7 ]>
-    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
-    <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
-  <![endif]-->
-
 </head>
 <body id="approot">
   <!-- Browsers with no javascript support will see this -->
@@ -96,11 +83,11 @@
 
   <!-- oldIES get here -->
   <!--[if lt IE 7]>
-    <p class="alert alert-error" id="very-outdated-browser">
-      <strong>
-      Your browser is obsolete. You should <a href="http://browsehappy.com/">update it</a>, or <a href="//www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a>.
-      </strong>
-    </p>
+    <p class="alert alert-error" id="obsolete-browser">Your browser is very outdated, and will likely not work well with our product. You really <a href="http://browsehappy.com/">should consider upgrading</a>, or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this product.</p>
+  <![endif]-->
+
+  <!--[if (lt IE 9)&(gt IE 6)]>
+    <p class="alert alert-error" id="outdated-browser">Your browser is outdated. We will try our best, but you <a href="http://browsehappy.com/">should consider upgrading</a>, or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this product.</p>
   <![endif]-->
 
   <!-- Throbber image displayed while the application boots-up -->
@@ -131,43 +118,58 @@
   <div class="container">
     <h1>Spitfire.js</h1>
 
-    <h2>Abstract</h2>
+    <h2>About</h2>
     <section>
-      This is meant to test basic functionality in the browser (and spitfire should provide
-      shims for these). By default, no shims are loaded.<br />
-      In order to use a different loader than the default one (labjs), click any other loader.<br />
-      In order to use spitfire/es5/-full to test *with* shim, click the appropriate menu entry.<br />
-      You can combine multiple parameters manually obviously.
+      Javascript shim / loader framework.<br />
+      <br />
+      Making things behave since 1976.<br />
     </section>
+
+    <h2>Links</h2>
+    <ul>
+      <li><a href="https://github.com/jsBoot/spitfire.js">On github (doc and stuff)</a></li>
+    </ul>
 
     <footer>
       <p>&copy; WebItUp 2012</p>
     </footer>
 
   </div>
-  <script type="text/javascript" src="burnscars.js"></script>
-  <script type="text/javascript" src="dependencies/jquery/master/jquery.js"></script>
-  <script type="text/javascript" src="dependencies/bootstrap/master/bootstrap.js"></script>
+
+  <!-- Prompt IE <= 6 users to install Chrome Frame directly. Remove this if you want to support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE XXXXXX ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+    <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+  <![endif]-->
+
+  <script type="text/javascript" src="spitfire-labjs.js"></script>
   <script type="text/javascript">
+  (function(){
+    'use strict';
     // If we got js, remove the nojs class and activate the throbber
     var h = document.getElementsByTagName('html')[0];
-    h.className = h.className.replace(/miniboot/, '');
+    h.className = h.className.replace(/no-js/, 'miniboot');
+
+    var shims = Spitfire.boot(true);
+    var baseUri = Spitfire.loader.base('spitfire-labjs');
+    for(var x = 0; x < shims.length; x++)
+      Spitfire.loader.script(baseUri + '/' + shims[x]);
+    Spitfire.loader.wait(function(){
+      // Ready to enjoy ES5, console, json, xhr...
+      console.warn(" [spitfire.js] all shims loaded");
+      var h = document.getElementsByTagName('html')[0];
+      h.className = h.className.replace(/miniboot/, '');
+    });
+    Spitfire.loader.script('dependencies/jquery/1.9.1/jquery.js')
+    Spitfire.loader.wait();
+    Spitfire.loader.script('dependencies/bootstrap/2.3.1/bootstrap.js')
+    Spitfire.loader.wait(function(){
+      var h = document.getElementsByTagName('html')[0];
+      h.className = h.className.replace(/miniboot/, '');
+    });
+  })();
   </script>
 
 </body>
 </html>
-  <!--[if lt IE 7]>
-    <p id="very-outdated-browser">Your browser is very outdated, and will likely not work well with our product. You really <a href="http://browsehappy.com/">should consider upgrading</a>, or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this product.</p>.</p>
-  <![endif]-->
-  <!--[if lt IE 9]>
-    <p id="outdated-browser">Your browser is outdated. We will try our best, but you <a href="http://browsehappy.com/">should consider upgrading</a>, or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this product.</p>.</p>
-  <![endif]-->
-
-
-
-  <!-- Prompt IE <= 6 users to install Chrome Frame directly. Remove this if you want to support IE 6.
-       chromium.org/developers/how-tos/chrome-frame-getting-started -->
-  <!--[if lt IE 7 ]>
-    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
-    <script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
-  <![endif]-->

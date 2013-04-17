@@ -1,6 +1,6 @@
 {
   "name": "Spitfire.js",
-  "version": "1.0.0-rc3",
+  "version": "1.1.0",
 
   "description": "Javascript shim / loader framework. Making things behave since 1976.",
   "keywords": ["shim", "loader", "framework", "es5"],

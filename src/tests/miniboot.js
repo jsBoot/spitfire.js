@@ -30,7 +30,7 @@
         loader.script(spitfireBaseUrl + shims[x]);
     }
 
-    if(useMonolith){
+    if (useMonolith) {
       loader.script('../burnscars' + suffix);
     }
     // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe statements
@@ -85,9 +85,9 @@
     if (useSpitfire)
       loader.script(spitfireBaseUrl + 'shimer' + suffix);
     if (useES5)
-      loader.script(spitfireBaseUrl + 'burnscars/es5-shim' + suffix);
+      loader.script(spitfireBaseUrl + 'burnscars/es5.shim' + suffix);
     if (useES5Full)
-      loader.wait().script(spitfireBaseUrl + 'burnscars/es5-sham' + suffix);
+      loader.wait().script(spitfireBaseUrl + 'burnscars/es5.shim.unsafe' + suffix);
 
     if (typeof require != 'undefined')
       loader.wait(function() {

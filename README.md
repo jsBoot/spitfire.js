@@ -5,22 +5,23 @@ About
 -------------
 
 Javascript shim / loader framework.
+
 Making things behave since 1976.
 
 For the impatients
 -------------
 
-Get the content of the "lib" folder, and make it available on your server as "/whatever/lib". Include "spitfire-lab-min.js" in your page.
+Get the content of the "dist" folder, and make it available on your server as "/whatever/dist". Include "spitfire-lab-min.js" in your page.
 
 
 ```
 <!doctype html>
 <html>
 <head>
-  <script src="//base-url-to-spitfire-lib-folder/spitfire-lab-min.js"></script>
+  <script src="//base-url-to-spitfire-lib-folder/spitfire-labjs-min.js"></script>
   <script type="text/javascript">
     var shims = Spitfire.boot();
-    var baseUri = Spitfire.loader.base('spitfire-lab');
+    var baseUri = Spitfire.loader.base('spitfire-labjs');
     for(var x = 0; x < shims.length; x++)
       Spitfire.loader.script(baseUri + '/' + shims[x]);
     Spitfire.loader.wait(function(){
@@ -35,14 +36,14 @@ Get the content of the "lib" folder, and make it available on your server as "/w
 ```
 
 Now, you can enjoy in any browser (at least, that's the purpose):
-- es5 support (partial, but most of the useful stuff)
+- es5/es6 support (partial, but most of the useful stuff)
 - proper Date support
 - json
 - XMLHttpRequest
 - console
 - localStorage
 - geolocation API
-- others coming
+- others
 
 Problem
 -------------
@@ -81,8 +82,10 @@ Spitfire.use('SomeCategory');
 
 // Use UNSAFE shims (shims that do not provide actual functionality, just named props)
 Spitfire.use(Spitfire.UNSAFE);
+
 // Enforce JSON replacement shim instead of native implementation, no matter what
 Spitfire.use(Spitfire.JSON);
+
 // Enforce XHR replacement shim instead of native implementation, no matter what
 Spitfire.use(Spitfire.XHR);
 
@@ -112,7 +115,7 @@ Spitfire.loader.script('something.js')
     // Everything loaded
   });
 
-var ld = Spitfire.loader.fork;
+var ld = Spitfire.loader.fork();
 ld.script('to_be_loaded_separately.js');
 
 ```
@@ -123,10 +126,16 @@ See the jsdoc documentation for more.
 API: gulliver.js
 -------------
 
-Gulliver is a MINIMALIST loader (under 1kB), meant for ealy stage boot.
+Gulliver is a MINIMALIST loader (under 1kB), meant for ealy stage boot, largely copied from labjs gist.
 If you don't understand what all that means, and the implications, you probably don't need it.
 
 How to use:
+
+```
+gulliver(function(){
+  console.log('OK!');
+}, 'someUrl');
+```
 
 
 API: Advanced embedding strategies
@@ -143,7 +152,9 @@ If you prefer to use your own copy of your favorite loader (assuming its support
 
 If you don't care at all about the loader API, just embed "shimer-min.js" to get the Spitfire module/namespace with no loader (it's then your responsibility to load the uris).
 
-If you are looking for a as-slick-as-possible minimal bootstrap loader, take a look at gulliver (see documentation).
+On the other hand, if you just want a loader and NOT the shiming API, use loader-something.js.
+
+If you are looking for a as-slick-as-possible minimal bootstrap loader, take a look at gulliver.
 
 ```
 gulliver(function(){
@@ -152,7 +163,9 @@ gulliver(function(){
 
 ```
 
-If you want don't care about conditional testing or loading at all, and just want a shim-it-all file, use the burnscars-min.js file directly. 
+Finally, if you just don't care at all about conditional testing or loading at all, and just want a shim-it-all file, simply use the burnscars-min.js file directly. Conversely, there is a burnscars.css file that reset css (normalize + h5bp fragment).
+
+One of these files (gulliver-min.js, spitfire(-[^-]+)?-min.js, loader(-[^-]+)?-min.js, shimer-min.js, burnscars.(?:js|css), along with the burnscars folder if you use on-demand shiming) is all that is needed for distribution.
 
 How to build
 -------------
@@ -164,6 +177,7 @@ How to build
 
 You can customize stuff by using a config-USERNAME-OSNAME.json file (see package.json to see what you can override).
 
+In case you would want to upgrade the dependencies, you should do that using Airstrip.
 
 How to contribute
 -------------
@@ -195,10 +209,10 @@ Most of the actual shiming code is provided by third-party library and sources, 
 - http://developer.mozilla.org
 - others
 
-See the pukefile and individual burnscars/ files for information.
+See the pukefile, the dependencies folder, individual burnscars/ files for information.
 All of them use a MIT compatible license, or public domain.
 
-The loader API is largely inspired by labjs.
+The loader API is largely inspired by that of labjs.
 
 About the tests
 -------------
@@ -212,21 +226,21 @@ You need to build (puke all) to have the tests deployed.
 Navigate your browser to lib/tests/All.html
 
 It will default to use loader-lab, unless you add params in the url to specify another loader
-(eg: #loader-require).
+(eg: #loader-requirejs).
 
 The following additional fragments options are supported in the url:
 - use shimer as well: #use-spitfire
 - use shimer with unsafe shims: #use-spitfire-full
+- use shimer as a monolith: #use-monolith
 - to use ES5-shim only: #use-es5
 - to use minified versions of the shims: #use-min
 
-You can combine any of these (though use-spitfire implies use-es5).
+You can combine any of these (though use-spitfire obviously implies use-es5).
 
 About the bugs
 -------------
 
-Yahoo loader doesn't behave.
-If you really use it, speak-up so we consider to fix.
+Except for Labjs, the loaders are rarely tested.
 
 
 Versioning and API
@@ -252,9 +266,5 @@ Spitfire will be made available, prebuilt, under a jsboot domain - though, unles
 Technology
 -------------
 
-We use puke (https://github.com/webitup/puke), a (inhouse) versatile python build system.
-
-We also depend on airstrip.js (https://github.com/jsBoot/airstrip) in order to 
-provide dependencies at build time - though you don't need to build it yourself and won't depend
-on it at runtime (airstrip provides access to the third-party libraries that are copied in the build result).
+We use puke (https://github.com/webitup/puke), a (inhouse) versatile python build system, and airstrip (https://github.com/jsBoot/airstrip.js), a javascript dependency manager built on-top of puke.
 

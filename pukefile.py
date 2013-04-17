@@ -102,9 +102,9 @@ def build():
   # ============================
   # Get the external shims
   # ============================
-  allshims = FileList("src/burnscars", filter="*.js")
+  allshims = FileList("src/burnscars", filter="*.js", exclude="*es6*")
 
-  for elem in ['json3', 'xmlhttprequest', 'es5', 'console', 'stacktrace']:
+  for elem in ['es5', 'json3', 'xmlhttprequest', 'console', 'stacktrace']:
     candidate = []
     l = FileList(FileSystem.join('dependencies', elem), exclude = '*-min.js')
     for i in l.get():
@@ -128,6 +128,8 @@ def build():
     # Copy raw into burnscars
     # Add to the allshims list
     allshims.merge(candidate)
+
+  allshims.merge(FileList("src/burnscars", filter="*es6*"))
 
   # ============================
   # Build all-in-one shim

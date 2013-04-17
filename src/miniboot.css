@@ -1,6 +1,6 @@
 @import url(burnscars.css);
-@import url(dependencies/bootstrap/master/css/bootstrap.css);
-@import url(dependencies/bootstrap/master/css/bootstrap-responsive.css);
+@import url(dependencies/bootstrap/2.3.1/css/bootstrap.css);
+@import url(dependencies/bootstrap/2.3.1/css/bootstrap-responsive.css);
 body {
   padding-top: 60px !important;
   background-image: url('assets/images/logo.png');

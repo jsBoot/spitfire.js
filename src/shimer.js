@@ -237,7 +237,7 @@
         !Object.isFrozen ||
         !Object.seal ||
         !Object.freeze,
-    uri: 'es5-sham'
+    uri: 'es5.shim.unsafe'
   }, root.UNSAFE);
 
   /**
@@ -443,7 +443,7 @@
   // ==========
   root.add({
     test: es5Tests,
-    uri: 'es5-shim'
+    uri: 'es5.shim'
   }, root.SAFE);
 
 

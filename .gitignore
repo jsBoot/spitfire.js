@@ -3,6 +3,7 @@
 
 # Build systems
 .pukecache/
+.airstrip*
 */.sass-cache/*
 
 # IDE
