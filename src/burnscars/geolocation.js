@@ -26,6 +26,8 @@
 // by Joshua Bell - http://calormen.com/polyfill
 
 // PUBLIC DOMAIN
+
+/*jshint browser:true*/
 if (!navigator.geolocation)
   (function() {
     'use strict';
@@ -175,7 +177,8 @@ if (!navigator.geolocation)
         function onFailure() {
           if (!timedOut) {
             if (timerId) { clearTimeout(timerId); }
-            dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE, 'Position unavailable'));
+            dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE,
+                'Position unavailable'));
           }
         }
 
@@ -242,7 +245,8 @@ if (!navigator.geolocation)
           function onFailure() {
             if (!timedOut && !timerDetails.cleared) {
               if (timerId) { clearTimeout(timerId); timerId = 0; }
-              dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE, 'Position unavailable'));
+              dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE,
+                  'Position unavailable'));
             }
           }
 
@@ -348,7 +352,8 @@ Box_104A_WEP%7Css:-86&wifi=mac:1e-7f-bf-0d-c6-44%7Cssid:freebox_abecat120%7Css:-
 
   initialize();
 
-  geocoder.geocode( { 'address': "18 rue frédérick lemaitre, 75020 Paris"}, function(results, status) {
+  geocoder.geocode( { 'address': "18 rue frédérick lemaitre, 75020 Paris"},
+  function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       map.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({

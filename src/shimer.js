@@ -17,7 +17,7 @@
  */
 
 (function() {
-  /*jshint evil:true, maxstatements:50*/
+  /*jshint evil:true, browser:true, maxstatements:50,maxcomplexity:60*/
   /*global define:false, exports:false*/
   'use strict';
 
@@ -44,7 +44,8 @@
   var root = typeof exports == 'object' && exports;
 
   // Pattern from JSON3
-  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript engines.
+  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript
+  // engines.
   if (isLoader || root) {
     if (isLoader) {
       // Export for asynchronous module loaders. The namespace is
@@ -473,8 +474,8 @@
       var props = [
         'log', 'debug', 'info', 'warn', 'error', 'assert' /*, 'dir', 'dirxml', 'exception', 'time',
           'timeEnd', 'table',
-          'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile', 'profileEnd',
-          'count'*/
+          'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile',
+          'profileEnd', 'count'*/
       ];
       for (var x = 0; x < props.length; x++)
         ok &= !!window.console[props[x]];

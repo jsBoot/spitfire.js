@@ -6,7 +6,6 @@
   "white": false, // "jslint can suck it"
 
   /******** Environment ********/
-  "browser": true,
   "devel": false,
   "jquery": true,
 
@@ -66,7 +65,6 @@
 
   /******** Relaxing options we DO use ********/
   "supernew": true,  // allow to be weird
-  "es5": true, // allow for getters / setters
   "esnext": true, // allow for ES6 features
 
   /******** Relaxing options we DONT use ********/

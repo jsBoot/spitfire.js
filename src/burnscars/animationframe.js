@@ -9,6 +9,7 @@
 
 
 (function() {
+  /*jshint browser:true*/
   'use strict';
 
   var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -24,7 +25,7 @@
       var currTime = Date.now();
       var timeToCall = Math.max(0, 16 - (currTime - lastTime));
       lastTime = currTime + timeToCall;
-      return window.setTimeout(function() {
+      return setTimeout(function() {
         callback(currTime + timeToCall);
       }, timeToCall);
     };

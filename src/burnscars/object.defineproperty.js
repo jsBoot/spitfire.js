@@ -1,5 +1,5 @@
 (function() {
-  /*jshint proto:true, camelcase:false */
+  /*jshint proto:true, camelcase:false, browser:true, maxcomplexity:13 */
   'use strict';
   // ES5 15.2.3.6
   // http://es5.github.com/#x15.2.3.6
@@ -50,7 +50,8 @@
       if ((typeof object != 'object' && typeof object != 'function') || object === null) {
         throw new TypeError(ERR_NON_OBJECT_TARGET + object);
       }
-      if ((typeof descriptor != 'object' && typeof descriptor != 'function') || descriptor === null) {
+      if ((typeof descriptor != 'object' && typeof descriptor != 'function') ||
+          descriptor === null) {
         throw new TypeError(ERR_NON_OBJECT_DESCRIPTOR + descriptor);
       }
       // make a valiant attempt to use the real defineProperty

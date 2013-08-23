@@ -33,7 +33,8 @@
     if (useMonolith) {
       loader.script('../burnscars' + suffix);
     }
-    // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe statements
+    // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe
+    // statements
     // (hence dereference unshimed-yet code...), so, we need to WAIT for the shimer to come in
     // And so is our event testing...
     loader.wait()
