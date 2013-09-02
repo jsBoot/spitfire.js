@@ -9,6 +9,7 @@
 
 
 (function() {
+  /*jshint browser:true*/
   'use strict';
 
   var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -24,7 +25,7 @@
       var currTime = Date.now();
       var timeToCall = Math.max(0, 16 - (currTime - lastTime));
       lastTime = currTime + timeToCall;
-      return window.setTimeout(function() {
+      return setTimeout(function() {
         callback(currTime + timeToCall);
       }, timeToCall);
     };
@@ -33,12 +34,12 @@
     };
   }
 }());
-
 // IE quick and dirty fix - XXX beware of NASTY side effects
 // Will break feature detection for some illformed jquery plugins
+/*jshint browser:true*/
 if (!('addEventListener' in window))
   (function() {
-    /*global attachEvent:true,detachEvent:true*/
+    /*global attachEvent:false,detachEvent:false*/
     'use strict';
     window.addEventListener = function(name, listener/*, phase*/) {
       attachEvent('on' + name, listener);
@@ -106,7 +107,6 @@ if (!('addEventListener' in window))
       }
     };
   })();
-
 if (!Function.prototype.isGenerator)
   (function() {
     'use strict';
@@ -115,7 +115,6 @@ if (!Function.prototype.isGenerator)
       return false;
     };
   })();
-
 // Based on a free third-party service - our choice right now
 // http://www.calormen.com/polyfill/geo.js
 
@@ -144,6 +143,8 @@ if (!Function.prototype.isGenerator)
 // by Joshua Bell - http://calormen.com/polyfill
 
 // PUBLIC DOMAIN
+
+/*jshint browser:true*/
 if (!navigator.geolocation)
   (function() {
     'use strict';
@@ -293,7 +294,8 @@ if (!navigator.geolocation)
         function onFailure() {
           if (!timedOut) {
             if (timerId) { clearTimeout(timerId); }
-            dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE, 'Position unavailable'));
+            dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE,
+                'Position unavailable'));
           }
         }
 
@@ -360,7 +362,8 @@ if (!navigator.geolocation)
           function onFailure() {
             if (!timedOut && !timerDetails.cleared) {
               if (timerId) { clearTimeout(timerId); timerId = 0; }
-              dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE, 'Position unavailable'));
+              dispatch(errorCallback, new PositionError(PositionError.POSITION_UNAVAILABLE,
+                  'Position unavailable'));
             }
           }
 
@@ -466,7 +469,8 @@ Box_104A_WEP%7Css:-86&wifi=mac:1e-7f-bf-0d-c6-44%7Cssid:freebox_abecat120%7Css:-
 
   initialize();
 
-  geocoder.geocode( { 'address': "18 rue frédérick lemaitre, 75020 Paris"}, function(results, status) {
+  geocoder.geocode( { 'address': "18 rue frédérick lemaitre, 75020 Paris"},
+  function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       map.setCenter(results[0].geometry.location);
       var marker = new google.maps.Marker({
@@ -479,21 +483,21 @@ Box_104A_WEP%7Css:-86&wifi=mac:1e-7f-bf-0d-c6-44%7Cssid:freebox_abecat120%7Css:-
   });
 */
 
-
 // https://github.com/marcuswestin/store.js#readme
 // http://amplifyjs.com/api/store/
 // https://developer.mozilla.org/en/DOM/Storage
 
-/*jshint nonstandard:true*/
+/*jshint nonstandard:true, browser:true*/
 if (!window.localStorage)
   (function() {
-    /*jshint regexp:false*/
+    /*jshint regexp:false, -W001*/
     'use strict';
 
     window.localStorage = {
       getItem: function(sKey) {
         if (!sKey || !this.hasOwnProperty(sKey)) { return null; }
-        return unescape(document.cookie.replace(new RegExp('(?:^|.*;\\s*)' + escape(sKey).replace(/[\-\.\+\*]/g,
+        return unescape(document.cookie.replace(new RegExp('(?:^|.*;\\s*)' +
+            escape(sKey).replace(/[\-\.\+\*]/g,
             '\\$&') + '\\s*\\=\\s*((?:[^;](?!;))*[^;]?).*'), '$1'));
       },
       key: function(nKeyId) { return unescape(document.cookie.replace(/\s*\=(?:.(?!;))*$/, '').
@@ -511,8 +515,9 @@ if (!window.localStorage)
         document.cookie = escape(sKey) + '=; expires=' + sExpDate.toGMTString() + '; path=/';
         this.length--;
       },
-      hasOwnProperty: function(sKey) { return (new RegExp('(?:^|;\\s*)' + escape(sKey).replace(/[\-\.\+\*]/g, '\\$&') +
-            '\\s*\\=')).test(document.cookie); }
+      hasOwnProperty: function(sKey) { return (new RegExp('(?:^|;\\s*)' +
+          escape(sKey).replace(/[\-\.\+\*]/g, '\\$&') +
+          '\\s*\\=')).test(document.cookie); }
     };
     window.localStorage.length = (document.cookie.match(/\=/g) || window.localStorage).length;
   })();
@@ -580,7 +585,6 @@ if (!window.localStorage)
 //     this.enumerable = true;
 //   })());
 // }
-
 // ES5 15.2.3.5
 // http://es5.github.com/#x15.2.3.5
 if (!Object.create)
@@ -611,7 +615,6 @@ if (!Object.create)
     };
 
   })();
-
 // ES5 15.2.3.7
 // http://es5.github.com/#x15.2.3.7
 if (!Object.defineProperties)
@@ -626,9 +629,8 @@ if (!Object.defineProperties)
       return object;
     };
   })();
-
 (function() {
-  /*jshint proto:true, camelcase:false */
+  /*jshint proto:true, camelcase:false, browser:true, maxcomplexity:13 */
   'use strict';
   // ES5 15.2.3.6
   // http://es5.github.com/#x15.2.3.6
@@ -679,7 +681,8 @@ if (!Object.defineProperties)
       if ((typeof object != 'object' && typeof object != 'function') || object === null) {
         throw new TypeError(ERR_NON_OBJECT_TARGET + object);
       }
-      if ((typeof descriptor != 'object' && typeof descriptor != 'function') || descriptor === null) {
+      if ((typeof descriptor != 'object' && typeof descriptor != 'function') ||
+          descriptor === null) {
         throw new TypeError(ERR_NON_OBJECT_DESCRIPTOR + descriptor);
       }
       // make a valiant attempt to use the real defineProperty
@@ -744,7 +747,6 @@ if (!Object.defineProperties)
   }
 
 })();
-
 // ES5 15.2.3.3
 // http://es5.github.com/#x15.2.3.3
 if (!Object.getOwnPropertyDescriptor)
@@ -805,7 +807,6 @@ if (!Object.getOwnPropertyDescriptor)
       return descriptor;
     };
   })();
-
 // ES5 15.2.3.4
 // http://es5.github.com/#x15.2.3.4
 if (!Object.getOwnPropertyNames)
@@ -815,7 +816,6 @@ if (!Object.getOwnPropertyNames)
       return Object.keys(object);
     };
   })();
-
 // ES5 15.2.3.2
 // http://es5.github.com/#x15.2.3.2
 if (!Object.getPrototypeOf)
@@ -833,7 +833,6 @@ if (!Object.getPrototypeOf)
       );
     };
   })();
-
 // ES5 15.2.3.13
 // http://es5.github.com/#x15.2.3.13
 if (!Object.isExtensible)
@@ -855,7 +854,219 @@ if (!Object.isExtensible)
       return returnValue;
     };
   })();
+/**
+ * @preserve console-shim 1.0.2
+ * https://github.com/kayahr/console-shim
+ * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
+ * Licensed under the MIT license
+ * (See http://www.opensource.org/licenses/mit-license)
+ */
+ 
+ 
+(function(){
+"use strict";
 
+/**
+ * Returns a function which calls the specified function in the specified
+ * scope.
+ *
+ * @param {Function} func
+ *            The function to call.
+ * @param {Object} scope
+ *            The scope to call the function in.
+ * @param {...*} args
+ *            Additional arguments to pass to the bound function.
+ * @returns {function(...[*]): undefined}
+ *            The bound function.
+ */
+var bind = function(func, scope, args)
+{
+    var fixedArgs = Array.prototype.slice.call(arguments, 2);
+    return function()
+    {
+        var args = fixedArgs.concat(Array.prototype.slice.call(arguments, 0));
+        (/** @type {Function} */ func).apply(scope, args);
+    };
+};
+
+// Create console if not present
+if (!window["console"]) window.console = /** @type {Console} */ ({});
+var console = (/** @type {Object} */ window.console);
+
+// Implement console log if needed
+if (!console["log"])
+{
+    // Use log4javascript if present
+    if (window["log4javascript"])
+    {
+        var log = log4javascript.getDefaultLogger();
+        console.log = bind(log.info, log);
+        console.debug = bind(log.debug, log);
+        console.info = bind(log.info, log);
+        console.warn = bind(log.warn, log);
+        console.error = bind(log.error, log);
+    }
+    
+    // Use empty dummy implementation to ignore logging
+    else
+    {
+        console.log = (/** @param {...*} args */ function(args) {});
+    }
+}
+
+// Implement other log levels to console.log if missing
+if (!console["debug"]) console.debug = console.log;
+if (!console["info"]) console.info = console.log;
+if (!console["warn"]) console.warn = console.log;
+if (!console["error"]) console.error = console.log;
+
+// Wrap the log methods in IE (<=9) because their argument handling is wrong
+// This wrapping is also done if the __consoleShimTest__ symbol is set. This
+// is needed for unit testing.
+if (window["__consoleShimTest__"] != null || 
+    eval("/*@cc_on @_jscript_version <= 9@*/"))
+{
+    /**
+     * Wraps the call to a real IE logging method. Modifies the arguments so
+     * parameters which are not represented by a placeholder are properly
+     * printed with a space character as separator.
+     *
+     * @param {...*} args
+     *            The function arguments. First argument is the log function
+     *            to call, the other arguments are the log arguments.
+     */
+    var wrap = function(args)
+    {
+        var i, max, match, log;
+        
+        // Convert argument list to real array
+        args = Array.prototype.slice.call(arguments, 0);
+        
+        // First argument is the log method to call
+        log = args.shift();
+        
+        max = args.length;
+        if (max > 1 && window["__consoleShimTest__"] !== false)
+        {
+            // When first parameter is not a string then add a format string to
+            // the argument list so we are able to modify it in the next stop
+            if (typeof(args[0]) != "string")
+            {
+                args.unshift("%o");
+                max += 1;
+            }
+            
+            // For each additional parameter which has no placeholder in the
+            // format string we add another placeholder separated with a
+            // space character.
+            match = args[0].match(/%[a-z]/g);
+            for (i = match ? match.length + 1 : 1; i < max; i += 1)
+            {
+                args[0] += " %o";
+            }
+        }
+        Function.apply.call(log, console, args);
+    };
+    
+    // Wrap the native log methods of IE to fix argument output problems
+    console.log = bind(wrap, window, console.log);
+    console.debug = bind(wrap, window, console.debug);
+    console.info = bind(wrap, window, console.info);
+    console.warn = bind(wrap, window, console.warn);
+    console.error = bind(wrap, window, console.error);
+}
+
+// Implement console.assert if missing
+if (!console["assert"])
+{
+    console["assert"] = function()
+    {
+        var args = Array.prototype.slice.call(arguments, 0);
+        var expr = args.shift();
+        if (!expr)
+        {
+            args[0] = "Assertion failed: " + args[0];
+            console.error.apply(console, args);
+        }
+    };
+}
+
+// Linking console.dir and console.dirxml to the console.log method if
+// missing. Hopefully the browser already logs objects and DOM nodes as a
+// tree.
+if (!console["dir"]) console["dir"] = console.log;
+if (!console["dirxml"]) console["dirxml"] = console.log;
+
+// Linking console.exception to console.error. This is not the same but
+// at least some error message is displayed.
+if (!console["exception"]) console["exception"] = console.error;
+
+// Implement console.time and console.timeEnd if one of them is missing
+if (!console["time"] || !console["timeEnd"])
+{
+    var timers = {};
+    console["time"] = function(id)
+    {
+        timers[id] = new Date().getTime();
+    };
+    console["timeEnd"] = function(id)
+    {
+        var start = timers[id];
+        if (start)
+        {
+            console.log(id + ": " + (new Date().getTime() - start) + "ms");
+            delete timers[id];
+        }
+    };
+}
+
+// Implement console.table if missing
+if (!console["table"])
+{
+    console["table"] = function(data, columns)
+    {
+        var i, iMax, row, j, jMax, k;
+        
+        // Do nothing if data has wrong type or no data was specified
+        if (!data || !(data instanceof Array) || !data.length) return;
+        
+        // Auto-calculate columns array if not set
+        if (!columns || !(columns instanceof Array))
+        {
+            columns = [];
+            for (k in data[0])
+            {
+                if (!data[0].hasOwnProperty(k)) continue;
+                columns.push(k);
+            }
+        }
+        
+        for (i = 0, iMax = data.length; i < iMax; i += 1)
+        {
+            row = [];
+            for (j = 0, jMax = columns.length; j < jMax; j += 1)
+            {
+                row.push(data[i][columns[j]]);
+            }
+            
+            Function.apply.call(console.log, console, row);
+        }
+    };
+}
+
+// Dummy implementations of other console features to prevent error messages
+// in browsers not supporting it.
+if (!console["clear"]) console["clear"] = function() {};
+if (!console["trace"]) console["trace"] = function() {};
+if (!console["group"]) console["group"] = function() {};
+if (!console["groupCollapsed"]) console["groupCollapsed"] = function() {};
+if (!console["groupEnd"]) console["groupEnd"] = function() {};
+if (!console["timeStamp"]) console["timeStamp"] = function() {};
+if (!console["profile"]) console["profile"] = function() {};
+if (!console["profileEnd"]) console["profileEnd"] = function() {};
+if (!console["count"]) console["count"] = function() {};
+
+})();
 // Copyright 2009-2012 by contributors, MIT License
 // vim: ts=4 sts=4 sw=4 expandtab
 
@@ -903,7 +1114,7 @@ if (!Function.prototype.bind) {
         // 3. Let A be a new (possibly empty) internal list of all of the
         //   argument values provided after thisArg (arg1, arg2 etc), in order.
         // XXX slicedArgs will stand in for "A" if used
-        var args = slice.call(arguments, 1); // for normal call
+        var args = _Array_slice_.call(arguments, 1); // for normal call
         // 4. Let F be a new native ECMAScript object.
         // 11. Set the [[Prototype]] internal property of F to the standard
         //   built-in Function prototype object as specified in 15.3.3.1.
@@ -934,7 +1145,7 @@ if (!Function.prototype.bind) {
 
                 var result = target.apply(
                     this,
-                    args.concat(slice.call(arguments))
+                    args.concat(_Array_slice_.call(arguments))
                 );
                 if (Object(result) === result) {
                     return result;
@@ -963,7 +1174,7 @@ if (!Function.prototype.bind) {
                 // equiv: target.call(this, ...boundArgs, ...args)
                 return target.apply(
                     that,
-                    args.concat(slice.call(arguments))
+                    args.concat(_Array_slice_.call(arguments))
                 );
 
             }
@@ -1017,7 +1228,7 @@ if (!Function.prototype.bind) {
 var call = Function.prototype.call;
 var prototypeOfArray = Array.prototype;
 var prototypeOfObject = Object.prototype;
-var slice = prototypeOfArray.slice;
+var _Array_slice_ = prototypeOfArray.slice;
 // Having a toString local variable name breaks in Opera so use _toString.
 var _toString = call.bind(prototypeOfObject.toString);
 var owns = call.bind(prototypeOfObject.hasOwnProperty);
@@ -1047,16 +1258,92 @@ if ((supportsAccessors = owns(prototypeOfObject, "__defineGetter__"))) {
 // IE < 9 bug: [1,2].splice(0).join("") == "" but should be "12"
 if ([1,2].splice(0).length != 2) {
     var array_splice = Array.prototype.splice;
-    Array.prototype.splice = function(start, deleteCount) {
-        if (!arguments.length) {
-            return [];
-        } else {
-            return array_splice.apply(this, [
-                start === void 0 ? 0 : start,
-                deleteCount === void 0 ? (this.length - start) : deleteCount
-            ].concat(slice.call(arguments, 2)))
+
+    if(function() { // test IE < 9 to splice bug - see issue #138
+        function makeArray(l) {
+            var a = [];
+            while (l--) {
+                a.unshift(l)
+            }
+            return a
         }
-    };
+
+        var array = []
+            , lengthBefore
+        ;
+
+        array.splice.bind(array, 0, 0).apply(null, makeArray(20));
+        array.splice.bind(array, 0, 0).apply(null, makeArray(26));
+
+        lengthBefore = array.length; //20
+        array.splice(5, 0, "XXX"); // add one element
+
+        if(lengthBefore + 1 == array.length) {
+            return true;// has right splice implementation without bugs
+        }
+        // else {
+        //    IE8 bug
+        // }
+    }()) {//IE 6/7
+        Array.prototype.splice = function(start, deleteCount) {
+            if (!arguments.length) {
+                return [];
+            } else {
+                return array_splice.apply(this, [
+                    start === void 0 ? 0 : start,
+                    deleteCount === void 0 ? (this.length - start) : deleteCount
+                ].concat(_Array_slice_.call(arguments, 2)))
+            }
+        };
+    }
+    else {//IE8
+        Array.prototype.splice = function(start, deleteCount) {
+            var result
+                , args = _Array_slice_.call(arguments, 2)
+                , addElementsCount = args.length
+            ;
+
+            if(!arguments.length) {
+                return [];
+            }
+
+            if(start === void 0) { // default
+                start = 0;
+            }
+            if(deleteCount === void 0) { // default
+                deleteCount = this.length - start;
+            }
+
+            if(addElementsCount > 0) {
+                if(deleteCount <= 0) {
+                    if(start == this.length) { // tiny optimisation #1
+                        this.push.apply(this, args);
+                        return [];
+                    }
+
+                    if(start == 0) { // tiny optimisation #2
+                        this.unshift.apply(this, args);
+                        return [];
+                    }
+                }
+
+                // Array.prototype.splice implementation
+                result = _Array_slice_.call(this, start, start + deleteCount);// delete part
+                args.push.apply(args, _Array_slice_.call(this, start + deleteCount, this.length));// right part
+                args.unshift.apply(args, _Array_slice_.call(this, 0, start));// left part
+
+                // delete all items from this array and replace it to 'left part' + _Array_slice_.call(arguments, 2) + 'right part'
+                args.unshift(0, this.length);
+
+                array_splice.apply(this, args);
+
+                return result;
+            }
+
+            return array_splice.call(this, start, deleteCount);
+        }
+
+    }
 }
 
 // ES5 15.4.4.12
@@ -1322,6 +1609,10 @@ if (!Array.prototype.reduceRight) {
                     throw new TypeError("reduceRight of empty array with no initial value");
                 }
             } while (true);
+        }
+
+        if (i < 0) {
+            return result;
         }
 
         do {
@@ -1604,7 +1895,7 @@ if (!Date.parse || "Date.parse is buggy") {
                 ":(\\d{2})" + // minutes capture
                 "(?:" + // optional :seconds.milliseconds
                     ":(\\d{2})" + // seconds capture
-                    "(?:\\.(\\d{3}))?" + // milliseconds capture
+                    "(?:(\\.\\d{1,}))?" + // milliseconds capture
                 ")?" +
             "(" + // capture UTC offset component
                 "Z|" + // UTC capture
@@ -1655,7 +1946,7 @@ if (!Date.parse || "Date.parse is buggy") {
                     hour = Number(match[4] || 0),
                     minute = Number(match[5] || 0),
                     second = Number(match[6] || 0),
-                    millisecond = Number(match[7] || 0),
+                    millisecond = Math.floor(Number(match[7] || 0) * 1000),
                     // When time zone is missed, local offset should be used
                     // (ES 5.1 bug)
                     // see https://bugs.ecmascript.org/show_bug.cgi?id=112
@@ -1711,6 +2002,161 @@ if (!Date.now) {
 
 
 //
+// Number
+// ======
+//
+
+// ES5.1 15.7.4.5
+// http://es5.github.com/#x15.7.4.5
+if (!Number.prototype.toFixed || (0.00008).toFixed(3) !== '0.000' || (0.9).toFixed(0) === '0' || (1.255).toFixed(2) !== '1.25' || (1000000000000000128).toFixed(0) !== "1000000000000000128") {
+    // Hide these variables and functions
+    (function () {
+        var base, size, data, i;
+
+        base = 1e7;
+        size = 6;
+        data = [0, 0, 0, 0, 0, 0];
+
+        function multiply(n, c) {
+            var i = -1;
+            while (++i < size) {
+                c += n * data[i];
+                data[i] = c % base;
+                c = Math.floor(c / base);
+            }
+        }
+
+        function divide(n) {
+            var i = size, c = 0;
+            while (--i >= 0) {
+                c += data[i];
+                data[i] = Math.floor(c / n);
+                c = (c % n) * base;
+            }
+        }
+
+        function toString() {
+            var i = size;
+            var s = '';
+            while (--i >= 0) {
+                if (s !== '' || i === 0 || data[i] !== 0) {
+                    var t = String(data[i]);
+                    if (s === '') {
+                        s = t;
+                    } else {
+                        s += '0000000'.slice(0, 7 - t.length) + t;
+                    }
+                }
+            }
+            return s;
+        }
+
+        function pow(x, n, acc) {
+            return (n === 0 ? acc : (n % 2 === 1 ? pow(x, n - 1, acc * x) : pow(x * x, n / 2, acc)));
+        }
+
+        function log(x) {
+            var n = 0;
+            while (x >= 4096) {
+                n += 12;
+                x /= 4096;
+            }
+            while (x >= 2) {
+                n += 1;
+                x /= 2;
+            }
+            return n;
+        }
+
+        Number.prototype.toFixed = function (fractionDigits) {
+            var f, x, s, m, e, z, j, k;
+
+            // Test for NaN and round fractionDigits down
+            f = Number(fractionDigits);
+            f = f !== f ? 0 : Math.floor(f);
+
+            if (f < 0 || f > 20) {
+                throw new RangeError("Number.toFixed called with invalid number of decimals");
+            }
+
+            x = Number(this);
+
+            // Test for NaN
+            if (x !== x) {
+                return "NaN";
+            }
+
+            // If it is too big or small, return the string value of the number
+            if (x <= -1e21 || x >= 1e21) {
+                return String(x);
+            }
+
+            s = "";
+
+            if (x < 0) {
+                s = "-";
+                x = -x;
+            }
+
+            m = "0";
+
+            if (x > 1e-21) {
+                // 1e-21 < x < 1e21
+                // -70 < log2(x) < 70
+                e = log(x * pow(2, 69, 1)) - 69;
+                z = (e < 0 ? x * pow(2, -e, 1) : x / pow(2, e, 1));
+                z *= 0x10000000000000; // Math.pow(2, 52);
+                e = 52 - e;
+
+                // -18 < e < 122
+                // x = z / 2 ^ e
+                if (e > 0) {
+                    multiply(0, z);
+                    j = f;
+
+                    while (j >= 7) {
+                        multiply(1e7, 0);
+                        j -= 7;
+                    }
+
+                    multiply(pow(10, j, 1), 0);
+                    j = e - 1;
+
+                    while (j >= 23) {
+                        divide(1 << 23);
+                        j -= 23;
+                    }
+
+                    divide(1 << j);
+                    multiply(1, 1);
+                    divide(2);
+                    m = toString();
+                } else {
+                    multiply(0, z);
+                    multiply(1 << (-e), 0);
+                    m = toString() + '0.00000000000000000000'.slice(2, 2 + f);
+                }
+            }
+
+            if (f > 0) {
+                k = m.length;
+
+                if (k <= f) {
+                    m = s + '0.0000000000000000000'.slice(0, f - k + 2) + m;
+                } else {
+                    m = s + m.slice(0, k - f) + '.' + m.slice(k - f);
+                }
+            } else {
+                m = s + m;
+            }
+
+            return m;
+        }
+    }());
+}
+
+
+//
 // String
 // ======
 //
@@ -1718,19 +2164,117 @@ if (!Date.now) {
 
 // ES5 15.5.4.14
 // http://es5.github.com/#x15.5.4.14
+
+// [bugfix, IE lt 9, firefox 4, Konqueror, Opera, obscure browsers]
+// Many browsers do not split properly with regular expressions or they
+// do not perform the split correctly under obscure conditions.
+// See http://blog.stevenlevithan.com/archives/cross-browser-split
+// I've tested in many browsers and this seems to cover the deviant ones:
+//    'ab'.split(/(?:ab)*/) should be ["", ""], not [""]
+//    '.'.split(/(.?)(.?)/) should be ["", ".", "", ""], not ["", ""]
+//    'tesst'.split(/(s)*/) should be ["t", undefined, "e", "s", "t"], not
+//       [undefined, "t", undefined, "e", ...]
+//    ''.split(/.?/) should be [], not [""]
+//    '.'.split(/()()/) should be ["."], not ["", "", "."]
+
+var string_split = String.prototype.split;
+if (
+    'ab'.split(/(?:ab)*/).length !== 2 ||
+    '.'.split(/(.?)(.?)/).length !== 4 ||
+    'tesst'.split(/(s)*/)[1] === "t" ||
+    ''.split(/.?/).length === 0 ||
+    '.'.split(/()()/).length > 1
+) {
+    (function () {
+        var compliantExecNpcg = /()??/.exec("")[1] === void 0; // NPCG: nonparticipating capturing group
+
+        String.prototype.split = function (separator, limit) {
+            var string = this;
+            if (separator === void 0 && limit === 0)
+                return [];
+
+            // If `separator` is not a regex, use native split
+            if (Object.prototype.toString.call(separator) !== "[object RegExp]") {
+                return string_split.apply(this, arguments);
+            }
+
+            var output = [],
+                flags = (separator.ignoreCase ? "i" : "") +
+                        (separator.multiline  ? "m" : "") +
+                        (separator.extended   ? "x" : "") + // Proposed for ES6
+                        (separator.sticky     ? "y" : ""), // Firefox 3+
+                lastLastIndex = 0,
+                // Make `global` and avoid `lastIndex` issues by working with a copy
+                separator = new RegExp(separator.source, flags + "g"),
+                separator2, match, lastIndex, lastLength;
+            string += ""; // Type-convert
+            if (!compliantExecNpcg) {
+                // Doesn't need flags gy, but they don't hurt
+                separator2 = new RegExp("^" + separator.source + "$(?!\\s)", flags);
+            }
+            /* Values for `limit`, per the spec:
+             * If undefined: 4294967295 // Math.pow(2, 32) - 1
+             * If 0, Infinity, or NaN: 0
+             * If positive number: limit = Math.floor(limit); if (limit > 4294967295) limit -= 4294967296;
+             * If negative number: 4294967296 - Math.floor(Math.abs(limit))
+             * If other: Type-convert, then use the above rules
+             */
+            limit = limit === void 0 ?
+                -1 >>> 0 : // Math.pow(2, 32) - 1
+                limit >>> 0; // ToUint32(limit)
+            while (match = separator.exec(string)) {
+                // `separator.lastIndex` is not reliable cross-browser
+                lastIndex = match.index + match[0].length;
+                if (lastIndex > lastLastIndex) {
+                    output.push(string.slice(lastLastIndex, match.index));
+                    // Fix browsers whose `exec` methods don't consistently return `undefined` for
+                    // nonparticipating capturing groups
+                    if (!compliantExecNpcg && match.length > 1) {
+                        match[0].replace(separator2, function () {
+                            for (var i = 1; i < arguments.length - 2; i++) {
+                                if (arguments[i] === void 0) {
+                                    match[i] = void 0;
+                                }
+                            }
+                        });
+                    }
+                    if (match.length > 1 && match.index < string.length) {
+                        Array.prototype.push.apply(output, match.slice(1));
+                    }
+                    lastLength = match[0].length;
+                    lastLastIndex = lastIndex;
+                    if (output.length >= limit) {
+                        break;
+                    }
+                }
+                if (separator.lastIndex === match.index) {
+                    separator.lastIndex++; // Avoid an infinite loop
+                }
+            }
+            if (lastLastIndex === string.length) {
+                if (lastLength || !separator.test("")) {
+                    output.push("");
+                }
+            } else {
+                output.push(string.slice(lastLastIndex));
+            }
+            return output.length > limit ? output.slice(0, limit) : output;
+        };
+    }());
+
 // [bugfix, chrome]
 // If separator is undefined, then the result array contains just one String,
 // which is the this value (converted to a String). If limit is not undefined,
 // then the output array is truncated so that it contains no more than limit
 // elements.
 // "0".split(undefined, 0) -> []
-if("0".split(void 0, 0).length) {
-    var string_split = String.prototype.split;
+} else if ("0".split(void 0, 0).length) {
     String.prototype.split = function(separator, limit) {
-        if(separator === void 0 && limit === 0)return [];
+        if (separator === void 0 && limit === 0) return [];
         return string_split.apply(this, arguments);
     }
 }
+
 
 // ECMA-262, 3rd B.2.3
 // Note an ECMAScript standart, although ECMAScript 3rd Edition has a
@@ -1766,7 +2310,7 @@ if (!String.prototype.trim || ws.trim()) {
     var trimBeginRegexp = new RegExp("^" + ws + ws + "*"),
         trimEndRegexp = new RegExp(ws + ws + "*$");
     String.prototype.trim = function trim() {
-        if (this === undefined || this === null) {
+        if (this === void 0 || this === null) {
             throw new TypeError("can't convert "+this+" to object");
         }
         return String(this)
@@ -1837,450 +2381,39 @@ var toObject = function (o) {
 };
 
 });
-
-// Copyright 2009-2012 by contributors, MIT License
-// vim: ts=4 sts=4 sw=4 expandtab
-
-// Module systems magic dance
-(function (definition) {
-    // RequireJS
-    if (typeof define == "function") {
-        define(definition);
-    // YUI3
-    } else if (typeof YUI == "function") {
-        YUI.add("es5-sham", definition);
-    // CommonJS and <script>
-    } else {
-        definition();
-    }
-})(function () {
-
-
-var call = Function.prototype.call;
-var prototypeOfObject = Object.prototype;
-var owns = call.bind(prototypeOfObject.hasOwnProperty);
-
-// If JS engine supports accessors creating shortcuts.
-var defineGetter;
-var defineSetter;
-var lookupGetter;
-var lookupSetter;
-var supportsAccessors;
-if ((supportsAccessors = owns(prototypeOfObject, "__defineGetter__"))) {
-    defineGetter = call.bind(prototypeOfObject.__defineGetter__);
-    defineSetter = call.bind(prototypeOfObject.__defineSetter__);
-    lookupGetter = call.bind(prototypeOfObject.__lookupGetter__);
-    lookupSetter = call.bind(prototypeOfObject.__lookupSetter__);
-}
-
-// ES5 15.2.3.2
-// http://es5.github.com/#x15.2.3.2
-if (!Object.getPrototypeOf) {
-    // https://github.com/kriskowal/es5-shim/issues#issue/2
-    // http://ejohn.org/blog/objectgetprototypeof/
-    // recommended by fschaefer on github
-    Object.getPrototypeOf = function getPrototypeOf(object) {
-        return object.__proto__ || (
-            object.constructor
-                ? object.constructor.prototype
-                : prototypeOfObject
-        );
-    };
-}
-
-// ES5 15.2.3.3
-// http://es5.github.com/#x15.2.3.3
-if (!Object.getOwnPropertyDescriptor) {
-    var ERR_NON_OBJECT = "Object.getOwnPropertyDescriptor called on a non-object: ";
-
-    Object.getOwnPropertyDescriptor = function getOwnPropertyDescriptor(object, property) {
-        if ((typeof object != "object" && typeof object != "function") || object === null) {
-            throw new TypeError(ERR_NON_OBJECT + object);
-        }
-        // If object does not owns property return undefined immediately.
-        if (!owns(object, property)) {
-            return;
-        }
-
-        // If object has a property then it's for sure both `enumerable` and
-        // `configurable`.
-        var descriptor =  { enumerable: true, configurable: true };
-
-        // If JS engine supports accessor properties then property may be a
-        // getter or setter.
-        if (supportsAccessors) {
-            // Unfortunately `__lookupGetter__` will return a getter even
-            // if object has own non getter property along with a same named
-            // inherited getter. To avoid misbehavior we temporary remove
-            // `__proto__` so that `__lookupGetter__` will return getter only
-            // if it's owned by an object.
-            var prototype = object.__proto__;
-            object.__proto__ = prototypeOfObject;
-
-            var getter = lookupGetter(object, property);
-            var setter = lookupSetter(object, property);
-
-            // Once we have getter and setter we can put values back.
-            object.__proto__ = prototype;
-
-            if (getter || setter) {
-                if (getter) {
-                    descriptor.get = getter;
-                }
-                if (setter) {
-                    descriptor.set = setter;
-                }
-                // If it was accessor property we're done and return here
-                // in order to avoid adding `value` to the descriptor.
-                return descriptor;
-            }
-        }
-
-        // If we got this far we know that object has an own property that is
-        // not an accessor so we set it as a value and return descriptor.
-        descriptor.value = object[property];
-        return descriptor;
-    };
-}
-
-// ES5 15.2.3.4
-// http://es5.github.com/#x15.2.3.4
-if (!Object.getOwnPropertyNames) {
-    Object.getOwnPropertyNames = function getOwnPropertyNames(object) {
-        return Object.keys(object);
-    };
-}
-
-// ES5 15.2.3.5
-// http://es5.github.com/#x15.2.3.5
-if (!Object.create) {
-
-    // Contributed by Brandon Benvie, October, 2012
-    var createEmpty;
-    var supportsProto = Object.prototype.__proto__ === null;
-    if (supportsProto || typeof document == 'undefined') {
-        createEmpty = function () {
-            return { "__proto__": null };
-        };
-    } else {
-        // In old IE __proto__ can't be used to manually set `null`, nor does
-        // any other method exist to make an object that inherits from nothing,
-        // aside from Object.prototype itself. Instead, create a new global
-        // object and *steal* its Object.prototype and strip it bare. This is
-        // used as the prototype to create nullary objects.
-        createEmpty = (function () {
-            var iframe = document.createElement('iframe');
-            var parent = document.body || document.documentElement;
-            iframe.style.display = 'none';
-            parent.appendChild(iframe);
-            iframe.src = 'javascript:';
-            var empty = iframe.contentWindow.Object.prototype;
-            parent.removeChild(iframe);
-            iframe = null;
-            delete empty.constructor;
-            delete empty.hasOwnProperty;
-            delete empty.propertyIsEnumerable;
-            delete empty.isPrototypeOf;
-            delete empty.toLocaleString;
-            delete empty.toString;
-            delete empty.valueOf;
-            empty.__proto__ = null;
-
-            function Empty() {}
-            Empty.prototype = empty;
-
-            return function () {
-                return new Empty();
-            };
-        })();
-    }
-
-    Object.create = function create(prototype, properties) {
-
-        var object;
-        function Type() {}  // An empty constructor.
-
-        if (prototype === null) {
-            object = createEmpty();
-        } else {
-            if (typeof prototype !== "object" && typeof prototype !== "function") {
-                // In the native implementation `parent` can be `null`
-                // OR *any* `instanceof Object`  (Object|Function|Array|RegExp|etc)
-                // Use `typeof` tho, b/c in old IE, DOM elements are not `instanceof Object`
-                // like they are in modern browsers. Using `Object.create` on DOM elements
-                // is...err...probably inappropriate, but the native version allows for it.
-                throw new TypeError("Object prototype may only be an Object or null"); // same msg as Chrome
-            }
-            Type.prototype = prototype;
-            object = new Type();
-            // IE has no built-in implementation of `Object.getPrototypeOf`
-            // neither `__proto__`, but this manually setting `__proto__` will
-            // guarantee that `Object.getPrototypeOf` will work as expected with
-            // objects created using `Object.create`
-            object.__proto__ = prototype;
-        }
-
-        if (properties !== void 0) {
-            Object.defineProperties(object, properties);
-        }
-
-        return object;
-    };
-}
-
-// ES5 15.2.3.6
-// http://es5.github.com/#x15.2.3.6
-
-// Patch for WebKit and IE8 standard mode
-// Designed by hax <hax.github.com>
-// related issue: https://github.com/kriskowal/es5-shim/issues#issue/5
-// IE8 Reference:
-//     http://msdn.microsoft.com/en-us/library/dd282900.aspx
-//     http://msdn.microsoft.com/en-us/library/dd229916.aspx
-// WebKit Bugs:
-//     https://bugs.webkit.org/show_bug.cgi?id=36423
-
-function doesDefinePropertyWork(object) {
-    try {
-        Object.defineProperty(object, "sentinel", {});
-        return "sentinel" in object;
-    } catch (exception) {
-        // returns falsy
-    }
-}
-
-// check whether defineProperty works if it's given. Otherwise,
-// shim partially.
-if (Object.defineProperty) {
-    var definePropertyWorksOnObject = doesDefinePropertyWork({});
-    var definePropertyWorksOnDom = typeof document == "undefined" ||
-        doesDefinePropertyWork(document.createElement("div"));
-    if (!definePropertyWorksOnObject || !definePropertyWorksOnDom) {
-        var definePropertyFallback = Object.defineProperty,
-            definePropertiesFallback = Object.defineProperties;
-    }
-}
-
-if (!Object.defineProperty || definePropertyFallback) {
-    var ERR_NON_OBJECT_DESCRIPTOR = "Property description must be an object: ";
-    var ERR_NON_OBJECT_TARGET = "Object.defineProperty called on non-object: "
-    var ERR_ACCESSORS_NOT_SUPPORTED = "getters & setters can not be defined " +
-                                      "on this javascript engine";
-
-    Object.defineProperty = function defineProperty(object, property, descriptor) {
-        if ((typeof object != "object" && typeof object != "function") || object === null) {
-            throw new TypeError(ERR_NON_OBJECT_TARGET + object);
-        }
-        if ((typeof descriptor != "object" && typeof descriptor != "function") || descriptor === null) {
-            throw new TypeError(ERR_NON_OBJECT_DESCRIPTOR + descriptor);
-        }
-        // make a valiant attempt to use the real defineProperty
-        // for I8's DOM elements.
-        if (definePropertyFallback) {
-            try {
-                return definePropertyFallback.call(Object, object, property, descriptor);
-            } catch (exception) {
-                // try the shim if the real one doesn't work
-            }
-        }
-
-        // If it's a data property.
-        if (owns(descriptor, "value")) {
-            // fail silently if "writable", "enumerable", or "configurable"
-            // are requested but not supported
-            /*
-            // alternate approach:
-            if ( // can't implement these features; allow false but not true
-                !(owns(descriptor, "writable") ? descriptor.writable : true) ||
-                !(owns(descriptor, "enumerable") ? descriptor.enumerable : true) ||
-                !(owns(descriptor, "configurable") ? descriptor.configurable : true)
-            )
-                throw new RangeError(
-                    "This implementation of Object.defineProperty does not " +
-                    "support configurable, enumerable, or writable."
-                );
-            */
-
-            if (supportsAccessors && (lookupGetter(object, property) ||
-                                      lookupSetter(object, property)))
-            {
-                // As accessors are supported only on engines implementing
-                // `__proto__` we can safely override `__proto__` while defining
-                // a property to make sure that we don't hit an inherited
-                // accessor.
-                var prototype = object.__proto__;
-                object.__proto__ = prototypeOfObject;
-                // Deleting a property anyway since getter / setter may be
-                // defined on object itself.
-                delete object[property];
-                object[property] = descriptor.value;
-                // Setting original `__proto__` back now.
-                object.__proto__ = prototype;
-            } else {
-                object[property] = descriptor.value;
-            }
-        } else {
-            if (!supportsAccessors) {
-                throw new TypeError(ERR_ACCESSORS_NOT_SUPPORTED);
-            }
-            // If we got that far then getters and setters can be defined !!
-            if (owns(descriptor, "get")) {
-                defineGetter(object, property, descriptor.get);
-            }
-            if (owns(descriptor, "set")) {
-                defineSetter(object, property, descriptor.set);
-            }
-        }
-        return object;
-    };
-}
-
-// ES5 15.2.3.7
-// http://es5.github.com/#x15.2.3.7
-if (!Object.defineProperties || definePropertiesFallback) {
-    Object.defineProperties = function defineProperties(object, properties) {
-        // make a valiant attempt to use the real defineProperties
-        if (definePropertiesFallback) {
-            try {
-                return definePropertiesFallback.call(Object, object, properties);
-            } catch (exception) {
-                // try the shim if the real one doesn't work
-            }
-        }
-
-        for (var property in properties) {
-            if (owns(properties, property) && property != "__proto__") {
-                Object.defineProperty(object, property, properties[property]);
-            }
-        }
-        return object;
-    };
-}
-
-// ES5 15.2.3.8
-// http://es5.github.com/#x15.2.3.8
-if (!Object.seal) {
-    Object.seal = function seal(object) {
-        // this is misleading and breaks feature-detection, but
-        // allows "securable" code to "gracefully" degrade to working
-        // but insecure code.
-        return object;
-    };
-}
-
-// ES5 15.2.3.9
-// http://es5.github.com/#x15.2.3.9
-if (!Object.freeze) {
-    Object.freeze = function freeze(object) {
-        // this is misleading and breaks feature-detection, but
-        // allows "securable" code to "gracefully" degrade to working
-        // but insecure code.
-        return object;
-    };
-}
-
-// detect a Rhino bug and patch it
-try {
-    Object.freeze(function () {});
-} catch (exception) {
-    Object.freeze = (function freeze(freezeObject) {
-        return function freeze(object) {
-            if (typeof object == "function") {
-                return object;
-            } else {
-                return freezeObject(object);
-            }
-        };
-    })(Object.freeze);
-}
-
-// ES5 15.2.3.10
-// http://es5.github.com/#x15.2.3.10
-if (!Object.preventExtensions) {
-    Object.preventExtensions = function preventExtensions(object) {
-        // this is misleading and breaks feature-detection, but
-        // allows "securable" code to "gracefully" degrade to working
-        // but insecure code.
-        return object;
-    };
-}
-
-// ES5 15.2.3.11
-// http://es5.github.com/#x15.2.3.11
-if (!Object.isSealed) {
-    Object.isSealed = function isSealed(object) {
-        return false;
-    };
-}
-
-// ES5 15.2.3.12
-// http://es5.github.com/#x15.2.3.12
-if (!Object.isFrozen) {
-    Object.isFrozen = function isFrozen(object) {
-        return false;
-    };
-}
-
-// ES5 15.2.3.13
-// http://es5.github.com/#x15.2.3.13
-if (!Object.isExtensible) {
-    Object.isExtensible = function isExtensible(object) {
-        // 1. If Type(O) is not Object throw a TypeError exception.
-        if (Object(object) !== object) {
-            throw new TypeError(); // TODO message
-        }
-        // 2. Return the Boolean value of the [[Extensible]] internal property of O.
-        var name = '';
-        while (owns(object, name)) {
-            name += '?';
-        }
-        object[name] = true;
-        var returnValue = owns(object, name);
-        delete object[name];
-        return returnValue;
-    };
-}
-
-});
-
-/*! JSON v3.2.4 | http://bestiejs.github.com/json3 | Copyright 2012, Kit Cambridge | http://kit.mit-license.org */
-;(function () {
+/*! JSON v3.2.5 | http://bestiejs.github.io/json3 | Copyright 2012-2013, Kit Cambridge | http://kit.mit-license.org */
+;(function (window) {
   // Convenience aliases.
   var getClass = {}.toString, isProperty, forEach, undef;
 
   // Detect the `define` function exposed by asynchronous module loaders. The
   // strict `define` check is necessary for compatibility with `r.js`.
-  var isLoader = typeof define === "function" && define.amd, JSON3 = !isLoader && typeof exports == "object" && exports;
+  var isLoader = typeof define === "function" && define.amd, JSON3 = typeof exports == "object" && exports;
 
   if (JSON3 || isLoader) {
     if (typeof JSON == "object" && JSON) {
       // Delegate to the native `stringify` and `parse` implementations in
       // asynchronous module loaders and CommonJS environments.
-      if (isLoader) {
-        JSON3 = JSON;
-      } else {
+      if (JSON3) {
         JSON3.stringify = JSON.stringify;
         JSON3.parse = JSON.parse;
+      } else {
+        JSON3 = JSON;
       }
     } else if (isLoader) {
-      JSON3 = this.JSON = {};
+      JSON3 = window.JSON = {};
     }
   } else {
     // Export for web browsers and JavaScript engines.
-    JSON3 = this.JSON || (this.JSON = {});
+    JSON3 = window.JSON || (window.JSON = {});
   }
 
-  // Local variables.
-  var Escapes, toPaddedString, quote, serialize;
-  var fromCharCode, Unescapes, abort, lex, get, walk, update, Index, Source;
-
   // Test the `Date#getUTC*` methods. Based on work by @Yaffle.
-  var isExtended = new Date(-3509827334573292), floor, Months, getDay;
-
+  var isExtended = new Date(-3509827334573292);
   try {
     // The `getUTCFullYear`, `Month`, and `Date` methods return nonsensical
     // results for certain dates in Opera >= 10.53.
-    isExtended = isExtended.getUTCFullYear() == -109252 && isExtended.getUTCMonth() === 0 && isExtended.getUTCDate() == 1 &&
+    isExtended = isExtended.getUTCFullYear() == -109252 && isExtended.getUTCMonth() === 0 && isExtended.getUTCDate() === 1 &&
       // Safari < 2.0.2 stores the internal millisecond time value correctly,
       // but clips the values returned by the date methods to the range of
       // signed 32-bit integers ([-2 ** 31, 2 ** 31 - 1]).
@@ -2290,11 +2423,17 @@ if (!Object.isExtensible) {
   // Internal: Determines whether the native `JSON.stringify` and `parse`
   // implementations are spec-compliant. Based on work by Ken Snyder.
   function has(name) {
-    var stringifySupported, parseSupported, value, serialized = '{"A":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}', all = name == "json";
-    if (all || name == "json-stringify" || name == "json-parse") {
+    if (name == "bug-string-char-index") {
+      // IE <= 7 doesn't support accessing string characters using square
+      // bracket notation. IE 8 only supports this for primitives.
+      return "a"[0] != "a";
+    }
+    var value, serialized = '{"a":[1,true,false,null,"\\u0000\\b\\n\\f\\r\\t"]}', isAll = name == "json";
+    if (isAll || name == "json-stringify" || name == "json-parse") {
       // Test `JSON.stringify`.
-      if (name == "json-stringify" || all) {
-        if ((stringifySupported = typeof JSON3.stringify == "function" && isExtended)) {
+      if (name == "json-stringify" || isAll) {
+        var stringify = JSON3.stringify, stringifySupported = typeof stringify == "function" && isExtended;
+        if (stringifySupported) {
           // A test function object with a custom `toJSON` method.
           (value = function () {
             return 1;
@@ -2303,86 +2442,88 @@ if (!Object.isExtensible) {
             stringifySupported =
               // Firefox 3.1b1 and b2 serialize string, number, and boolean
               // primitives as object literals.
-              JSON3.stringify(0) === "0" &&
+              stringify(0) === "0" &&
               // FF 3.1b1, b2, and JSON 2 serialize wrapped primitives as object
               // literals.
-              JSON3.stringify(new Number()) === "0" &&
-              JSON3.stringify(new String()) == '""' &&
+              stringify(new Number()) === "0" &&
+              stringify(new String()) == '""' &&
               // FF 3.1b1, 2 throw an error if the value is `null`, `undefined`, or
               // does not define a canonical JSON representation (this applies to
               // objects with `toJSON` properties as well, *unless* they are nested
               // within an object or array).
-              JSON3.stringify(getClass) === undef &&
+              stringify(getClass) === undef &&
               // IE 8 serializes `undefined` as `"undefined"`. Safari <= 5.1.7 and
               // FF 3.1b3 pass this test.
-              JSON3.stringify(undef) === undef &&
+              stringify(undef) === undef &&
               // Safari <= 5.1.7 and FF 3.1b3 throw `Error`s and `TypeError`s,
               // respectively, if the value is omitted entirely.
-              JSON3.stringify() === undef &&
+              stringify() === undef &&
               // FF 3.1b1, 2 throw an error if the given value is not a number,
               // string, array, object, Boolean, or `null` literal. This applies to
               // objects with custom `toJSON` methods as well, unless they are nested
               // inside object or array literals. YUI 3.0.0b1 ignores custom `toJSON`
               // methods entirely.
-              JSON3.stringify(value) === "1" &&
-              JSON3.stringify([value]) == "[1]" &&
+              stringify(value) === "1" &&
+              stringify([value]) == "[1]" &&
               // Prototype <= 1.6.1 serializes `[undefined]` as `"[]"` instead of
               // `"[null]"`.
-              JSON3.stringify([undef]) == "[null]" &&
+              stringify([undef]) == "[null]" &&
               // YUI 3.0.0b1 fails to serialize `null` literals.
-              JSON3.stringify(null) == "null" &&
+              stringify(null) == "null" &&
               // FF 3.1b1, 2 halts serialization if an array contains a function:
               // `[1, true, getClass, 1]` serializes as "[1,true,],". These versions
               // of Firefox also allow trailing commas in JSON objects and arrays.
               // FF 3.1b3 elides non-JSON values from objects and arrays, unless they
               // define custom `toJSON` methods.
-              JSON3.stringify([undef, getClass, null]) == "[null,null,null]" &&
+              stringify([undef, getClass, null]) == "[null,null,null]" &&
               // Simple serialization test. FF 3.1b1 uses Unicode escape sequences
               // where character escape codes are expected (e.g., `\b` => `\u0008`).
-              JSON3.stringify({ "A": [value, true, false, null, "\0\b\n\f\r\t"] }) == serialized &&
+              stringify({ "a": [value, true, false, null, "\x00\b\n\f\r\t"] }) == serialized &&
               // FF 3.1b1 and b2 ignore the `filter` and `width` arguments.
-              JSON3.stringify(null, value) === "1" &&
-              JSON3.stringify([1, 2], null, 1) == "[\n 1,\n 2\n]" &&
+              stringify(null, value) === "1" &&
+              stringify([1, 2], null, 1) == "[\n 1,\n 2\n]" &&
               // JSON 2, Prototype <= 1.7, and older WebKit builds incorrectly
               // serialize extended years.
-              JSON3.stringify(new Date(-8.64e15)) == '"-271821-04-20T00:00:00.000Z"' &&
+              stringify(new Date(-8.64e15)) == '"-271821-04-20T00:00:00.000Z"' &&
               // The milliseconds are optional in ES 5, but required in 5.1.
-              JSON3.stringify(new Date(8.64e15)) == '"+275760-09-13T00:00:00.000Z"' &&
+              stringify(new Date(8.64e15)) == '"+275760-09-13T00:00:00.000Z"' &&
               // Firefox <= 11.0 incorrectly serializes years prior to 0 as negative
               // four-digit years instead of six-digit years. Credits: @Yaffle.
-              JSON3.stringify(new Date(-621987552e5)) == '"-000001-01-01T00:00:00.000Z"' &&
+              stringify(new Date(-621987552e5)) == '"-000001-01-01T00:00:00.000Z"' &&
               // Safari <= 5.1.5 and Opera >= 10.53 incorrectly serialize millisecond
               // values less than 1000. Credits: @Yaffle.
-              JSON3.stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
+              stringify(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
           } catch (exception) {
             stringifySupported = false;
           }
         }
-        if (!all) {
+        if (!isAll) {
           return stringifySupported;
         }
       }
       // Test `JSON.parse`.
-      if (name == "json-parse" || all) {
-        if (typeof JSON3.parse == "function") {
+      if (name == "json-parse" || isAll) {
+        var parse = JSON3.parse;
+        if (typeof parse == "function") {
           try {
             // FF 3.1b1, b2 will throw an exception if a bare literal is provided.
             // Conforming implementations should also coerce the initial argument to
             // a string prior to parsing.
-            if (JSON3.parse("0") === 0 && !JSON3.parse(false)) {
+            if (parse("0") === 0 && !parse(false)) {
               // Simple parsing test.
-              value = JSON3.parse(serialized);
-              if ((parseSupported = value.A.length == 5 && value.A[0] == 1)) {
+              value = parse(serialized);
+              var parseSupported = value["a"].length == 5 && value["a"][0] === 1;
+              if (parseSupported) {
                 try {
                   // Safari <= 5.1.2 and FF 3.1b1 allow unescaped tabs in strings.
-                  parseSupported = !JSON3.parse('"\t"');
+                  parseSupported = !parse('"\t"');
                 } catch (exception) {}
                 if (parseSupported) {
                   try {
                     // FF 4.0 and 4.0.1 allow leading `+` signs, and leading and
                     // trailing decimal points. FF 4.0, 4.0.1, and IE 9-10 also
                     // allow certain octal literals.
-                    parseSupported = JSON3.parse("01") != 1;
+                    parseSupported = parse("01") !== 1;
                   } catch (exception) {}
                 }
               }
@@ -2391,7 +2532,7 @@ if (!Object.isExtensible) {
             parseSupported = false;
           }
         }
-        if (!all) {
+        if (!isAll) {
           return parseSupported;
         }
       }
@@ -2400,19 +2541,30 @@ if (!Object.isExtensible) {
   }
 
   if (!has("json")) {
+    // Common `[[Class]]` name aliases.
+    var functionClass = "[object Function]";
+    var dateClass = "[object Date]";
+    var numberClass = "[object Number]";
+    var stringClass = "[object String]";
+    var arrayClass = "[object Array]";
+    var booleanClass = "[object Boolean]";
+
+    // Detect incomplete support for accessing string characters by index.
+    var charIndexBuggy = has("bug-string-char-index");
+
     // Define additional utility methods if the `Date` methods are buggy.
     if (!isExtended) {
-      floor = Math.floor;
+      var floor = Math.floor;
       // A mapping between the months of the year and the number of days between
       // January 1st and the first of the respective month.
-      Months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+      var Months = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
       // Internal: Calculates the number of days between the Unix epoch and the
       // first day of the given month.
-      getDay = function (year, month) {
+      var getDay = function (year, month) {
         return Months[month] + 365 * (year - 1970) + floor((year - 1969 + (month = +(month > 1))) / 4) - floor((year - 1901 + month) / 100) + floor((year - 1601 + month) / 400);
       };
     }
-    
+
     // Internal: Determines if a property is a direct property of the given
     // object. Delegates to the native `Object#hasOwnProperty` method.
     if (!(isProperty = {}.hasOwnProperty)) {
@@ -2478,7 +2630,7 @@ if (!Object.isExtensible) {
         // IE <= 8, Mozilla 1.0, and Netscape 6.2 ignore shadowed non-enumerable
         // properties.
         forEach = function (object, callback) {
-          var isFunction = getClass.call(object) == "[object Function]", property, length;
+          var isFunction = getClass.call(object) == functionClass, property, length;
           for (property in object) {
             // Gecko <= 1.0 enumerates the `prototype` property of functions under
             // certain conditions; IE does not.
@@ -2493,7 +2645,7 @@ if (!Object.isExtensible) {
         // Safari <= 2.0.4 enumerates shadowed properties twice.
         forEach = function (object, callback) {
           // Create a set of iterated properties.
-          var members = {}, isFunction = getClass.call(object) == "[object Function]", property;
+          var members = {}, isFunction = getClass.call(object) == functionClass, property;
           for (property in object) {
             // Store each property name to prevent double enumeration. The
             // `prototype` property of functions is not enumerated due to cross-
@@ -2506,7 +2658,7 @@ if (!Object.isExtensible) {
       } else {
         // No bugs detected; use the standard `for...in` algorithm.
         forEach = function (object, callback) {
-          var isFunction = getClass.call(object) == "[object Function]", property, isConstructor;
+          var isFunction = getClass.call(object) == functionClass, property, isConstructor;
           for (property in object) {
             if (!(isFunction && property == "prototype") && isProperty.call(object, property) && !(isConstructor = property === "constructor")) {
               callback(property);
@@ -2530,48 +2682,65 @@ if (!Object.isExtensible) {
     // level of the output.
     if (!has("json-stringify")) {
       // Internal: A map of control characters and their escaped equivalents.
-      Escapes = {
-        "\\": "\\\\",
-        '"': '\\"',
-        "\b": "\\b",
-        "\f": "\\f",
-        "\n": "\\n",
-        "\r": "\\r",
-        "\t": "\\t"
+      var Escapes = {
+        92: "\\\\",
+        34: '\\"',
+        8: "\\b",
+        12: "\\f",
+        10: "\\n",
+        13: "\\r",
+        9: "\\t"
       };
 
       // Internal: Converts `value` into a zero-padded string such that its
       // length is at least equal to `width`. The `width` must be <= 6.
-      toPaddedString = function (width, value) {
+      var leadingZeroes = "000000";
+      var toPaddedString = function (width, value) {
         // The `|| 0` expression is necessary to work around a bug in
         // Opera <= 7.54u2 where `0 == -0`, but `String(-0) !== "0"`.
-        return ("000000" + (value || 0)).slice(-width);
+        return (leadingZeroes + (value || 0)).slice(-width);
       };
 
       // Internal: Double-quotes a string `value`, replacing all ASCII control
       // characters (characters with code unit values between 0 and 31) with
       // their escaped equivalents. This is an implementation of the
       // `Quote(value)` operation defined in ES 5.1 section 15.12.3.
-      quote = function (value) {
-        var result = '"', index = 0, symbol;
-        for (; symbol = value.charAt(index); index++) {
-          // Escape the reverse solidus, double quote, backspace, form feed, line
-          // feed, carriage return, and tab characters.
-          result += '\\"\b\f\n\r\t'.indexOf(symbol) > -1 ? Escapes[symbol] :
-            // If the character is a control character, append its Unicode escape
-            // sequence; otherwise, append the character as-is.
-            (Escapes[symbol] = symbol < " " ? "\\u00" + toPaddedString(2, symbol.charCodeAt(0).toString(16)) : symbol);
+      var unicodePrefix = "\\u00";
+      var quote = function (value) {
+        var result = '"', index = 0, length = value.length, isLarge = length > 10 && charIndexBuggy, symbols;
+        if (isLarge) {
+          symbols = value.split("");
+        }
+        for (; index < length; index++) {
+          var charCode = value.charCodeAt(index);
+          // If the character is a control character, append its Unicode or
+          // shorthand escape sequence; otherwise, append the character as-is.
+          switch (charCode) {
+            case 8: case 9: case 10: case 12: case 13: case 34: case 92:
+              result += Escapes[charCode];
+              break;
+            default:
+              if (charCode < 32) {
+                result += unicodePrefix + toPaddedString(2, charCode.toString(16));
+                break;
+              }
+              result += isLarge ? symbols[index] : charIndexBuggy ? value.charAt(index) : value[index];
+          }
         }
         return result + '"';
       };
 
       // Internal: Recursively serializes an object. Implements the
       // `Str(key, holder)`, `JO(value)`, and `JA(value)` operations.
-      serialize = function (property, object, callback, properties, whitespace, indentation, stack) {
-        var value = object[property], className, year, month, date, time, hours, minutes, seconds, milliseconds, results, element, index, length, prefix, any, result;
+      var serialize = function (property, object, callback, properties, whitespace, indentation, stack) {
+        var value = object[property], className, year, month, date, time, hours, minutes, seconds, milliseconds, results, element, index, length, prefix, hasMembers, result;
+        try {
+          // Necessary for host object support.
+          value = object[property];
+        } catch (exception) {}
         if (typeof value == "object" && value) {
           className = getClass.call(value);
-          if (className == "[object Date]" && !isProperty.call(value, "toJSON")) {
+          if (className == dateClass && !isProperty.call(value, "toJSON")) {
             if (value > -1 / 0 && value < 1 / 0) {
               // Dates are serialized according to the `Date#toJSON` method
               // specified in ES 5.1 section 15.9.5.44. See section 15.9.1.15
@@ -2615,7 +2784,7 @@ if (!Object.isExtensible) {
             } else {
               value = null;
             }
-          } else if (typeof value.toJSON == "function" && ((className != "[object Number]" && className != "[object String]" && className != "[object Array]") || isProperty.call(value, "toJSON"))) {
+          } else if (typeof value.toJSON == "function" && ((className != numberClass && className != stringClass && className != arrayClass) || isProperty.call(value, "toJSON"))) {
             // Prototype <= 1.6.1 adds non-standard `toJSON` methods to the
             // `Number`, `String`, `Date`, and `Array` prototypes. JSON 3
             // ignores all `toJSON` methods on these objects unless they are
@@ -2632,14 +2801,14 @@ if (!Object.isExtensible) {
           return "null";
         }
         className = getClass.call(value);
-        if (className == "[object Boolean]") {
+        if (className == booleanClass) {
           // Booleans are represented literally.
           return "" + value;
-        } else if (className == "[object Number]") {
+        } else if (className == numberClass) {
           // JSON numbers must be finite. `Infinity` and `NaN` are serialized as
           // `"null"`.
           return value > -1 / 0 && value < 1 / 0 ? "" + value : "null";
-        } else if (className == "[object String]") {
+        } else if (className == stringClass) {
           // Strings are double-quoted and escaped.
           return quote(value);
         }
@@ -2659,13 +2828,13 @@ if (!Object.isExtensible) {
           // Save the current indentation level and indent one additional level.
           prefix = indentation;
           indentation += whitespace;
-          if (className == "[object Array]") {
+          if (className == arrayClass) {
             // Recursively serialize array elements.
-            for (index = 0, length = value.length; index < length; any || (any = true), index++) {
+            for (index = 0, length = value.length; index < length; hasMembers || (hasMembers = true), index++) {
               element = serialize(index, value, callback, properties, whitespace, indentation, stack);
               results.push(element === undef ? "null" : element);
             }
-            result = any ? (whitespace ? "[\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "]" : ("[" + results.join(",") + "]")) : "[]";
+            result = hasMembers ? (whitespace ? "[\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "]" : ("[" + results.join(",") + "]")) : "[]";
           } else {
             // Recursively serialize object members. Members are selected from
             // either a user-specified list of property names, or the object
@@ -2681,9 +2850,9 @@ if (!Object.isExtensible) {
                 // `JSON.stringify`.
                 results.push(quote(property) + ":" + (whitespace ? " " : "") + element);
               }
-              any || (any = true);
+              hasMembers || (hasMembers = true);
             });
-            result = any ? (whitespace ? "{\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "}" : ("{" + results.join(",") + "}")) : "{}";
+            result = hasMembers ? (whitespace ? "{\n" + indentation + results.join(",\n" + indentation) + "\n" + prefix + "}" : ("{" + results.join(",") + "}")) : "{}";
           }
           // Remove the object from the traversed object stack.
           stack.pop();
@@ -2693,24 +2862,24 @@ if (!Object.isExtensible) {
 
       // Public: `JSON.stringify`. See ES 5.1 section 15.12.3.
       JSON3.stringify = function (source, filter, width) {
-        var whitespace, callback, properties, index, length, value;
+        var whitespace, callback, properties;
         if (typeof filter == "function" || typeof filter == "object" && filter) {
-          if (getClass.call(filter) == "[object Function]") {
+          if (getClass.call(filter) == functionClass) {
             callback = filter;
-          } else if (getClass.call(filter) == "[object Array]") {
+          } else if (getClass.call(filter) == arrayClass) {
             // Convert the property names array into a makeshift set.
             properties = {};
-            for (index = 0, length = filter.length; index < length; value = filter[index++], ((getClass.call(value) == "[object String]" || getClass.call(value) == "[object Number]") && (properties[value] = 1)));
+            for (var index = 0, length = filter.length, value; index < length; value = filter[index++], ((getClass.call(value) == stringClass || getClass.call(value) == numberClass) && (properties[value] = 1)));
           }
         }
         if (width) {
-          if (getClass.call(width) == "[object Number]") {
+          if (getClass.call(width) == numberClass) {
             // Convert the `width` to an integer and create a string containing
             // `width` number of space characters.
             if ((width -= width % 1) > 0) {
               for (whitespace = "", width > 10 && (width = 10); whitespace.length < width; whitespace += " ");
             }
-          } else if (getClass.call(width) == "[object String]") {
+          } else if (getClass.call(width) == stringClass) {
             whitespace = width.length <= 10 ? width : width.slice(0, 10);
           }
         }
@@ -2723,22 +2892,26 @@ if (!Object.isExtensible) {
 
     // Public: Parses a JSON source string.
     if (!has("json-parse")) {
-      fromCharCode = String.fromCharCode;
+      var fromCharCode = String.fromCharCode;
+
       // Internal: A map of escaped control characters and their unescaped
       // equivalents.
-      Unescapes = {
-        "\\": "\\",
-        '"': '"',
-        "/": "/",
-        "b": "\b",
-        "t": "\t",
-        "n": "\n",
-        "f": "\f",
-        "r": "\r"
+      var Unescapes = {
+        92: "\\",
+        34: '"',
+        47: "/",
+        98: "\b",
+        116: "\t",
+        110: "\n",
+        102: "\f",
+        114: "\r"
       };
 
+      // Internal: Stores the parser state.
+      var Index, Source;
+
       // Internal: Resets the parser state and throws a `SyntaxError`.
-      abort = function() {
+      var abort = function() {
         Index = Source = null;
         throw SyntaxError();
       };
@@ -2746,140 +2919,156 @@ if (!Object.isExtensible) {
       // Internal: Returns the next token, or `"$"` if the parser has reached
       // the end of the source string. A token may be a string, number, `null`
       // literal, or Boolean literal.
-      lex = function () {
-        var source = Source, length = source.length, symbol, value, begin, position, sign;
+      var lex = function () {
+        var source = Source, length = source.length, value, begin, position, isSigned, charCode;
         while (Index < length) {
-          symbol = source.charAt(Index);
-          if ("\t\r\n ".indexOf(symbol) > -1) {
-            // Skip whitespace tokens, including tabs, carriage returns, line
-            // feeds, and space characters.
-            Index++;
-          } else if ("{}[]:,".indexOf(symbol) > -1) {
-            // Parse a punctuator token at the current position.
-            Index++;
-            return symbol;
-          } else if (symbol == '"') {
-            // Advance to the next character and parse a JSON string at the
-            // current position. String tokens are prefixed with the sentinel
-            // `@` character to distinguish them from punctuators.
-            for (value = "@", Index++; Index < length;) {
-              symbol = source.charAt(Index);
-              if (symbol < " ") {
-                // Unescaped ASCII control characters are not permitted.
-                abort();
-              } else if (symbol == "\\") {
-                // Parse escaped JSON control characters, `"`, `\`, `/`, and
-                // Unicode escape sequences.
-                symbol = source.charAt(++Index);
-                if ('\\"/btnfr'.indexOf(symbol) > -1) {
-                  // Revive escaped control characters.
-                  value += Unescapes[symbol];
-                  Index++;
-                } else if (symbol == "u") {
-                  // Advance to the first character of the escape sequence.
-                  begin = ++Index;
-                  // Validate the Unicode escape sequence.
-                  for (position = Index + 4; Index < position; Index++) {
-                    symbol = source.charAt(Index);
-                    // A valid sequence comprises four hexdigits that form a
-                    // single hexadecimal value.
-                    if (!(symbol >= "0" && symbol <= "9" || symbol >= "a" && symbol <= "f" || symbol >= "A" && symbol <= "F")) {
-                      // Invalid Unicode escape sequence.
-                      abort();
-                    }
-                  }
-                  // Revive the escaped character.
-                  value += fromCharCode("0x" + source.slice(begin, Index));
-                } else {
-                  // Invalid escape sequence.
-                  abort();
-                }
-              } else {
-                if (symbol == '"') {
-                  // An unescaped double-quote character marks the end of the
-                  // string.
-                  break;
-                }
-                // Append the original character as-is.
-                value += symbol;
-                Index++;
-              }
-            }
-            if (source.charAt(Index) == '"') {
+          charCode = source.charCodeAt(Index);
+          switch (charCode) {
+            case 9: case 10: case 13: case 32:
+              // Skip whitespace tokens, including tabs, carriage returns, line
+              // feeds, and space characters.
               Index++;
-              // Return the revived string.
+              break;
+            case 123: case 125: case 91: case 93: case 58: case 44:
+              // Parse a punctuator token (`{`, `}`, `[`, `]`, `:`, or `,`) at
+              // the current position.
+              value = charIndexBuggy ? source.charAt(Index) : source[Index];
+              Index++;
               return value;
-            }
-            // Unterminated string.
-            abort();
-          } else {
-            // Parse numbers and literals.
-            begin = Index;
-            // Advance the scanner's position past the sign, if one is
-            // specified.
-            if (symbol == "-") {
-              sign = true;
-              symbol = source.charAt(++Index);
-            }
-            // Parse an integer or floating-point value.
-            if (symbol >= "0" && symbol <= "9") {
-              // Leading zeroes are interpreted as octal literals.
-              if (symbol == "0" && (symbol = source.charAt(Index + 1), symbol >= "0" && symbol <= "9")) {
-                // Illegal octal literal.
+            case 34:
+              // `"` delimits a JSON string; advance to the next character and
+              // begin parsing the string. String tokens are prefixed with the
+              // sentinel `@` character to distinguish them from punctuators and
+              // end-of-string tokens.
+              for (value = "@", Index++; Index < length;) {
+                charCode = source.charCodeAt(Index);
+                if (charCode < 32) {
+                  // Unescaped ASCII control characters (those with a code unit
+                  // less than the space character) are not permitted.
+                  abort();
+                } else if (charCode == 92) {
+                  // A reverse solidus (`\`) marks the beginning of an escaped
+                  // control character (including `"`, `\`, and `/`) or Unicode
+                  // escape sequence.
+                  charCode = source.charCodeAt(++Index);
+                  switch (charCode) {
+                    case 92: case 34: case 47: case 98: case 116: case 110: case 102: case 114:
+                      // Revive escaped control characters.
+                      value += Unescapes[charCode];
+                      Index++;
+                      break;
+                    case 117:
+                      // `\u` marks the beginning of a Unicode escape sequence.
+                      // Advance to the first character and validate the
+                      // four-digit code point.
+                      begin = ++Index;
+                      for (position = Index + 4; Index < position; Index++) {
+                        charCode = source.charCodeAt(Index);
+                        // A valid sequence comprises four hexdigits (case-
+                        // insensitive) that form a single hexadecimal value.
+                        if (!(charCode >= 48 && charCode <= 57 || charCode >= 97 && charCode <= 102 || charCode >= 65 && charCode <= 70)) {
+                          // Invalid Unicode escape sequence.
+                          abort();
+                        }
+                      }
+                      // Revive the escaped character.
+                      value += fromCharCode("0x" + source.slice(begin, Index));
+                      break;
+                    default:
+                      // Invalid escape sequence.
+                      abort();
+                  }
+                } else {
+                  if (charCode == 34) {
+                    // An unescaped double-quote character marks the end of the
+                    // string.
+                    break;
+                  }
+                  charCode = source.charCodeAt(Index);
+                  begin = Index;
+                  // Optimize for the common case where a string is valid.
+                  while (charCode >= 32 && charCode != 92 && charCode != 34) {
+                    charCode = source.charCodeAt(++Index);
+                  }
+                  // Append the string as-is.
+                  value += source.slice(begin, Index);
+                }
+              }
+              if (source.charCodeAt(Index) == 34) {
+                // Advance to the next character and return the revived string.
+                Index++;
+                return value;
+              }
+              // Unterminated string.
+              abort();
+            default:
+              // Parse numbers and literals.
+              begin = Index;
+              // Advance past the negative sign, if one is specified.
+              if (charCode == 45) {
+                isSigned = true;
+                charCode = source.charCodeAt(++Index);
+              }
+              // Parse an integer or floating-point value.
+              if (charCode >= 48 && charCode <= 57) {
+                // Leading zeroes are interpreted as octal literals.
+                if (charCode == 48 && ((charCode = source.charCodeAt(Index + 1)), charCode >= 48 && charCode <= 57)) {
+                  // Illegal octal literal.
+                  abort();
+                }
+                isSigned = false;
+                // Parse the integer component.
+                for (; Index < length && ((charCode = source.charCodeAt(Index)), charCode >= 48 && charCode <= 57); Index++);
+                // Floats cannot contain a leading decimal point; however, this
+                // case is already accounted for by the parser.
+                if (source.charCodeAt(Index) == 46) {
+                  position = ++Index;
+                  // Parse the decimal component.
+                  for (; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                  if (position == Index) {
+                    // Illegal trailing decimal.
+                    abort();
+                  }
+                  Index = position;
+                }
+                // Parse exponents. The `e` denoting the exponent is
+                // case-insensitive.
+                charCode = source.charCodeAt(Index);
+                if (charCode == 101 || charCode == 69) {
+                  charCode = source.charCodeAt(++Index);
+                  // Skip past the sign following the exponent, if one is
+                  // specified.
+                  if (charCode == 43 || charCode == 45) {
+                    Index++;
+                  }
+                  // Parse the exponential component.
+                  for (position = Index; position < length && ((charCode = source.charCodeAt(position)), charCode >= 48 && charCode <= 57); position++);
+                  if (position == Index) {
+                    // Illegal empty exponent.
+                    abort();
+                  }
+                  Index = position;
+                }
+                // Coerce the parsed value to a JavaScript number.
+                return +source.slice(begin, Index);
+              }
+              // A negative sign may only precede numbers.
+              if (isSigned) {
                 abort();
               }
-              sign = false;
-              // Parse the integer component.
-              for (; Index < length && (symbol = source.charAt(Index), symbol >= "0" && symbol <= "9"); Index++);
-              // Floats cannot contain a leading decimal point; however, this
-              // case is already accounted for by the parser.
-              if (source.charAt(Index) == ".") {
-                position = ++Index;
-                // Parse the decimal component.
-                for (; position < length && (symbol = source.charAt(position), symbol >= "0" && symbol <= "9"); position++);
-                if (position == Index) {
-                  // Illegal trailing decimal.
-                  abort();
-                }
-                Index = position;
+              // `true`, `false`, and `null` literals.
+              if (source.slice(Index, Index + 4) == "true") {
+                Index += 4;
+                return true;
+              } else if (source.slice(Index, Index + 5) == "false") {
+                Index += 5;
+                return false;
+              } else if (source.slice(Index, Index + 4) == "null") {
+                Index += 4;
+                return null;
               }
-              // Parse exponents.
-              symbol = source.charAt(Index);
-              if (symbol == "e" || symbol == "E") {
-                // Skip past the sign following the exponent, if one is
-                // specified.
-                symbol = source.charAt(++Index);
-                if (symbol == "+" || symbol == "-") {
-                  Index++;
-                }
-                // Parse the exponential component.
-                for (position = Index; position < length && (symbol = source.charAt(position), symbol >= "0" && symbol <= "9"); position++);
-                if (position == Index) {
-                  // Illegal empty exponent.
-                  abort();
-                }
-                Index = position;
-              }
-              // Coerce the parsed value to a JavaScript number.
-              return +source.slice(begin, Index);
-            }
-            // A negative sign may only precede numbers.
-            if (sign) {
+              // Unrecognized token.
               abort();
-            }
-            // `true`, `false`, and `null` literals.
-            if (source.slice(Index, Index + 4) == "true") {
-              Index += 4;
-              return true;
-            } else if (source.slice(Index, Index + 5) == "false") {
-              Index += 5;
-              return false;
-            } else if (source.slice(Index, Index + 4) == "null") {
-              Index += 4;
-              return null;
-            }
-            // Unrecognized token.
-            abort();
           }
         }
         // Return the sentinel `$` character if the parser has reached the end
@@ -2888,14 +3077,14 @@ if (!Object.isExtensible) {
       };
 
       // Internal: Parses a JSON `value` token.
-      get = function (value) {
-        var results, any, key;
+      var get = function (value) {
+        var results, hasMembers;
         if (value == "$") {
           // Unexpected end of input.
           abort();
         }
         if (typeof value == "string") {
-          if (value.charAt(0) == "@") {
+          if (value[0] == "@") {
             // Remove the sentinel `@` character.
             return value.slice(1);
           }
@@ -2903,7 +3092,7 @@ if (!Object.isExtensible) {
           if (value == "[") {
             // Parses a JSON array, returning a new JavaScript array.
             results = [];
-            for (;; any || (any = true)) {
+            for (;; hasMembers || (hasMembers = true)) {
               value = lex();
               // A closing square bracket marks the end of the array literal.
               if (value == "]") {
@@ -2912,7 +3101,7 @@ if (!Object.isExtensible) {
               // If the array literal contains elements, the current token
               // should be a comma separating the previous element from the
               // next.
-              if (any) {
+              if (hasMembers) {
                 if (value == ",") {
                   value = lex();
                   if (value == "]") {
@@ -2934,7 +3123,7 @@ if (!Object.isExtensible) {
           } else if (value == "{") {
             // Parses a JSON object, returning a new JavaScript object.
             results = {};
-            for (;; any || (any = true)) {
+            for (;; hasMembers || (hasMembers = true)) {
               value = lex();
               // A closing curly brace marks the end of the object literal.
               if (value == "}") {
@@ -2942,7 +3131,7 @@ if (!Object.isExtensible) {
               }
               // If the object literal contains members, the current token
               // should be a comma separator.
-              if (any) {
+              if (hasMembers) {
                 if (value == ",") {
                   value = lex();
                   if (value == "}") {
@@ -2957,7 +3146,7 @@ if (!Object.isExtensible) {
               // Leading commas are not permitted, object property names must be
               // double-quoted strings, and a `:` must separate each property
               // name and value.
-              if (value == "," || typeof value != "string" || value.charAt(0) != "@" || lex() != ":") {
+              if (value == "," || typeof value != "string" || value[0] != "@" || lex() != ":") {
                 abort();
               }
               results[value.slice(1)] = get(lex());
@@ -2971,7 +3160,7 @@ if (!Object.isExtensible) {
       };
 
       // Internal: Updates a traversed object member.
-      update = function(source, property, callback) {
+      var update = function(source, property, callback) {
         var element = walk(source, property, callback);
         if (element === undef) {
           delete source[property];
@@ -2983,17 +3172,17 @@ if (!Object.isExtensible) {
       // Internal: Recursively traverses a parsed JSON object, invoking the
       // `callback` function for each value. This is an implementation of the
       // `Walk(holder, name)` operation defined in ES 5.1 section 15.12.2.
-      walk = function (source, property, callback) {
+      var walk = function (source, property, callback) {
         var value = source[property], length;
         if (typeof value == "object" && value) {
-          if (getClass.call(value) == "[object Array]") {
+          // `forEach` can't be used to traverse an array in Opera <= 8.54
+          // because its `Object#hasOwnProperty` implementation returns `false`
+          // for array indices (e.g., `![1, 2, 3].hasOwnProperty("0")`).
+          if (getClass.call(value) == arrayClass) {
             for (length = value.length; length--;) {
               update(value, length, callback);
             }
           } else {
-            // `forEach` can't be used to traverse an array in Opera <= 8.54,
-            // as `Object#hasOwnProperty` returns `false` for array indices
-            // (e.g., `![1, 2, 3].hasOwnProperty("0")`).
             forEach(value, function (property) {
               update(value, property, callback);
             });
@@ -3006,7 +3195,7 @@ if (!Object.isExtensible) {
       JSON3.parse = function (source, callback) {
         var result, value;
         Index = 0;
-        Source = source;
+        Source = "" + source;
         result = get(lex());
         // If a JSON string contains multiple tokens, it is invalid.
         if (lex() != "$") {
@@ -3014,7 +3203,7 @@ if (!Object.isExtensible) {
         }
         // Reset the parser state.
         Index = Source = null;
-        return callback && getClass.call(callback) == "[object Function]" ? walk((value = {}, value[""] = result, value), "", callback) : result;
+        return callback && getClass.call(callback) == functionClass ? walk((value = {}, value[""] = result, value), "", callback) : result;
       };
     }
   }
@@ -3025,7 +3214,457 @@ if (!Object.isExtensible) {
       return JSON3;
     });
   }
-}).call(this);
+}(this));
+// Domain Public by Eric Wendelin http://eriwen.com/ (2008)
+//                  Luke Smith http://lucassmith.name/ (2008)
+//                  Loic Dachary <loic@dachary.org> (2008)
+//                  Johan Euphrosine <proppy@aminche.com> (2008)
+//                  Oyvind Sean Kinsey http://kinsey.no/blog (2010)
+//                  Victor Homyakov <victor-homyakov@users.sourceforge.net> (2010)
+
+/**
+ * Main function giving a function stack trace with a forced or passed in Error
+ *
+ * @cfg {Error} e The error to create a stacktrace from (optional)
+ * @cfg {Boolean} guess If we should try to resolve the names of anonymous functions
+ * @return {Array} of Strings with functions, lines, files, and arguments where possible
+ */
+function printStackTrace(options) {
+    options = options || {guess: true};
+    var ex = options.e || null, guess = !!options.guess;
+    var p = new printStackTrace.implementation(), result = p.run(ex);
+    return (guess) ? p.guessAnonymousFunctions(result) : result;
+}
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = printStackTrace;
+}
+
+printStackTrace.implementation = function() {
+};
+
+printStackTrace.implementation.prototype = {
+    /**
+     * @param {Error} ex The error to create a stacktrace from (optional)
+     * @param {String} mode Forced mode (optional, mostly for unit tests)
+     */
+    run: function(ex, mode) {
+        ex = ex || this.createException();
+        // examine exception properties w/o debugger
+        //for (var prop in ex) {alert("Ex['" + prop + "']=" + ex[prop]);}
+        mode = mode || this.mode(ex);
+        if (mode === 'other') {
+            return this.other(arguments.callee);
+        } else {
+            return this[mode](ex);
+        }
+    },
+
+    createException: function() {
+        try {
+            this.undef();
+        } catch (e) {
+            return e;
+        }
+    },
+
+    /**
+     * Mode could differ for different exception, e.g.
+     * exceptions in Chrome may or may not have arguments or stack.
+     *
+     * @return {String} mode of operation for the exception
+     */
+    mode: function(e) {
+        if (e['arguments'] && e.stack) {
+            return 'chrome';
+        } else if (e.stack && e.sourceURL) {
+            return 'safari';
+        } else if (e.stack && e.number) {
+            return 'ie';
+        } else if (typeof e.message === 'string' && typeof window !== 'undefined' && window.opera) {
+            // e.message.indexOf("Backtrace:") > -1 -> opera
+            // !e.stacktrace -> opera
+            if (!e.stacktrace) {
+                return 'opera9'; // use e.message
+            }
+            // 'opera#sourceloc' in e -> opera9, opera10a
+            if (e.message.indexOf('\n') > -1 && e.message.split('\n').length > e.stacktrace.split('\n').length) {
+                return 'opera9'; // use e.message
+            }
+            // e.stacktrace && !e.stack -> opera10a
+            if (!e.stack) {
+                return 'opera10a'; // use e.stacktrace
+            }
+            // e.stacktrace && e.stack -> opera10b
+            if (e.stacktrace.indexOf("called from line") < 0) {
+                return 'opera10b'; // use e.stacktrace, format differs from 'opera10a'
+            }
+            // e.stacktrace && e.stack -> opera11
+            return 'opera11'; // use e.stacktrace, format differs from 'opera10a', 'opera10b'
+        } else if (e.stack && !e.fileName) {
+            // Chrome 27 does not have e.arguments as earlier versions,
+            // but still does not have e.fileName as Firefox
+            return 'chrome';
+        } else if (e.stack) {
+            return 'firefox';
+        }
+        return 'other';
+    },
+
+    /**
+     * Given a context, function name, and callback function, overwrite it so that it calls
+     * printStackTrace() first with a callback and then runs the rest of the body.
+     *
+     * @param {Object} context of execution (e.g. window)
+     * @param {String} functionName to instrument
+     * @param {Function} callback function to call with a stack trace on invocation
+     */
+    instrumentFunction: function(context, functionName, callback) {
+        context = context || window;
+        var original = context[functionName];
+        context[functionName] = function instrumented() {
+            callback.call(this, printStackTrace().slice(4));
+            return context[functionName]._instrumented.apply(this, arguments);
+        };
+        context[functionName]._instrumented = original;
+    },
+
+    /**
+     * Given a context and function name of a function that has been
+     * instrumented, revert the function to it's original (non-instrumented)
+     * state.
+     *
+     * @param {Object} context of execution (e.g. window)
+     * @param {String} functionName to de-instrument
+     */
+    deinstrumentFunction: function(context, functionName) {
+        if (context[functionName].constructor === Function &&
+                context[functionName]._instrumented &&
+                context[functionName]._instrumented.constructor === Function) {
+            context[functionName] = context[functionName]._instrumented;
+        }
+    },
+
+    /**
+     * Given an Error object, return a formatted Array based on Chrome's stack string.
+     *
+     * @param e - Error object to inspect
+     * @return Array<String> of function calls, files and line numbers
+     */
+    chrome: function(e) {
+        var stack = (e.stack + '\n').replace(/^\S[^\(]+?[\n$]/gm, '').
+          replace(/^\s+(at eval )?at\s+/gm, '').
+          replace(/^([^\(]+?)([\n$])/gm, '{anonymous}()@$1$2').
+          replace(/^Object.<anonymous>\s*\(([^\)]+)\)/gm, '{anonymous}()@$1').split('\n');
+        stack.pop();
+        return stack;
+    },
+
+    /**
+     * Given an Error object, return a formatted Array based on Safari's stack string.
+     *
+     * @param e - Error object to inspect
+     * @return Array<String> of function calls, files and line numbers
+     */
+    safari: function(e) {
+        return e.stack.replace(/\[native code\]\n/m, '')
+            .replace(/^(?=\w+Error\:).*$\n/m, '')
+            .replace(/^@/gm, '{anonymous}()@')
+            .split('\n');
+    },
+
+    /**
+     * Given an Error object, return a formatted Array based on IE's stack string.
+     *
+     * @param e - Error object to inspect
+     * @return Array<String> of function calls, files and line numbers
+     */
+    ie: function(e) {
+        var lineRE = /^.*at (\w+) \(([^\)]+)\)$/gm;
+        return e.stack.replace(/at Anonymous function /gm, '{anonymous}()@')
+            .replace(/^(?=\w+Error\:).*$\n/m, '')
+            .replace(lineRE, '$1@$2')
+            .split('\n');
+    },
+
+    /**
+     * Given an Error object, return a formatted Array based on Firefox's stack string.
+     *
+     * @param e - Error object to inspect
+     * @return Array<String> of function calls, files and line numbers
+     */
+    firefox: function(e) {
+        return e.stack.replace(/(?:\n@:0)?\s+$/m, '').replace(/^[\(@]/gm, '{anonymous}()@').split('\n');
+    },
+
+    opera11: function(e) {
+        var ANON = '{anonymous}', lineRE = /^.*line (\d+), column (\d+)(?: in (.+))? in (\S+):$/;
+        var lines = e.stacktrace.split('\n'), result = [];
+
+        for (var i = 0, len = lines.length; i < len; i += 2) {
+            var match = lineRE.exec(lines[i]);
+            if (match) {
+                var location = match[4] + ':' + match[1] + ':' + match[2];
+                var fnName = match[3] || "global code";
+                fnName = fnName.replace(/<anonymous function: (\S+)>/, "$1").replace(/<anonymous function>/, ANON);
+                result.push(fnName + '@' + location + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+            }
+        }
+
+        return result;
+    },
+
+    opera10b: function(e) {
+        // "<anonymous function: run>([arguments not available])@file://localhost/G:/js/stacktrace.js:27\n" +
+        // "printStackTrace([arguments not available])@file://localhost/G:/js/stacktrace.js:18\n" +
+        // "@file://localhost/G:/js/test/functional/testcase1.html:15"
+        var lineRE = /^(.*)@(.+):(\d+)$/;
+        var lines = e.stacktrace.split('\n'), result = [];
+
+        for (var i = 0, len = lines.length; i < len; i++) {
+            var match = lineRE.exec(lines[i]);
+            if (match) {
+                var fnName = match[1]? (match[1] + '()') : "global code";
+                result.push(fnName + '@' + match[2] + ':' + match[3]);
+            }
+        }
+
+        return result;
+    },
+
+    /**
+     * Given an Error object, return a formatted Array based on Opera 10's stacktrace string.
+     *
+     * @param e - Error object to inspect
+     * @return Array<String> of function calls, files and line numbers
+     */
+    opera10a: function(e) {
+        // "  Line 27 of linked script file://localhost/G:/js/stacktrace.js\n"
+        // "  Line 11 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html: In function foo\n"
+        var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
+        var lines = e.stacktrace.split('\n'), result = [];
+
+        for (var i = 0, len = lines.length; i < len; i += 2) {
+            var match = lineRE.exec(lines[i]);
+            if (match) {
+                var fnName = match[3] || ANON;
+                result.push(fnName + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+            }
+        }
+
+        return result;
+    },
+
+    // Opera 7.x-9.2x only!
+    opera9: function(e) {
+        // "  Line 43 of linked script file://localhost/G:/js/stacktrace.js\n"
+        // "  Line 7 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html\n"
+        var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
+        var lines = e.message.split('\n'), result = [];
+
+        for (var i = 2, len = lines.length; i < len; i += 2) {
+            var match = lineRE.exec(lines[i]);
+            if (match) {
+                result.push(ANON + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
+            }
+        }
+
+        return result;
+    },
+
+    // Safari 5-, IE 9-, and others
+    other: function(curr) {
+        var ANON = '{anonymous}', fnRE = /function\s*([\w\-$]+)?\s*\(/i, stack = [], fn, args, maxStackSize = 10;
+        while (curr && curr['arguments'] && stack.length < maxStackSize) {
+            fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
+            args = Array.prototype.slice.call(curr['arguments'] || []);
+            stack[stack.length] = fn + '(' + this.stringifyArguments(args) + ')';
+            curr = curr.caller;
+        }
+        return stack;
+    },
+
+    /**
+     * Given arguments array as a String, substituting type names for non-string types.
+     *
+     * @param {Arguments,Array} args
+     * @return {String} stringified arguments
+     */
+    stringifyArguments: function(args) {
+        var result = [];
+        var slice = Array.prototype.slice;
+        for (var i = 0; i < args.length; ++i) {
+            var arg = args[i];
+            if (arg === undefined) {
+                result[i] = 'undefined';
+            } else if (arg === null) {
+                result[i] = 'null';
+            } else if (arg.constructor) {
+                if (arg.constructor === Array) {
+                    if (arg.length < 3) {
+                        result[i] = '[' + this.stringifyArguments(arg) + ']';
+                    } else {
+                        result[i] = '[' + this.stringifyArguments(slice.call(arg, 0, 1)) + '...' + this.stringifyArguments(slice.call(arg, -1)) + ']';
+                    }
+                } else if (arg.constructor === Object) {
+                    result[i] = '#object';
+                } else if (arg.constructor === Function) {
+                    result[i] = '#function';
+                } else if (arg.constructor === String) {
+                    result[i] = '"' + arg + '"';
+                } else if (arg.constructor === Number) {
+                    result[i] = arg;
+                }
+            }
+        }
+        return result.join(',');
+    },
+
+    sourceCache: {},
+
+    /**
+     * @return the text from a given URL
+     */
+    ajax: function(url) {
+        var req = this.createXMLHTTPObject();
+        if (req) {
+            try {
+                req.open('GET', url, false);
+                //req.overrideMimeType('text/plain');
+                //req.overrideMimeType('text/javascript');
+                req.send(null);
+                //return req.status == 200 ? req.responseText : '';
+                return req.responseText;
+            } catch (e) {
+            }
+        }
+        return '';
+    },
+
+    /**
+     * Try XHR methods in order and store XHR factory.
+     *
+     * @return <Function> XHR function or equivalent
+     */
+    createXMLHTTPObject: function() {
+        var xmlhttp, XMLHttpFactories = [
+            function() {
+                return new XMLHttpRequest();
+            }, function() {
+                return new ActiveXObject('Msxml2.XMLHTTP');
+            }, function() {
+                return new ActiveXObject('Msxml3.XMLHTTP');
+            }, function() {
+                return new ActiveXObject('Microsoft.XMLHTTP');
+            }
+        ];
+        for (var i = 0; i < XMLHttpFactories.length; i++) {
+            try {
+                xmlhttp = XMLHttpFactories[i]();
+                // Use memoization to cache the factory
+                this.createXMLHTTPObject = XMLHttpFactories[i];
+                return xmlhttp;
+            } catch (e) {
+            }
+        }
+    },
+
+    /**
+     * Given a URL, check if it is in the same domain (so we can get the source
+     * via Ajax).
+     *
+     * @param url <String> source url
+     * @return <Boolean> False if we need a cross-domain request
+     */
+    isSameDomain: function(url) {
+        return typeof location !== "undefined" && url.indexOf(location.hostname) !== -1; // location may not be defined, e.g. when running from nodejs.
+    },
+
+    /**
+     * Get source code from given URL if in the same domain.
+     *
+     * @param url <String> JS source URL
+     * @return <Array> Array of source code lines
+     */
+    getSource: function(url) {
+        // TODO reuse source from script tags?
+        if (!(url in this.sourceCache)) {
+            this.sourceCache[url] = this.ajax(url).split('\n');
+        }
+        return this.sourceCache[url];
+    },
+
+    guessAnonymousFunctions: function(stack) {
+        for (var i = 0; i < stack.length; ++i) {
+            var reStack = /\{anonymous\}\(.*\)@(.*)/,
+                reRef = /^(.*?)(?::(\d+))(?::(\d+))?(?: -- .+)?$/,
+                frame = stack[i], ref = reStack.exec(frame);
+
+            if (ref) {
+                var m = reRef.exec(ref[1]);
+                if (m) { // If falsey, we did not get any file/line information
+                    var file = m[1], lineno = m[2], charno = m[3] || 0;
+                    if (file && this.isSameDomain(file) && lineno) {
+                        var functionName = this.guessAnonymousFunction(file, lineno, charno);
+                        stack[i] = frame.replace('{anonymous}', functionName);
+                    }
+                }
+            }
+        }
+        return stack;
+    },
+
+    guessAnonymousFunction: function(url, lineNo, charNo) {
+        var ret;
+        try {
+            ret = this.findFunctionName(this.getSource(url), lineNo);
+        } catch (e) {
+            ret = 'getSource failed with url: ' + url + ', exception: ' + e.toString();
+        }
+        return ret;
+    },
+
+    findFunctionName: function(source, lineNo) {
+        // FIXME findFunctionName fails for compressed source
+        // (more than one function on the same line)
+        // function {name}({args}) m[1]=name m[2]=args
+        var reFunctionDeclaration = /function\s+([^(]*?)\s*\(([^)]*)\)/;
+        // {name} = function ({args}) TODO args capture
+        // /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*function(?:[^(]*)/
+        var reFunctionExpression = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*function\b/;
+        // {name} = eval()
+        var reFunctionEvaluation = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*(?:eval|new Function)\b/;
+        // Walk backwards in the source lines until we find
+        // the line which matches one of the patterns above
+        var code = "", line, maxLines = Math.min(lineNo, 20), m, commentPos;
+        for (var i = 0; i < maxLines; ++i) {
+            // lineNo is 1-based, source[] is 0-based
+            line = source[lineNo - i - 1];
+            commentPos = line.indexOf('//');
+            if (commentPos >= 0) {
+                line = line.substr(0, commentPos);
+            }
+            // TODO check other types of comments? Commented code may lead to false positive
+            if (line) {
+                code = line + code;
+                m = reFunctionExpression.exec(code);
+                if (m && m[1]) {
+                    return m[1];
+                }
+                m = reFunctionDeclaration.exec(code);
+                if (m && m[1]) {
+                    //return m[1] + "(" + (m[2] || "") + ")";
+                    return m[1];
+                }
+                m = reFunctionEvaluation.exec(code);
+                if (m && m[1]) {
+                    return m[1];
+                }
+            }
+        }
+        return '(?)';
+    }
+};
 /**
 * XMLHttpRequest.js Copyright (C) 2011 Sergey Ilinsky (http://www.ilinsky.com)
 *
@@ -3048,7 +3687,7 @@ if (!Object.isExtensible) {
 
 	// Save reference to earlier defined object implementation (if any)
 	var oXMLHttpRequest = window.XMLHttpRequest;
-
+	
 	// Define on browser type
 	var bGecko  = !!window.controllers;
 	var bIE     = !!window.document.namespaces;
@@ -3056,7 +3695,15 @@ if (!Object.isExtensible) {
 
 	// Enables "XMLHttpRequest()" call next to "new XMLHttpRequest()"
 	function fXMLHttpRequest() {
-		this._object  = oXMLHttpRequest && !bIE7 ? new oXMLHttpRequest : new window.ActiveXObject("Microsoft.XMLHTTP");
+		if (!window.XMLHttpRequest || bIE7) {
+			this._object = new window.ActiveXObject("Microsoft.XMLHTTP");
+		} // only use initial XHR object internally if current reference to XHR is our normalized replacement 
+		else if (window.XMLHttpRequest.isNormalizedObject) {
+			this._object = new oXMLHttpRequest();
+		} // otherwise use whatever is currently referenced by XMLHttpRequest
+		else {
+			this._object = new window.XMLHttpRequest();		
+		}
 		this._listeners = [];
 	}
 
@@ -3070,6 +3717,9 @@ if (!Object.isExtensible) {
 	if (bGecko && oXMLHttpRequest.wrapped) {
 		cXMLHttpRequest.wrapped = oXMLHttpRequest.wrapped;
 	}
+	
+	// Marker to be able to easily identify our object
+	cXMLHttpRequest.isNormalizedObject = true;
 
 	// Constants
 	cXMLHttpRequest.UNSENT            = 0;
@@ -3499,7 +4149,7 @@ if (!Object.isExtensible) {
 			'type':       "readystatechange",
 			'bubbles':    false,
 			'cancelable': false,
-			'timeStamp':  new Date + 0
+			'timeStamp':  new Date().getTime()
 		});
 	}
 
@@ -3516,7 +4166,7 @@ if (!Object.isExtensible) {
 
 		// Check if there is no error in document
 		if (oDocument){
-			if ((bIE && oDocument.parseError !== 0) || !oDocument.documentElement || (oDocument.documentElement && oDocument.documentElement.tagName == "parsererror")) {
+			if ((bIE && oDocument.parseError != 0) || !oDocument.documentElement || (oDocument.documentElement && oDocument.documentElement.tagName == "parsererror")) {
 				return null;
 			}
 		}
@@ -3551,668 +4201,6 @@ if (!Object.isExtensible) {
 	window.XMLHttpRequest = cXMLHttpRequest;
 
 })();
-
-/**
- * @preserve console-shim 1.0.2
- * https://github.com/kayahr/console-shim
- * Copyright (C) 2011 Klaus Reimer <k@ailis.de>
- * Licensed under the MIT license
- * (See http://www.opensource.org/licenses/mit-license)
- */
- 
- 
-(function(){
-"use strict";
-
-/**
- * Returns a function which calls the specified function in the specified
- * scope.
- *
- * @param {Function} func
- *            The function to call.
- * @param {Object} scope
- *            The scope to call the function in.
- * @param {...*} args
- *            Additional arguments to pass to the bound function.
- * @returns {function(...[*]): undefined}
- *            The bound function.
- */
-var bind = function(func, scope, args)
-{
-    var fixedArgs = Array.prototype.slice.call(arguments, 2);
-    return function()
-    {
-        var args = fixedArgs.concat(Array.prototype.slice.call(arguments, 0));
-        (/** @type {Function} */ func).apply(scope, args);
-    };
-};
-
-// Create console if not present
-if (!window["console"]) window.console = /** @type {Console} */ ({});
-var console = (/** @type {Object} */ window.console);
-
-// Implement console log if needed
-if (!console["log"])
-{
-    // Use log4javascript if present
-    if (window["log4javascript"])
-    {
-        var log = log4javascript.getDefaultLogger();
-        console.log = bind(log.info, log);
-        console.debug = bind(log.debug, log);
-        console.info = bind(log.info, log);
-        console.warn = bind(log.warn, log);
-        console.error = bind(log.error, log);
-    }
-    
-    // Use empty dummy implementation to ignore logging
-    else
-    {
-        console.log = (/** @param {...*} args */ function(args) {});
-    }
-}
-
-// Implement other log levels to console.log if missing
-if (!console["debug"]) console.debug = console.log;
-if (!console["info"]) console.info = console.log;
-if (!console["warn"]) console.warn = console.log;
-if (!console["error"]) console.error = console.log;
-
-// Wrap the log methods in IE (<=9) because their argument handling is wrong
-// This wrapping is also done if the __consoleShimTest__ symbol is set. This
-// is needed for unit testing.
-if (window["__consoleShimTest__"] != null || 
-    eval("/*@cc_on @_jscript_version <= 9@*/"))
-{
-    /**
-     * Wraps the call to a real IE logging method. Modifies the arguments so
-     * parameters which are not represented by a placeholder are properly
-     * printed with a space character as separator.
-     *
-     * @param {...*} args
-     *            The function arguments. First argument is the log function
-     *            to call, the other arguments are the log arguments.
-     */
-    var wrap = function(args)
-    {
-        var i, max, match, log;
-        
-        // Convert argument list to real array
-        args = Array.prototype.slice.call(arguments, 0);
-        
-        // First argument is the log method to call
-        log = args.shift();
-        
-        max = args.length;
-        if (max > 1 && window["__consoleShimTest__"] !== false)
-        {
-            // When first parameter is not a string then add a format string to
-            // the argument list so we are able to modify it in the next stop
-            if (typeof(args[0]) != "string")
-            {
-                args.unshift("%o");
-                max += 1;
-            }
-            
-            // For each additional parameter which has no placeholder in the
-            // format string we add another placeholder separated with a
-            // space character.
-            match = args[0].match(/%[a-z]/g);
-            for (i = match ? match.length + 1 : 1; i < max; i += 1)
-            {
-                args[0] += " %o";
-            }
-        }
-        Function.apply.call(log, console, args);
-    };
-    
-    // Wrap the native log methods of IE to fix argument output problems
-    console.log = bind(wrap, window, console.log);
-    console.debug = bind(wrap, window, console.debug);
-    console.info = bind(wrap, window, console.info);
-    console.warn = bind(wrap, window, console.warn);
-    console.error = bind(wrap, window, console.error);
-}
-
-// Implement console.assert if missing
-if (!console["assert"])
-{
-    console["assert"] = function()
-    {
-        var args = Array.prototype.slice.call(arguments, 0);
-        var expr = args.shift();
-        if (!expr)
-        {
-            args[0] = "Assertion failed: " + args[0];
-            console.error.apply(console, args);
-        }
-    };
-}
-
-// Linking console.dir and console.dirxml to the console.log method if
-// missing. Hopefully the browser already logs objects and DOM nodes as a
-// tree.
-if (!console["dir"]) console["dir"] = console.log;
-if (!console["dirxml"]) console["dirxml"] = console.log;
-
-// Linking console.exception to console.error. This is not the same but
-// at least some error message is displayed.
-if (!console["exception"]) console["exception"] = console.error;
-
-// Implement console.time and console.timeEnd if one of them is missing
-if (!console["time"] || !console["timeEnd"])
-{
-    var timers = {};
-    console["time"] = function(id)
-    {
-        timers[id] = new Date().getTime();
-    };
-    console["timeEnd"] = function(id)
-    {
-        var start = timers[id];
-        if (start)
-        {
-            console.log(id + ": " + (new Date().getTime() - start) + "ms");
-            delete timers[id];
-        }
-    };
-}
-
-// Implement console.table if missing
-if (!console["table"])
-{
-    console["table"] = function(data, columns)
-    {
-        var i, iMax, row, j, jMax, k;
-        
-        // Do nothing if data has wrong type or no data was specified
-        if (!data || !(data instanceof Array) || !data.length) return;
-        
-        // Auto-calculate columns array if not set
-        if (!columns || !(columns instanceof Array))
-        {
-            columns = [];
-            for (k in data[0])
-            {
-                if (!data[0].hasOwnProperty(k)) continue;
-                columns.push(k);
-            }
-        }
-        
-        for (i = 0, iMax = data.length; i < iMax; i += 1)
-        {
-            row = [];
-            for (j = 0, jMax = columns.length; j < jMax; j += 1)
-            {
-                row.push(data[i][columns[j]]);
-            }
-            
-            Function.apply.call(console.log, console, row);
-        }
-    };
-}
-
-// Dummy implementations of other console features to prevent error messages
-// in browsers not supporting it.
-if (!console["clear"]) console["clear"] = function() {};
-if (!console["trace"]) console["trace"] = function() {};
-if (!console["group"]) console["group"] = function() {};
-if (!console["groupCollapsed"]) console["groupCollapsed"] = function() {};
-if (!console["groupEnd"]) console["groupEnd"] = function() {};
-if (!console["timeStamp"]) console["timeStamp"] = function() {};
-if (!console["profile"]) console["profile"] = function() {};
-if (!console["profileEnd"]) console["profileEnd"] = function() {};
-if (!console["count"]) console["count"] = function() {};
-
-})();
-
-// Domain Public by Eric Wendelin http://eriwen.com/ (2008)
-//                  Luke Smith http://lucassmith.name/ (2008)
-//                  Loic Dachary <loic@dachary.org> (2008)
-//                  Johan Euphrosine <proppy@aminche.com> (2008)
-//                  Oyvind Sean Kinsey http://kinsey.no/blog (2010)
-//                  Victor Homyakov <victor-homyakov@users.sourceforge.net> (2010)
-
-/**
- * Main function giving a function stack trace with a forced or passed in Error
- *
- * @cfg {Error} e The error to create a stacktrace from (optional)
- * @cfg {Boolean} guess If we should try to resolve the names of anonymous functions
- * @return {Array} of Strings with functions, lines, files, and arguments where possible
- */
-function printStackTrace(options) {
-    options = options || {guess: true};
-    var ex = options.e || null, guess = !!options.guess;
-    var p = new printStackTrace.implementation(), result = p.run(ex);
-    return (guess) ? p.guessAnonymousFunctions(result) : result;
-}
-
-if (typeof module !== "undefined" && module.exports) {
-    module.exports = printStackTrace;
-}
-
-printStackTrace.implementation = function() {
-};
-
-printStackTrace.implementation.prototype = {
-    /**
-     * @param {Error} ex The error to create a stacktrace from (optional)
-     * @param {String} mode Forced mode (optional, mostly for unit tests)
-     */
-    run: function(ex, mode) {
-        ex = ex || this.createException();
-        // examine exception properties w/o debugger
-        //for (var prop in ex) {alert("Ex['" + prop + "']=" + ex[prop]);}
-        mode = mode || this.mode(ex);
-        if (mode === 'other') {
-            return this.other(arguments.callee);
-        } else {
-            return this[mode](ex);
-        }
-    },
-
-    createException: function() {
-        try {
-            this.undef();
-        } catch (e) {
-            return e;
-        }
-    },
-
-    /**
-     * Mode could differ for different exception, e.g.
-     * exceptions in Chrome may or may not have arguments or stack.
-     *
-     * @return {String} mode of operation for the exception
-     */
-    mode: function(e) {
-        if (e['arguments'] && e.stack) {
-            return 'chrome';
-        } else if (e.stack && e.sourceURL) {
-            return 'safari';
-        } else if (e.stack && e.number) {
-            return 'ie';
-        } else if (typeof e.message === 'string' && typeof window !== 'undefined' && window.opera) {
-            // e.message.indexOf("Backtrace:") > -1 -> opera
-            // !e.stacktrace -> opera
-            if (!e.stacktrace) {
-                return 'opera9'; // use e.message
-            }
-            // 'opera#sourceloc' in e -> opera9, opera10a
-            if (e.message.indexOf('\n') > -1 && e.message.split('\n').length > e.stacktrace.split('\n').length) {
-                return 'opera9'; // use e.message
-            }
-            // e.stacktrace && !e.stack -> opera10a
-            if (!e.stack) {
-                return 'opera10a'; // use e.stacktrace
-            }
-            // e.stacktrace && e.stack -> opera10b
-            if (e.stacktrace.indexOf("called from line") < 0) {
-                return 'opera10b'; // use e.stacktrace, format differs from 'opera10a'
-            }
-            // e.stacktrace && e.stack -> opera11
-            return 'opera11'; // use e.stacktrace, format differs from 'opera10a', 'opera10b'
-        } else if (e.stack) {
-            return 'firefox';
-        }
-        return 'other';
-    },
-
-    /**
-     * Given a context, function name, and callback function, overwrite it so that it calls
-     * printStackTrace() first with a callback and then runs the rest of the body.
-     *
-     * @param {Object} context of execution (e.g. window)
-     * @param {String} functionName to instrument
-     * @param {Function} function to call with a stack trace on invocation
-     */
-    instrumentFunction: function(context, functionName, callback) {
-        context = context || window;
-        var original = context[functionName];
-        context[functionName] = function instrumented() {
-            callback.call(this, printStackTrace().slice(4));
-            return context[functionName]._instrumented.apply(this, arguments);
-        };
-        context[functionName]._instrumented = original;
-    },
-
-    /**
-     * Given a context and function name of a function that has been
-     * instrumented, revert the function to it's original (non-instrumented)
-     * state.
-     *
-     * @param {Object} context of execution (e.g. window)
-     * @param {String} functionName to de-instrument
-     */
-    deinstrumentFunction: function(context, functionName) {
-        if (context[functionName].constructor === Function &&
-                context[functionName]._instrumented &&
-                context[functionName]._instrumented.constructor === Function) {
-            context[functionName] = context[functionName]._instrumented;
-        }
-    },
-
-    /**
-     * Given an Error object, return a formatted Array based on Chrome's stack string.
-     *
-     * @param e - Error object to inspect
-     * @return Array<String> of function calls, files and line numbers
-     */
-    chrome: function(e) {
-        var stack = (e.stack + '\n').replace(/^\S[^\(]+?[\n$]/gm, '').
-          replace(/^\s+(at eval )?at\s+/gm, '').
-          replace(/^([^\(]+?)([\n$])/gm, '{anonymous}()@$1$2').
-          replace(/^Object.<anonymous>\s*\(([^\)]+)\)/gm, '{anonymous}()@$1').split('\n');
-        stack.pop();
-        return stack;
-    },
-
-    /**
-     * Given an Error object, return a formatted Array based on Safari's stack string.
-     *
-     * @param e - Error object to inspect
-     * @return Array<String> of function calls, files and line numbers
-     */
-    safari: function(e) {
-        return e.stack.replace(/\[native code\]\n/m, '')
-            .replace(/^(?=\w+Error\:).*$\n/m, '')
-            .replace(/^@/gm, '{anonymous}()@')
-            .split('\n');
-    },
-
-    /**
-     * Given an Error object, return a formatted Array based on IE's stack string.
-     *
-     * @param e - Error object to inspect
-     * @return Array<String> of function calls, files and line numbers
-     */
-    ie: function(e) {
-        var lineRE = /^.*at (\w+) \(([^\)]+)\)$/gm;
-        return e.stack.replace(/at Anonymous function /gm, '{anonymous}()@')
-            .replace(/^(?=\w+Error\:).*$\n/m, '')
-            .replace(lineRE, '$1@$2')
-            .split('\n');
-    },
-
-    /**
-     * Given an Error object, return a formatted Array based on Firefox's stack string.
-     *
-     * @param e - Error object to inspect
-     * @return Array<String> of function calls, files and line numbers
-     */
-    firefox: function(e) {
-        return e.stack.replace(/(?:\n@:0)?\s+$/m, '').replace(/^[\(@]/gm, '{anonymous}()@').split('\n');
-    },
-
-    opera11: function(e) {
-        var ANON = '{anonymous}', lineRE = /^.*line (\d+), column (\d+)(?: in (.+))? in (\S+):$/;
-        var lines = e.stacktrace.split('\n'), result = [];
-
-        for (var i = 0, len = lines.length; i < len; i += 2) {
-            var match = lineRE.exec(lines[i]);
-            if (match) {
-                var location = match[4] + ':' + match[1] + ':' + match[2];
-                var fnName = match[3] || "global code";
-                fnName = fnName.replace(/<anonymous function: (\S+)>/, "$1").replace(/<anonymous function>/, ANON);
-                result.push(fnName + '@' + location + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-            }
-        }
-
-        return result;
-    },
-
-    opera10b: function(e) {
-        // "<anonymous function: run>([arguments not available])@file://localhost/G:/js/stacktrace.js:27\n" +
-        // "printStackTrace([arguments not available])@file://localhost/G:/js/stacktrace.js:18\n" +
-        // "@file://localhost/G:/js/test/functional/testcase1.html:15"
-        var lineRE = /^(.*)@(.+):(\d+)$/;
-        var lines = e.stacktrace.split('\n'), result = [];
-
-        for (var i = 0, len = lines.length; i < len; i++) {
-            var match = lineRE.exec(lines[i]);
-            if (match) {
-                var fnName = match[1]? (match[1] + '()') : "global code";
-                result.push(fnName + '@' + match[2] + ':' + match[3]);
-            }
-        }
-
-        return result;
-    },
-
-    /**
-     * Given an Error object, return a formatted Array based on Opera 10's stacktrace string.
-     *
-     * @param e - Error object to inspect
-     * @return Array<String> of function calls, files and line numbers
-     */
-    opera10a: function(e) {
-        // "  Line 27 of linked script file://localhost/G:/js/stacktrace.js\n"
-        // "  Line 11 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html: In function foo\n"
-        var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)(?:: In function (\S+))?$/i;
-        var lines = e.stacktrace.split('\n'), result = [];
-
-        for (var i = 0, len = lines.length; i < len; i += 2) {
-            var match = lineRE.exec(lines[i]);
-            if (match) {
-                var fnName = match[3] || ANON;
-                result.push(fnName + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-            }
-        }
-
-        return result;
-    },
-
-    // Opera 7.x-9.2x only!
-    opera9: function(e) {
-        // "  Line 43 of linked script file://localhost/G:/js/stacktrace.js\n"
-        // "  Line 7 of inline#1 script in file://localhost/G:/js/test/functional/testcase1.html\n"
-        var ANON = '{anonymous}', lineRE = /Line (\d+).*script (?:in )?(\S+)/i;
-        var lines = e.message.split('\n'), result = [];
-
-        for (var i = 2, len = lines.length; i < len; i += 2) {
-            var match = lineRE.exec(lines[i]);
-            if (match) {
-                result.push(ANON + '()@' + match[2] + ':' + match[1] + ' -- ' + lines[i + 1].replace(/^\s+/, ''));
-            }
-        }
-
-        return result;
-    },
-
-    // Safari 5-, IE 9-, and others
-    other: function(curr) {
-        var ANON = '{anonymous}', fnRE = /function\s*([\w\-$]+)?\s*\(/i, stack = [], fn, args, maxStackSize = 10;
-        while (curr && curr['arguments'] && stack.length < maxStackSize) {
-            fn = fnRE.test(curr.toString()) ? RegExp.$1 || ANON : ANON;
-            args = Array.prototype.slice.call(curr['arguments'] || []);
-            stack[stack.length] = fn + '(' + this.stringifyArguments(args) + ')';
-            curr = curr.caller;
-        }
-        return stack;
-    },
-
-    /**
-     * Given arguments array as a String, subsituting type names for non-string types.
-     *
-     * @param {Arguments} args
-     * @return {Array} of Strings with stringified arguments
-     */
-    stringifyArguments: function(args) {
-        var result = [];
-        var slice = Array.prototype.slice;
-        for (var i = 0; i < args.length; ++i) {
-            var arg = args[i];
-            if (arg === undefined) {
-                result[i] = 'undefined';
-            } else if (arg === null) {
-                result[i] = 'null';
-            } else if (arg.constructor) {
-                if (arg.constructor === Array) {
-                    if (arg.length < 3) {
-                        result[i] = '[' + this.stringifyArguments(arg) + ']';
-                    } else {
-                        result[i] = '[' + this.stringifyArguments(slice.call(arg, 0, 1)) + '...' + this.stringifyArguments(slice.call(arg, -1)) + ']';
-                    }
-                } else if (arg.constructor === Object) {
-                    result[i] = '#object';
-                } else if (arg.constructor === Function) {
-                    result[i] = '#function';
-                } else if (arg.constructor === String) {
-                    result[i] = '"' + arg + '"';
-                } else if (arg.constructor === Number) {
-                    result[i] = arg;
-                }
-            }
-        }
-        return result.join(',');
-    },
-
-    sourceCache: {},
-
-    /**
-     * @return the text from a given URL
-     */
-    ajax: function(url) {
-        var req = this.createXMLHTTPObject();
-        if (req) {
-            try {
-                req.open('GET', url, false);
-                //req.overrideMimeType('text/plain');
-                //req.overrideMimeType('text/javascript');
-                req.send(null);
-                //return req.status == 200 ? req.responseText : '';
-                return req.responseText;
-            } catch (e) {
-            }
-        }
-        return '';
-    },
-
-    /**
-     * Try XHR methods in order and store XHR factory.
-     *
-     * @return <Function> XHR function or equivalent
-     */
-    createXMLHTTPObject: function() {
-        var xmlhttp, XMLHttpFactories = [
-            function() {
-                return new XMLHttpRequest();
-            }, function() {
-                return new ActiveXObject('Msxml2.XMLHTTP');
-            }, function() {
-                return new ActiveXObject('Msxml3.XMLHTTP');
-            }, function() {
-                return new ActiveXObject('Microsoft.XMLHTTP');
-            }
-        ];
-        for (var i = 0; i < XMLHttpFactories.length; i++) {
-            try {
-                xmlhttp = XMLHttpFactories[i]();
-                // Use memoization to cache the factory
-                this.createXMLHTTPObject = XMLHttpFactories[i];
-                return xmlhttp;
-            } catch (e) {
-            }
-        }
-    },
-
-    /**
-     * Given a URL, check if it is in the same domain (so we can get the source
-     * via Ajax).
-     *
-     * @param url <String> source url
-     * @return False if we need a cross-domain request
-     */
-    isSameDomain: function(url) {
-        return typeof location !== "undefined" && url.indexOf(location.hostname) !== -1; // location may not be defined, e.g. when running from nodejs.
-    },
-
-    /**
-     * Get source code from given URL if in the same domain.
-     *
-     * @param url <String> JS source URL
-     * @return <Array> Array of source code lines
-     */
-    getSource: function(url) {
-        // TODO reuse source from script tags?
-        if (!(url in this.sourceCache)) {
-            this.sourceCache[url] = this.ajax(url).split('\n');
-        }
-        return this.sourceCache[url];
-    },
-
-    guessAnonymousFunctions: function(stack) {
-        for (var i = 0; i < stack.length; ++i) {
-            var reStack = /\{anonymous\}\(.*\)@(.*)/,
-                reRef = /^(.*?)(?::(\d+))(?::(\d+))?(?: -- .+)?$/,
-                frame = stack[i], ref = reStack.exec(frame);
-
-            if (ref) {
-                var m = reRef.exec(ref[1]);
-                if (m) { // If falsey, we did not get any file/line information
-                    var file = m[1], lineno = m[2], charno = m[3] || 0;
-                    if (file && this.isSameDomain(file) && lineno) {
-                        var functionName = this.guessAnonymousFunction(file, lineno, charno);
-                        stack[i] = frame.replace('{anonymous}', functionName);
-                    }
-                }
-            }
-        }
-        return stack;
-    },
-
-    guessAnonymousFunction: function(url, lineNo, charNo) {
-        var ret;
-        try {
-            ret = this.findFunctionName(this.getSource(url), lineNo);
-        } catch (e) {
-            ret = 'getSource failed with url: ' + url + ', exception: ' + e.toString();
-        }
-        return ret;
-    },
-
-    findFunctionName: function(source, lineNo) {
-        // FIXME findFunctionName fails for compressed source
-        // (more than one function on the same line)
-        // function {name}({args}) m[1]=name m[2]=args
-        var reFunctionDeclaration = /function\s+([^(]*?)\s*\(([^)]*)\)/;
-        // {name} = function ({args}) TODO args capture
-        // /['"]?([0-9A-Za-z_]+)['"]?\s*[:=]\s*function(?:[^(]*)/
-        var reFunctionExpression = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*function\b/;
-        // {name} = eval()
-        var reFunctionEvaluation = /['"]?([$_A-Za-z][$_A-Za-z0-9]*)['"]?\s*[:=]\s*(?:eval|new Function)\b/;
-        // Walk backwards in the source lines until we find
-        // the line which matches one of the patterns above
-        var code = "", line, maxLines = Math.min(lineNo, 20), m, commentPos;
-        for (var i = 0; i < maxLines; ++i) {
-            // lineNo is 1-based, source[] is 0-based
-            line = source[lineNo - i - 1];
-            commentPos = line.indexOf('//');
-            if (commentPos >= 0) {
-                line = line.substr(0, commentPos);
-            }
-            // TODO check other types of comments? Commented code may lead to false positive
-            if (line) {
-                code = line + code;
-                m = reFunctionExpression.exec(code);
-                if (m && m[1]) {
-                    return m[1];
-                }
-                m = reFunctionDeclaration.exec(code);
-                if (m && m[1]) {
-                    //return m[1] + "(" + (m[2] || "") + ")";
-                    return m[1];
-                }
-                m = reFunctionEvaluation.exec(code);
-                if (m && m[1]) {
-                    return m[1];
-                }
-            }
-        }
-        return '(?)';
-    }
-};
-
 // ES6-shim 0.5.3 (c) 2012 Paul Miller (paulmillr.com)
 // ES6-shim may be freely distributed under the MIT license.
 // For more details and documentation:
@@ -4242,7 +4230,6 @@ printStackTrace.implementation.prototype = {
       return Array.prototype.slice.call(arguments);
     };
 })();
-
 // ES6-shim 0.5.3 (c) 2012 Paul Miller (paulmillr.com)
 // ES6-shim may be freely distributed under the MIT license.
 // For more details and documentation:
@@ -4351,7 +4338,6 @@ printStackTrace.implementation.prototype = {
     };
 
 })();
-
 // ES6-shim 0.5.3 (c) 2012 Paul Miller (paulmillr.com)
 // ES6-shim may be freely distributed under the MIT license.
 // For more details and documentation:
@@ -4403,7 +4389,6 @@ printStackTrace.implementation.prototype = {
   //   };
 
 })();
-
 // ES6-shim 0.5.3 (c) 2012 Paul Miller (paulmillr.com)
 // ES6-shim may be freely distributed under the MIT license.
 // For more details and documentation:
@@ -4477,7 +4462,6 @@ printStackTrace.implementation.prototype = {
     };
 
 })();
-
 // ES6-shim 0.5.3 (c) 2012 Paul Miller (paulmillr.com)
 // ES6-shim may be freely distributed under the MIT license.
 // For more details and documentation:
@@ -4590,4 +4574,3 @@ printStackTrace.implementation.prototype = {
     };
 
 })();
-

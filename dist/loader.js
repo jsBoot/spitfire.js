@@ -10,11 +10,12 @@
  * @see http://www.dustindiaz.com/scriptjs/
  *
  * @author WebItUp
- * @version 1.1.0
+ * @version 1.2.0
  *
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
- * @name https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#62-f14fa4a0754ddf2a106d57504b97442407cd7d48
+ * @name loader.js
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
  */
 
 /**
@@ -31,6 +32,7 @@
  */
 
 (function() {
+  /*jshint browser:true, maxcomplexity:11*/
   /*global head:false, YUI:false, yepnope:false, requirejs:false, $LAB:false,
     define:false, exports:false*/
   'use strict';
@@ -249,7 +251,8 @@
   /**
   * This is meant as a helper to resolve an uri against that of another script.
   *
-  * @todo Note this is NOT guaranteed to work - the document may NOT be ready at the time this is used...
+  * @todo Note this is NOT guaranteed to work - the document may NOT be ready at the time
+  * this is used...
   * Correct approach would be to timeout and repeat this in case it returns false.
   *
   * @function module:Spitfire/loader.base
@@ -317,7 +320,8 @@
    * =========================
    */
   // Pattern from JSON3
-  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript engines.
+  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript
+  // engines.
   var isLoader = typeof define === 'function' && define.amd;
   var root = typeof exports == 'object' && exports;
 

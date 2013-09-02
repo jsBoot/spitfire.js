@@ -1,8 +1,9 @@
 // IE quick and dirty fix - XXX beware of NASTY side effects
 // Will break feature detection for some illformed jquery plugins
+/*jshint browser:true*/
 if (!('addEventListener' in window))
   (function() {
-    /*global attachEvent:true,detachEvent:true*/
+    /*global attachEvent:false,detachEvent:false*/
     'use strict';
     window.addEventListener = function(name, listener/*, phase*/) {
       attachEvent('on' + name, listener);

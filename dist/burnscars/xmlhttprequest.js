@@ -20,7 +20,7 @@
 
 	// Save reference to earlier defined object implementation (if any)
 	var oXMLHttpRequest = window.XMLHttpRequest;
-
+	
 	// Define on browser type
 	var bGecko  = !!window.controllers;
 	var bIE     = !!window.document.namespaces;
@@ -28,7 +28,15 @@
 
 	// Enables "XMLHttpRequest()" call next to "new XMLHttpRequest()"
 	function fXMLHttpRequest() {
-		this._object  = oXMLHttpRequest && !bIE7 ? new oXMLHttpRequest : new window.ActiveXObject("Microsoft.XMLHTTP");
+		if (!window.XMLHttpRequest || bIE7) {
+			this._object = new window.ActiveXObject("Microsoft.XMLHTTP");
+		} // only use initial XHR object internally if current reference to XHR is our normalized replacement 
+		else if (window.XMLHttpRequest.isNormalizedObject) {
+			this._object = new oXMLHttpRequest();
+		} // otherwise use whatever is currently referenced by XMLHttpRequest
+		else {
+			this._object = new window.XMLHttpRequest();		
+		}
 		this._listeners = [];
 	}
 
@@ -42,6 +50,9 @@
 	if (bGecko && oXMLHttpRequest.wrapped) {
 		cXMLHttpRequest.wrapped = oXMLHttpRequest.wrapped;
 	}
+	
+	// Marker to be able to easily identify our object
+	cXMLHttpRequest.isNormalizedObject = true;
 
 	// Constants
 	cXMLHttpRequest.UNSENT            = 0;
@@ -471,7 +482,7 @@
 			'type':       "readystatechange",
 			'bubbles':    false,
 			'cancelable': false,
-			'timeStamp':  new Date + 0
+			'timeStamp':  new Date().getTime()
 		});
 	}
 
@@ -488,7 +499,7 @@
 
 		// Check if there is no error in document
 		if (oDocument){
-			if ((bIE && oDocument.parseError !== 0) || !oDocument.documentElement || (oDocument.documentElement && oDocument.documentElement.tagName == "parsererror")) {
+			if ((bIE && oDocument.parseError != 0) || !oDocument.documentElement || (oDocument.documentElement && oDocument.documentElement.tagName == "parsererror")) {
 				return null;
 			}
 		}
@@ -523,4 +534,3 @@
 	window.XMLHttpRequest = cXMLHttpRequest;
 
 })();
-

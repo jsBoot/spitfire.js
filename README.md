@@ -143,7 +143,7 @@ API: Advanced embedding strategies
 
 If you prefer to use modules (and requirejs), just embed instead "spitfire-require-min.js".
 
-You can also use "spitfire-yahoo-min.js", "spitfire-head-min.js", or "spitfire-yepnope-min.js" for alternative loaders.
+You can also use "spitfire-yui-min.js", "spitfire-head-min.js", or "spitfire-yepnope-min.js" for alternative loaders.
 
 The API is exactly the same - but the bundled loader differ.
 Note that if "require" exists in the global scope, we switch to a module API instead - you must then require 'Spitfire' and 'Spitfire/loader' instead of namespaces.

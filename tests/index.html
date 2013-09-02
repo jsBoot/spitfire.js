@@ -23,34 +23,20 @@
     This is a placeholder stylesheet meant to
     provide *default* styles to be displayed while the app boots-up
     */
-    behavior: url(../dependencies/pie/2.0beta1/pie-min.htc);
 
-    noscript > p{
-      padding: 8px 35px 8px 14px;
-      margin-bottom: 18px;
-      color: #c09853;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-      background-color: #fcf8e3;
-      border: 1px solid #fbeed5;
-      -webkit-border-radius: 4px;
-         -moz-border-radius: 4px;
-              border-radius: 4px;
-      color: #b94a48;
-      background-color: #f2dede;
-      border-color: #eed3d7;
-      text-align: center;
-    }
+    behavior: url(../dependencies/pie/pie-min.htc);
 
-    #throbber{
-      display: none;
-    }
-
-    html.no-js .js {
+    /* Hide everything but noscript, unless javascript is on */
+    html.no-js body > :not(noscript) {
       display: none;
     }
 
     /* Show the throbber until the app finishes booting and remove the miniboot class */
-    html.miniboot #throbber{
+    #throbber{
+      display: none;
+    }
+
+    html.no-js #throbber{
       display: block;
       position: absolute;
       top: 20%;
@@ -76,7 +62,7 @@
 <body id="approot">
   <!-- Browsers with no javascript support will see this -->
   <noscript>
-    <p>
+    <p class="alert alert-danger">
       <strong>You must activate Javascript, then reload, in order to use this application.</strong>
     </p>
   </noscript>
@@ -106,10 +92,10 @@
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li><a href="?">Lab</a></li>
-            <li><a href="?loader-requirejs">require</a></li>
-            <li><a href="?loader-yepnopejs">yepnope</a></li>
-            <li><a href="?loader-headjs">head</a></li>
-            <li><a href="?loader-yui3">YUI</a></li>
+            <li><a href="?loader-require">require</a></li>
+            <li><a href="?loader-yepnope">yepnope</a></li>
+            <li><a href="?loader-head">head</a></li>
+            <li><a href="?loader-yui">YUI</a></li>
           </ul>
         </div>
         <div class="nav-collapse collapse">
@@ -166,7 +152,7 @@
       h.className = h.className.replace(/no-js/, 'miniboot');
       // Bootstrap loader loading with gulliver
       var baseLoader = location.href.match(/(loader-[a-z0-9-]+)/);
-      baseLoader = baseLoader ? baseLoader.pop() : 'loader-labjs';
+      baseLoader = baseLoader ? baseLoader.pop() : 'loader-lab';
       gulliver(function(){
         var suffix = !!location.href.match(/use-min/) ? '-min.js' : '.js';
         // Once gulliver has booted the base loader, go on

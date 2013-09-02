@@ -1,0 +1,41 @@
+{
+  "name": "IE7.js",
+  "version": "2.1(beta4)",
+
+  "description": "IE7.js is a JavaScript library to make Microsoft Internet Explorer behave like a standards-compliant browser. It fixes many HTML and CSS issues and makes transparent PNG work correctly under IE5 and IE6.",
+  "keywords": ["ie", "shim"],
+  "author": "Dean Edwards",
+  "maintainers": [
+    {
+      "name": "Mangled Deutz",
+      "email": "dev@webitup.fr",
+      "url": "http://www.webitup.fr"
+    }
+  ],
+  "contributors":[],
+  "bugs": "https://code.google.com/p/ie7-js/issues/list",
+  "licenses": [
+     {
+         "type": "MIT",
+         "url": "http://en.wikipedia.org/wiki/MIT_License"
+     }
+  ],
+  "repositories": [
+         {
+              "type": "git",
+              "url": "https://github.com/jsBoot/ie7.git"
+         },
+         {
+            "type": "svn",
+            "url": "http://ie7-js.googlecode.com/svn/trunk/"
+         }
+  ],
+  "dependencies": {
+  },
+
+  "homepage": "https://code.google.com/p/ie7-js/",
+
+  "directories": {
+    "src": "src"
+  }
+}

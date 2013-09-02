@@ -11,12 +11,13 @@
  *
  * @author WebItUp
  * @author Getify
- * @version 1.1.0
+ * @version 1.2.0
  *
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  * @see https://gist.github.com/603980
- * @name https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#62-f14fa4a0754ddf2a106d57504b97442407cd7d48
+ * @name gulliver.js
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
  */
 
 

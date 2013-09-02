@@ -1,5 +1,6 @@
 (function() {
-  /*global Spitfire:true, jasmine:true, require:true*/
+  /*jshint browser:true*/
+  /*global Spitfire, jasmine, require*/
   'use strict';
 
   var spitfireBaseUrl = '../';
@@ -33,7 +34,8 @@
     if (useMonolith) {
       loader.script('../burnscars' + suffix);
     }
-    // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe statements
+    // ES5 tests are NOT safe to load, as they perform prototype copy operations in describe
+    // statements
     // (hence dereference unshimed-yet code...), so, we need to WAIT for the shimer to come in
     // And so is our event testing...
     loader.wait()
@@ -66,10 +68,10 @@
     // Specs
     // For some hard to understand reason, we can't use the stack used *outside*
     loader = loader.fork();
-    loader.style('../dependencies/jasmine/1.3.1/jasmine.css');
-    loader.script('../dependencies/jasmine/1.3.1/jasmine' + suffix)
+    loader.style('../dependencies/jasmine/jasmine.css');
+    loader.script('../dependencies/jasmine/jasmine.js')
     .wait();
-    loader.script('../dependencies/jasmine/1.3.1/jasmine-html' + suffix)
+    loader.script('../dependencies/jasmine/jasmine-html.js')
     .wait();
     loader.script('specs/Function.js')
     .script('specs/Object.js')

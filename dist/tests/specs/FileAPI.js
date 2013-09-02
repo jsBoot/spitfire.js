@@ -95,7 +95,8 @@
 
 
 
-    // [Constructor, Constructor((ArrayBufferView or Blob or DOMString)?[] blobParts, optional BlobPropertyBag options)]
+    // [Constructor, Constructor((ArrayBufferView or Blob or DOMString)?[] blobParts, optional
+    // BlobPropertyBag options)]
     // interface Blob {
 
     //   readonly attribute unsigned long long size;

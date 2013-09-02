@@ -73,7 +73,7 @@ def all():
 @task("Hint on the src folder")
 def hint():
   Wrappers.hint("src")
-  Wrappers.hint("tests")
+  # Wrappers.hint("tests")
 
 @task("Tidy on the src folder")
 def tidy():
@@ -160,9 +160,14 @@ def build():
       'xmlhttprequest/XMLHttpRequest.js'
     ]:
     it = puke.fs.join('bower_components', elem)
-    dest = puke.fs.join(destination, 'burnscars', elem.split('/').pop().lower())
+    dest = puke.fs.join(destination, 'burnscars', elem.split('/').pop().lower().replace('-', '.'))
     puke.fs.copyfile(it, dest)
     allshims.merge(it)
+
+  it = puke.fs.join('bower_components', 'es5-shim/es5-sham.js')
+  dest = puke.fs.join(destination, 'burnscars', 'es5.shim.unsafe.js')
+  puke.fs.copyfile(it, dest)
+
 
   # Get ES6 - not from bower yet, though
   allshims.merge(puke.find("src/burnscars", filter="*es6*"))
@@ -225,5 +230,13 @@ def build():
 @task("Deploy package")
 def deploy():
   yawner.deployer(yawner.config.paths.build, withversion = True)
+
+  yawner.deployer(puke.fs.join('bower_components', 'jasmine/lib/jasmine-core'), destination = 'dependencies/jasmine')
+  yawner.deployer(puke.fs.join('bower_components', 'jquery'), destination = 'dependencies/jquery')
+  yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs/assets/js'), destination = 'dependencies/bootstrap/js')
+  yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs/assets/css'), destination = 'dependencies/bootstrap/css')
+  yawner.deployer(puke.fs.join('bower_components', 'PIE', 'build'), destination = 'dependencies/pie')
+  yawner.deployer(puke.fs.join('bower_components', 'ie7'), destination = 'dependencies/ie7')
+
   # yawner.deployer("dependencies", withversion = True, destination = "dependencies")
 

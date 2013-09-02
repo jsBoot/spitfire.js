@@ -99,9 +99,13 @@
     describe('Supports array comprehension', function() {
       try {
         eval('var numbers = [0, 1]; [i * 2 for each(i in numbers)];');
-        it('Supports array comprehension', function() {runs(function() {expect(true).toBe(true);});});
+        it('Supports array comprehension', function() {
+          runs(function() {expect(true).toBe(true);});
+        });
       }catch (e) {
-        it('Doesn\'t support array comprehension at all', function() {runs(function() {expect(true).toBe(false);});});
+        it('Doesn\'t support array comprehension at all', function() {
+          runs(function() {expect(true).toBe(false);});
+        });
       }
     });
 
@@ -316,7 +320,8 @@
 
           var q = t.sort();
           expect(q).toEqual(t);
-          // var compare = [[], [], -1, new RegExp(), /a/, 0.5, 1, Infinity, NaN, {}, {}, {}, false, function(){},
+          // var compare = [[], [], -1, new RegExp(), /a/, 0.5, 1, Infinity, NaN, {}, {}, {}, false,
+          // function(){},
           // new Function(), "string", true, undefined];
           // XXX can't compare NaNs...
           var match = [10, 15, 18];//, 5, 16, 11, 7, 6, 1, 0, 9, 9, 9, 3, 19, 12, 17, 8, 4, 2];
@@ -347,7 +352,8 @@
     });
 
     // Consistency and
-    // Can be constructed by using new Array(), [], or as the result of a function call returning an array
+    // Can be constructed by using new Array(), [], or as the result of a function call returning
+    // an array
     // or array comprehension var doubled = [i * 2 for each (i in numbers)];
     //
   });

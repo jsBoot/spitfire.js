@@ -69,9 +69,9 @@
       monade('String instance has method substr()', new String('a'), 'substr');
       monade('String instance has method substring()', new String('a'), 'substring');
       monade('String instance has method toLocaleLowerCase()', new String('a'),
-        'toLocaleLowerCase');
+          'toLocaleLowerCase');
       monade('String instance has method toLocaleUpperCase()', new String('a'),
-        'toLocaleUpperCase');
+          'toLocaleUpperCase');
       monade('String instance has method toLowerCase()', new String('a'), 'toLowerCase');
       monade('String instance has method toUpperCase()', new String('a'), 'toUpperCase');
       monade('String instance has method trim()', new String('a'), 'trim');

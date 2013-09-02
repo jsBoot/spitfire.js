@@ -10,11 +10,12 @@
  * @see http://www.dustindiaz.com/scriptjs/
  *
  * @author WebItUp
- * @version 1.1.0
+ * @version 1.2.0
  *
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
- * @name https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#62-f14fa4a0754ddf2a106d57504b97442407cd7d48
+ * @name loader.js
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
  */
 
 /**
@@ -31,6 +32,7 @@
  */
 
 (function() {
+  /*jshint browser:true, maxcomplexity:11*/
   /*global head:false, YUI:false, yepnope:false, requirejs:false, $LAB:false,
     define:false, exports:false*/
   'use strict';
@@ -249,7 +251,8 @@
   /**
   * This is meant as a helper to resolve an uri against that of another script.
   *
-  * @todo Note this is NOT guaranteed to work - the document may NOT be ready at the time this is used...
+  * @todo Note this is NOT guaranteed to work - the document may NOT be ready at the time
+  * this is used...
   * Correct approach would be to timeout and repeat this in case it returns false.
   *
   * @function module:Spitfire/loader.base
@@ -317,7 +320,8 @@
    * =========================
    */
   // Pattern from JSON3
-  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript engines.
+  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript
+  // engines.
   var isLoader = typeof define === 'function' && define.amd;
   var root = typeof exports == 'object' && exports;
 
@@ -340,7 +344,6 @@
 
 }).apply(this);
 
-
 /**
  * @file
  * @summary Set of browser features tests, shims, and minimalistic testing API.
@@ -352,15 +355,16 @@
  * @see http://es5.github.com/#x15.4.4.13
  *
  * @author WebItUp
- * @version 1.1.0
+ * @version 1.2.0
  *
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
- * @name https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#62-f14fa4a0754ddf2a106d57504b97442407cd7d48
+ * @name shimer.js
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
  */
 
 (function() {
-  /*jshint evil:true, maxstatements:50*/
+  /*jshint evil:true, browser:true, maxstatements:50,maxcomplexity:60*/
   /*global define:false, exports:false*/
   'use strict';
 
@@ -387,7 +391,8 @@
   var root = typeof exports == 'object' && exports;
 
   // Pattern from JSON3
-  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript engines.
+  // Export for asynchronous module loaders, CommonJS environments, web browsers, and JavaScript
+  // engines.
   if (isLoader || root) {
     if (isLoader) {
       // Export for asynchronous module loaders. The namespace is
@@ -816,8 +821,8 @@
       var props = [
         'log', 'debug', 'info', 'warn', 'error', 'assert' /*, 'dir', 'dirxml', 'exception', 'time',
           'timeEnd', 'table',
-          'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile', 'profileEnd',
-          'count'*/
+          'clear', 'trace', 'group', 'groupCollapsed', 'groupEnd', 'timeStamp', 'profile',
+          'profileEnd', 'count'*/
       ];
       for (var x = 0; x < props.length; x++)
         ok &= !!window.console[props[x]];
@@ -893,5 +898,4 @@
 // https://github.com/mozilla/shumway
 // Check for modernizr once again as well
 // https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills
-
 
