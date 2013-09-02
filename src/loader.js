@@ -14,7 +14,8 @@
  *
  * @license {PUKE-RIGHTS-LICENSE}.
  * @copyright {PUKE-RIGHTS-COPYRIGHT}
- * @name {PUKE-GIT-ROOT}/loader.js{PUKE-GIT-REVISION}
+ * @name loader.js
+ * @location {PUKE-GIT-ROOT}/loader.js{PUKE-GIT-REVISION}
  */
 
 /**

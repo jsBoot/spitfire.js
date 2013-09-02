@@ -7,7 +7,7 @@
 
   /******** Environment ********/
   "devel": false,
-  "jquery": true,
+  "jquery": false,
 
   /******** Enforceable setting we DONT use - CAREFUL WITH THAT, JOE ********/
   // Allow bitwise operators

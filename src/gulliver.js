@@ -16,7 +16,8 @@
  * @license {PUKE-RIGHTS-LICENSE}.
  * @copyright {PUKE-RIGHTS-COPYRIGHT}
  * @see https://gist.github.com/603980
- * @name {PUKE-GIT-ROOT}/gulliver.js{PUKE-GIT-REVISION}
+ * @name gulliver.js
+ * @location {PUKE-GIT-ROOT}/gulliver.js{PUKE-GIT-REVISION}
  */
 
 

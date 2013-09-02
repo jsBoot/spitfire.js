@@ -25,7 +25,7 @@ Get the content of the "dist" folder, and make it available on your server as "/
     for(var x = 0; x < shims.length; x++)
       Spitfire.loader.script(baseUri + '/' + shims[x]);
     Spitfire.loader.wait(function(){
-      // Ready to enjoy ES5, console, json, xhr...
+      // Ready to enjoy ES5, ES6, console, json, xhr...
       console.warn(" [spitfire.js] all shims loaded");
     });
   </script>

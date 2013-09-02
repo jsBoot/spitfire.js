@@ -1,16 +1,11 @@
 {
   "directories": {
     "src": "src",
-    "tests": "src/tests",
+    "tests": "tests",
     "build": ".build",
     "tmp": ".tmp",
     "doc": "doc",
-    "dist": "/Users/dmp/buildd/deploy.webitup.org/web/static/lib/webitup"
-  },
-
-  "config":{
-    "suffix": "",
-    "use-trunk": false
+    "dist": "dist"
   }
 
 }

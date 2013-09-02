@@ -13,7 +13,8 @@
  *
  * @license {PUKE-RIGHTS-LICENSE}.
  * @copyright {PUKE-RIGHTS-COPYRIGHT}
- * @name {PUKE-GIT-ROOT}/shimer.js{PUKE-GIT-REVISION}
+ * @name shimer.js
+ * @location {PUKE-GIT-ROOT}/shimer.js{PUKE-GIT-REVISION}
  */
 
 (function() {

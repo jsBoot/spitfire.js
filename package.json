@@ -1,58 +1,228 @@
 {
-  "name": "Spitfire.js",
-  "version": "1.1.0",
-
-  "description": "Javascript shim / loader framework. Making things behave since 1976.",
-  "keywords": ["shim", "loader", "framework", "es5"],
-  "author": "WebItUp",
-  "maintainers": [
-    {
-      "name": "Mangled Deutz",
-      "email": "dev@webitup.fr",
-      "url": "http://www.webitup.fr"
-    }
-  ],
-  "contributors":[
-    {
-      "name": "Mangled Deutz",
-      "email": "dev@webitup.fr",
-      "url": "http://www.webitup.fr"
-    },
-    {
-      "name": "Raildecom",
-      "email": "dev@webitup.fr",
-      "url": "http://www.webitup.fr"
-    }
-  ],
-  "bugs": "https://github.com/jsBoot/spitfire.js/issues",
-  "licenses": [
-     {
-         "type": "MIT",
-         "url": "http://en.wikipedia.org/wiki/MIT_License"
-     }
-  ],
-  "repositories": [
-         {
-              "type": "git",
-              "url": "https://github.com/jsBoot/spitfire.js.git"
-         }
-  ],
-  "dependencies": {
-  },
-
-  "homepage": "http://spitfire.jsboot.com",
-
-  "directories": {
-    "src": "src",
-    "tests": "src/tests",
-    "build": ".build",
-    "tmp": ".tmp",
-    "doc": "doc",
-    "dist": "dist"
-  },
-
-  "config": {
-    "suffix": "-min",
-    "use-trunk": false
-  }
+    "name": "Spitfire.js", 
+    "contributors": [
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Mangled Deutz", 
+            "email": "dev@webitup.fr"
+        }, 
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Raildecom", 
+            "email": "dev@webitup.fr"
+        }
+    ], 
+    "author": "WebItUp", 
+    "homepage": "http://spitfire.jsboot.com", 
+    "directories": {
+        "tmp": ".tmp", 
+        "src": "src", 
+        "tests": "tests", 
+        "dist": "dist", 
+        "doc": "doc", 
+        "build": ".build"
+    }, 
+    "repositories": [
+        {
+            "url": "https://github.com/jsBoot/spitfire.js.git", 
+            "type": "git"
+        }
+    ], 
+    "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
+    "keywords": [
+        "shim", 
+        "loader", 
+        "framework", 
+        "es5"
+    ], 
+    "maintainers": [
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Mangled Deutz", 
+            "email": "dev@webitup.fr"
+        }
+    ], 
+    "version": "1.2.0", 
+    "bower": {
+        "jquery": {
+            "owner": "components", 
+            "repo": "jquery", 
+            "active": "2.0.3", 
+            "private": false, 
+            "versions": [
+                "2.0.3"
+            ]
+        }, 
+        "console-shim": {
+            "owner": "kayahr", 
+            "repo": "console-shim", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "normalize_css": {
+            "owner": "necolas", 
+            "repo": "normalize.css", 
+            "active": "2.1.3", 
+            "private": false, 
+            "versions": [
+                "2.1.3"
+            ]
+        }, 
+        "es5-shim": {
+            "owner": "kriskowal", 
+            "repo": "es5-shim", 
+            "active": "2.1.0", 
+            "private": false, 
+            "versions": [
+                "2.1.0"
+            ]
+        }, 
+        "javascript-stacktrace": {
+            "owner": "eriwen", 
+            "repo": "javascript-stacktrace", 
+            "active": "0.5.3", 
+            "private": false, 
+            "versions": [
+                "0.5.3"
+            ]
+        }, 
+        "yepnope_js": {
+            "owner": "SlexAxton", 
+            "repo": "yepnope.js", 
+            "active": "1.5.4", 
+            "private": false, 
+            "versions": [
+                "1.5.4"
+            ]
+        }, 
+        "html5-boilerplate": {
+            "owner": "h5bp", 
+            "repo": "html5-boilerplate", 
+            "active": "4.2.0", 
+            "private": false, 
+            "versions": [
+                "4.2.0"
+            ]
+        }, 
+        "jasmine": {
+            "owner": "pivotal", 
+            "repo": "jasmine", 
+            "active": "1.3.1", 
+            "private": false, 
+            "versions": [
+                "1.3.1"
+            ]
+        }, 
+        "PIE": {
+            "owner": "lojjic", 
+            "repo": "PIE", 
+            "active": "1.0.0", 
+            "private": false, 
+            "versions": [
+                "1.0.0"
+            ]
+        }, 
+        "ie7": {
+            "owner": "jsBoot", 
+            "repo": "ie7", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "requirejs": {
+            "owner": "jrburke", 
+            "repo": "requirejs", 
+            "active": "2.1.8", 
+            "private": false, 
+            "versions": [
+                "2.1.8"
+            ]
+        }, 
+        "LABjs": {
+            "owner": "getify", 
+            "repo": "LABjs", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "json3": {
+            "owner": "bestiejs", 
+            "repo": "json3", 
+            "active": "3.2.5", 
+            "private": false, 
+            "versions": [
+                "3.2.5"
+            ]
+        }, 
+        "yui3": {
+            "owner": "yui", 
+            "repo": "yui3", 
+            "active": "3.11.0", 
+            "private": false, 
+            "versions": [
+                "3.11.0"
+            ]
+        }, 
+        "docstrap": {
+            "owner": "terryweiss", 
+            "repo": "docstrap", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "xmlhttprequest": {
+            "owner": "ilinsky", 
+            "repo": "xmlhttprequest", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "es6-shim": {
+            "owner": "paulmillr", 
+            "repo": "es6-shim", 
+            "active": "0.8.0", 
+            "private": false, 
+            "versions": [
+                "0.8.0"
+            ]
+        }, 
+        "headjs": {
+            "owner": "headjs", 
+            "repo": "headjs", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "bootstrap": {
+            "owner": "twbs", 
+            "repo": "bootstrap", 
+            "active": "2.3.1", 
+            "private": false, 
+            "versions": [
+                "2.3.1"
+            ]
+        }
+    }, 
+    "dependencies": {}, 
+    "licenses": [
+        {
+            "url": "http://en.wikipedia.org/wiki/MIT_License", 
+            "type": "MIT"
+        }
+    ], 
+    "config": {}, 
+    "description": "Javascript shim / loader framework. Making things behave since 1976."
 }

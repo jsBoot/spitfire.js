@@ -5,7 +5,7 @@
 /*jshint nonstandard:true, browser:true*/
 if (!window.localStorage)
   (function() {
-    /*jshint regexp:false*/
+    /*jshint regexp:false, -W001*/
     'use strict';
 
     window.localStorage = {
