@@ -166,6 +166,8 @@ if (!navigator.geolocation)
           return;
         }
 
+        var timedOut = false;
+        var timerId = 0;
         function onSuccess(position) {
           cached = position;
           if (!timedOut) {
@@ -184,7 +186,6 @@ if (!navigator.geolocation)
 
         var cancelOperation = acquireLocation(onSuccess, onFailure, enableHighAccuracy);
 
-        var timedOut = false, timerId = 0;
         if (isFinite(timeout)) {
           timerId = setTimeout(function() {
             timedOut = true;
@@ -230,6 +231,7 @@ if (!navigator.geolocation)
 
         var lastPosition = null, timerId = 0;
         function acquisitionSteps() {
+          var timedOut = false;
           function onSuccess(position) {
             cached = position;
             if (!timedOut && !timerDetails.cleared) {
@@ -252,7 +254,6 @@ if (!navigator.geolocation)
 
           var cancelOperation = acquireLocation(onSuccess, onFailure, enableHighAccuracy);
 
-          var timedOut = false;
           if (isFinite(timeout) && !timerId) {
             timerId = setTimeout(function() {
               timedOut = true;

@@ -4,6 +4,7 @@
 # Build systems
 .pukecache/
 bower_components
+node_modules
 */.sass-cache/*
 
 # IDE

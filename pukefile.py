@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 global help
-from helpers import Helpers as help, Yawn, Bower, Wrappers
+from helpers import Helpers as help, Yawn, Wrappers
 import re
 import json
 
@@ -16,11 +16,13 @@ def versions(k):
   yawner.air_versions(k)
 
 def init():
+  puke.sh.npm.install()
   yawner.air_init()
   # Need to build...
   puke.sh.ant(_cwd = 'bower_components/PIE')
 
 def update():
+  puke.sh.npm.install()
   yawner.air_update()
 
 def install(uri, version = "master", local = None, private = False):
@@ -106,6 +108,9 @@ def doc():
   destination = puke.fs.join(yawner.config.paths.tmp, 'doc')
   replace = yawner.replacer()
   puke.copy(source, destination, replace = replace)
+
+  cm = puke.sh.Command("./node_modules/jsdoc/jsdoc")
+  cm(puke.sh.glob(puke.fs.join(destination, "*.js")), "-t", "bower_components/ink-docstrap/template/", "-c", ".jsdoc.json", "-d", yawner.config.paths.doc)
 
   # puke.sh.jsdoc build/* -t <path.to.unzipped>/template -c <path.to.unzipped>/conf.json -d <path.to.output>/
 

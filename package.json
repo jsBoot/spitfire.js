@@ -22,12 +22,11 @@
         "doc": "doc", 
         "build": ".build"
     }, 
-    "repositories": [
-        {
-            "url": "https://github.com/jsBoot/spitfire.js.git", 
-            "type": "git"
-        }
-    ], 
+    "repository":
+    {
+        "url": "https://github.com/jsBoot/spitfire.js.git", 
+        "type": "git"
+    }, 
     "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
     "keywords": [
         "shim", 
@@ -209,13 +208,21 @@
         "bootstrap": {
             "owner": "twbs", 
             "repo": "bootstrap", 
-            "active": "2.3.1", 
+            "active": "2.3.2", 
             "private": false, 
             "versions": [
-                "2.3.1"
+                "2.3.2"
             ]
         }
-    }, 
+    },
+    "devDependencies" : {
+        "karma": "*",
+        "fixmyjs": "*",
+        "jshint": "*",
+        "karma-browserstack-launcher": "*",
+        "bower": ">=1.0.0 <2.0.0",
+        "jsdoc": ">=3.0.0"
+    },
     "dependencies": {}, 
     "licenses": [
         {

@@ -3,179 +3,16 @@
 # Re-name
 import puke2 as puke
 
+from pukes.config import Config
+from pukes.bower import Bower
+from pukes.git import Git
+
 import re
 import json
 import os
 
 # Monkey patch while puke2 is still wonky
 import monkey
-
-
-UNSPECIFIED = "UNSPECIFIED"
-UNIMPLEMENTED = "UNIMPLEMENTED"
-WRONG_ARGUMENT = "WRONG_ARGUMENT"
-MISSING = "MISSING"
-BROKEN = "BROKEN"
-
-
-class GenericError(Exception):
-
-    """Base class for exceptions in airstrip."""
-
-    def __init__(self, etype, message):
-        if not etype in globals():
-            etype = UNSPECIFIED
-        self.type = etype
-        self.message = message
-        super(GenericError, self).__init__(message)
-
-
-class ConfigError(GenericError):
-
-    """Exception raised for errors in the rc submodule.
-
-    Attributes:
-      etype -- error type
-      message  -- explanation of the error
-    """
-
-    def __init__(self, etype, message):
-        super(ConfigError, self).__init__(etype, message)
-
-
-class Config(puke.config.File):
-
-    """A config class extending puke.config.File to support multiple paths and
-    default boilerplate.
-
-    Multiple paths allows for exemple to have home "general" config files
-    to be overriden by other files present in the current working directory.
-
-    The default boilerplate gives you the guarantee that all settings at least
-    exist.
-
-    :param default A string containing a json object with default values for
-    your config
-    :param mainpath Where the main config file is expected to be
-    :param additionalpaths An array containing additional paths to use
-    """
-
-    def __init__(self, default, mainpath, additionalpaths=[], version="1"):
-        if isinstance(additionalpaths, basestring):
-            additionalpaths = [additionalpaths]
-        additionalpaths.insert(0, mainpath)
-        super(Config, self).__init__(default)
-        for p in additionalpaths:
-            if puke.fs.exists(p) and puke.fs.isfile(p, True):
-                try:
-                    self.merge(p)
-                except:
-                    raise ConfigError(
-                        BROKEN,
-                        "Your config file at %s is horked! rm / fix it" % p)
-
-
-class Git:
-
-    """ Trivial git helper on top of puke.sh
-    """
-
-    def __init__(self, path="."):
-        self.giter = puke.sh.git.bake(_cwd=path, _tty_out=False)
-
-    def branch(self):
-        branch = puke.sh.grep(
-            self.giter("branch", "--no-color"), "*").strip("*").strip()
-        if branch == "(no branch)":
-            branch = self.giter("describe", "--tags", "--no-color").strip()
-        return branch
-
-    def nb(self):
-        return puke.sh.wc(
-            self.giter("log", "--no-color", "--pretty=format:%h"),
-            '-l').strip()
-
-    def hash(self):
-        return puke.sh.cut(puke.sh.head(
-            self.giter("log"),
-            n=1), f=2, d=' ').strip()
-
-
-class Bower:
-    """ Formerly airstrip - just wraps around Bower to handle dependencies
-    """
-
-    def __init__(self, conf):
-        self.config = conf
-        pass
-
-
-    def init(self):
-        for i in self.config:
-            d = self.config[i]
-            for v in d.versions:
-                puke.display.info("Installing: %s/%s#%s into %s" % (d.owner, d.repo, v, i))
-                puke.display.info(str(self.add(i, d.owner, d.repo, v, True if "private" in d else False)))
-        # Force update once done
-        puke.sh.bower.update()
-
-
-    def update(self):
-        return puke.sh.bower.update()
-
-    def list(self):
-        ret = {}
-        for i in self.config:
-            d = self.config[i]
-            if "active" in d:
-                # ret[i] = 'bower_components/%s-%s' % (i, d.active)
-                ret[i] = 'bower_components/%s' % i
-            else:
-                for v in d.versions:
-                    # ret[i] = 'bower_components/%s-%s' % (i, v)
-                    ret[i] = 'bower_components/%s' % i
-
-        return ret#self.config.keys()
-
-    # def path(self, key, version):
-    #     return self.config[key].owner, self.config[key].repo
-
-
-    # def real_list(self):
-    #     ls = puke.find(".", filter = "*bower.json*")
-    #     result = {}
-    #     for i in ls:
-    #         cc = puke.config.load(i)
-    #         name = cc.content.name
-    #         url = cc.content.homepage
-    #         version = cc.content._target
-    #         source = cc.content._source
-    #         if 'version' in cc.content:
-    #             version = cc.content.version
-    #         if not source in result:
-    #             result[source] = {
-    #                 "home": url,
-    #                 "versions": []
-    #             }
-    #         result[source]["versions"].append({"path": "bower_components/%s" %name, "version": version})
-    #     return result
-
-    def search(self, keyword):
-        return puke.sh.bower.search(keyword)
-
-    def info(self, name):
-        return puke.sh.bower.info(name)
-
-    def add(self, local, owner, name, version = 'master', private = False):
-        # Get external shims
-        version = version or 'master'
-        remote = 'git@github.com:%s/%s.git' % (owner, name) if private else 'git://github.com/%s/%s' % (owner, name)
-        # return puke.sh.bower.install("%s-%s=%s#%s" % (local, version, remote, version))
-        # return puke.sh.bower.install("%s=%s#%s" % (local, remote, version))
-        print "bower install %s#%s" % (remote, version)
-        return puke.sh.bower.install("%s#%s" % (remote, version))
-
-
 
 class Wrappers:
     """ Simple helpers to streamline common web tasks onto our idiosyncrasy
@@ -215,7 +52,7 @@ class Wrappers:
         if ret:
             # print ret.stderr
             # print ret.stdout
-            puke.display.fail(ret.stdout)
+            puke.display.fail(ret)
             # puke.log.critical(ret)
         else:
             puke.display.info("You passed the dreaded hinter!")
@@ -285,7 +122,7 @@ class Yawn:
         self.man = r
         r = r.content
         # Map to older format for lazyness reasons :)
-        clean = re.sub('[.]git$', '', r.repositories[0]["url"])
+        clean = re.sub('[.]git$', '', r.repository["url"])
 
         r.package = {
             "name": r.name,
