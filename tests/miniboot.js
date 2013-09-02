@@ -54,13 +54,14 @@
       var jasmineEnv = jasmine.getEnv();
       jasmineEnv.updateInterval = 1000;
 
-      var trivialReporter = new jasmine.HtmlReporter();
+      // var trivialReporter = new jasmine.HtmlReporter();
+      var trivialReporter = new jasmine.BootstrapReporter();
       jasmineEnv.addReporter(trivialReporter);
       jasmineEnv.specFilter = function(spec) {
         return trivialReporter.specFilter(spec);
       };
       jasmineEnv.execute();
-      document.getElementById('jasmine').appendChild(document.getElementById('HTMLReporter'));
+      // document.getElementById('jasmine').appendChild(document.getElementById('jasmine_reporter'));
     });
   };
 
@@ -68,10 +69,13 @@
     // Specs
     // For some hard to understand reason, we can't use the stack used *outside*
     loader = loader.fork();
-    loader.style('../dependencies/jasmine/jasmine.css');
+    // loader.style('../dependencies/jasmine/jasmine.css');
+    loader.style('../dependencies/jasmine/jasmine-bootstrap.css');
     loader.script('../dependencies/jasmine/jasmine.js')
     .wait();
-    loader.script('../dependencies/jasmine/jasmine-html.js')
+    // loader.script('../dependencies/jasmine/jasmine-html.js')
+    // .wait();
+    loader.script('../dependencies/jasmine/jasmine-bootstrap.js')
     .wait();
     loader.script('specs/Function.js')
     .script('specs/Object.js')

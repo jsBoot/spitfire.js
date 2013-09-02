@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: '../',
 
 
     // frameworks to use
@@ -53,22 +53,115 @@ module.exports = function(config) {
 
     // define browsers
     customLaunchers: {
-      bs_firefox_mac: {
+      bs_firefox_old_mac: {
+        base: 'BrowserStack',
+        browser: 'firefox',
+        browser_version: '10.0',
+        os: 'OS X',
+        os_version: 'Snow Leopard'
+      },
+      bs_firefox_esr_mac: {
+        base: 'BrowserStack',
+        browser: 'firefox',
+        browser_version: '17.0',
+        os: 'OS X',
+        os_version: 'Snow Leopard'
+      },
+      bs_firefox_stable_mac: {
         base: 'BrowserStack',
         browser: 'firefox',
         browser_version: '21.0',
         os: 'OS X',
+        os_version: 'Snow Leopard'
+      },
+
+
+      /*Safaris*/
+      bs_safari_4_mac: {
+        base: 'BrowserStack',
+        browser: 'safari',
+        browser_version: '4.0',
+        os: 'OS X',
+        os_version: 'Snow Leopard'
+      },
+
+      bs_safari_5_mac: {
+        base: 'BrowserStack',
+        browser: 'safari',
+        browser_version: '5.0',
+        os: 'OS X',
+        os_version: 'Snow Leopard'
+      },
+
+      bs_safari_51_mac: {
+        base: 'BrowserStack',
+        browser: 'safari',
+        browser_version: '5.1',
+        os: 'OS X',
+        os_version: 'Snow Leopard'
+      },
+
+      bs_safari_6_mac: {
+        base: 'BrowserStack',
+        browser: 'safari',
+        browser_version: '6.0',
+        os: 'OS X',
         os_version: 'Mountain Lion'
       },
+
+      /*IEs*/
+      bs_ie_6: {
+        base: 'BrowserStack',
+        browser: 'ie',
+        browser_version: '6.0',
+        os: 'Windows',
+        os_version: 'XP'
+      },
+      bs_ie_7: {
+        base: 'BrowserStack',
+        browser: 'ie',
+        browser_version: '7.0',
+        os: 'Windows',
+        os_version: 'XP'
+      },
+      bs_ie_8: {
+        base: 'BrowserStack',
+        browser: 'ie',
+        browser_version: '8.0',
+        os: 'Windows',
+        os_version: '7'
+      },
+      bs_ie_9: {
+        base: 'BrowserStack',
+        browser: 'ie',
+        browser_version: '9.0',
+        os: 'Windows',
+        os_version: '7'
+      },
+      bs_ie_10: {
+        base: 'BrowserStack',
+        browser: 'ie',
+        browser_version: '10.0',
+        os: 'Windows',
+        os_version: '7'
+      }
+      /*,
       bs_iphone5: {
         base: 'BrowserStack',
         device: 'iPhone 5',
         os: 'ios',
         os_version: '6.0'
-      }
+      }*/
     },
 
-    browsers: ['bs_firefox_mac'],
+/*    browsers: [
+      'ChromeCanary',
+      'bs_firefox_stable_mac',
+      'bs_firefox_esr_mac',
+      'bs_firefox_old_mac'
+    ],*/
+
+    // ['bs_firefox_old_mac', 'bs_firefox_esr_mac', 'bs_firefox_stable_mac'],
 // , 'bs_iphone5'],
 
 

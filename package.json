@@ -1,17 +1,9 @@
 {
-    "name": "Spitfire.js", 
-    "contributors": [
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Mangled Deutz", 
-            "email": "dev@webitup.fr"
-        }, 
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Raildecom", 
-            "email": "dev@webitup.fr"
-        }
-    ], 
+    "description": "Javascript shim / loader framework. Making things behave since 1976.", 
+    "repository": {
+        "url": "https://github.com/jsBoot/spitfire.js.git", 
+        "type": "git"
+    }, 
     "author": "WebItUp", 
     "homepage": "http://spitfire.jsboot.com", 
     "directories": {
@@ -21,11 +13,6 @@
         "dist": "dist", 
         "doc": "doc", 
         "build": ".build"
-    }, 
-    "repository":
-    {
-        "url": "https://github.com/jsBoot/spitfire.js.git", 
-        "type": "git"
     }, 
     "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
     "keywords": [
@@ -41,7 +28,7 @@
             "email": "dev@webitup.fr"
         }
     ], 
-    "version": "1.2.0", 
+    "dependencies": {}, 
     "bower": {
         "jquery": {
             "owner": "components", 
@@ -169,6 +156,15 @@
                 "3.11.0"
             ]
         }, 
+        "jasmine-bootstrap": {
+            "owner": "esbie", 
+            "repo": "jasmine-bootstrap", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
         "docstrap": {
             "owner": "terryweiss", 
             "repo": "docstrap", 
@@ -214,22 +210,34 @@
                 "2.3.2"
             ]
         }
-    },
-    "devDependencies" : {
-        "karma": "*",
-        "fixmyjs": "*",
-        "jshint": "*",
-        "karma-browserstack-launcher": "*",
-        "bower": ">=1.0.0 <2.0.0",
-        "jsdoc": ">=3.0.0"
-    },
-    "dependencies": {}, 
+    }, 
+    "version": "1.2.0", 
     "licenses": [
         {
             "url": "http://en.wikipedia.org/wiki/MIT_License", 
             "type": "MIT"
         }
     ], 
+    "devDependencies": {
+        "fixmyjs": "*", 
+        "karma-browserstack-launcher": "*", 
+        "jshint": "*", 
+        "bower": ">=1.0.0 <2.0.0", 
+        "karma": "*", 
+        "jsdoc": ">=3.0.0"
+    }, 
     "config": {}, 
-    "description": "Javascript shim / loader framework. Making things behave since 1976."
+    "contributors": [
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Mangled Deutz", 
+            "email": "dev@webitup.fr"
+        }, 
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Raildecom", 
+            "email": "dev@webitup.fr"
+        }
+    ], 
+    "name": "Spitfire.js"
 }

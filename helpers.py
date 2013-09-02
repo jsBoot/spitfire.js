@@ -6,6 +6,8 @@ import puke2 as puke
 from pukes.config import Config
 from pukes.bower import Bower
 from pukes.git import Git
+from pukes.jsdoc import jsDoc
+from pukes.karma import Karma
 
 import re
 import json
@@ -103,6 +105,20 @@ class Wrappers:
                     except:
                         puke.display.fail('Failed removing %s' % path)
 
+
+    @staticmethod
+    def doc(s, t, d):
+        c = jsDoc()
+        c.go(s, t, d)
+
+
+    @staticmethod
+    def test(b):
+        c = Karma()
+        browsers = b.split(',')
+        for i in browsers:
+          puke.display.header("Testing: %s" % i)
+          c.go(i)
 
 class Yawn:
 
