@@ -40,7 +40,7 @@
         });
       });
 
-      xit('undefined should be read-only (javascript 1.8.5)', function() {
+/*      xit('undefined should be read-only (javascript 1.8.5)', function() {
         runs(function() {
           try {
             undefined = 'ass';
@@ -50,7 +50,7 @@
             expect(true).toBe(true);
           }
         });
-      });
+      });*/
     });
 
     describe('NaN', function() {
@@ -104,7 +104,7 @@
           expect(Number.NaN.constructor).toBe(Number);
         });
       });
-      xit('NaN is read-only', function() {
+/*      xit('NaN is read-only', function() {
         runs(function() {
           try {
             NaN = 'ass';
@@ -117,7 +117,7 @@
             expect(true).toBe(true);
           }
         });
-      });
+      });*/
     });
 
     describe('Infinity', function() {

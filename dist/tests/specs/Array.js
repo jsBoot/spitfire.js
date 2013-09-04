@@ -95,7 +95,7 @@
       basechecks([]);
     });
 
-
+/*
     xdescribe('Supports array comprehension', function() {
       try {
         eval('var numbers = [0, 1]; [i * 2 for each(i in numbers)];');
@@ -117,7 +117,7 @@
         it('Doesn\'t support deref', function() {runs(function() {expect(true).toBe(false);});});
       }
     });
-
+*/
     describe('Constructor', function() {
       it('Constructor is consistent', function() {
         runs(function() {
