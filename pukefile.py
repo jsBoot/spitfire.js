@@ -157,7 +157,7 @@ def deploy():
 
   yawner.deployer(puke.fs.join('bower_components', 'jasmine/lib/jasmine-core'), destination = 'dependencies/jasmine', withversion = True)
   yawner.deployer(puke.fs.join('bower_components', 'jasmine-bootstrap/src'), destination = 'dependencies/jasmine', withversion = True)
-  yawner.deployer(puke.fs.join('bower_components', 'jasmine-reporters/src/jasmine.tap_reporter.js'), destination = 'dependencies/jasmine', withversion = True)
+  yawner.deployer(puke.fs.join('bower_components', 'jasmine-reporters/src'), destination = 'dependencies/jasmine', withversion = True)
 
   yawner.deployer(puke.fs.join('bower_components', 'jquery'), destination = 'dependencies/jquery', withversion = True)
   yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs/assets/js'), destination = 'dependencies/bootstrap/js', withversion = True)
