@@ -77,7 +77,8 @@
             "dist/burnscars.js",
             "dist/burnscars/es5.shim.unsafe.js",
             "dist/tests/specs/Object.js",
-            "dist/tests/specs/Function.js"
+            "dist/tests/specs/Function.js",
+            "dist/tests/testling.js"
         ]
 
     }, 
