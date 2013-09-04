@@ -14,11 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'dist/gulliver.js',
-      'dist/spitfire-lab-min.js',
       'dist/burnscars.js',
-      'dist/tests/specs/gulliver.js',
-      'dist/tests/specs/loader.js',
       'dist/tests/specs/String.js',
       'dist/tests/specs/Object.js'
     ],
@@ -50,11 +46,11 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
-
     browserStack: {
-      username: 'olivier@webitup.fr',
-      accessKey: '5TV8Z0CWyrGcRaw5BeSd'
+      username: '',
+      accessKey: ''
     },
+
 
     // define browsers
     customLaunchers: {
