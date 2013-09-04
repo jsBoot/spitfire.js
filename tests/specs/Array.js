@@ -96,7 +96,7 @@
     });
 
 
-    describe('Supports array comprehension', function() {
+    xdescribe('Supports array comprehension', function() {
       try {
         eval('var numbers = [0, 1]; [i * 2 for each(i in numbers)];');
         it('Supports array comprehension', function() {
@@ -109,7 +109,7 @@
       }
     });
 
-    describe('Supports deref', function() {
+    xdescribe('Supports deref', function() {
       try {
         eval('var key; var val; [key, val] = (function(){return [\'a\', \'b\'];})();');
         it('Supports deref', function() {runs(function() {expect(true).toBe(true);});});
