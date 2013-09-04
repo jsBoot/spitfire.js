@@ -16,7 +16,7 @@
         "loader", 
         "framework", 
         "es5",
-        "es6",
+        "es6"
     ], 
     "config": {}, 
     "name": "Spitfire.js",
