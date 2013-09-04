@@ -2,11 +2,11 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#70-76156d6de9eb63f17de31b46257813a9ad012490
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 'use strict';(function(e){function a(a,d){var b=/^\w+\:\/\//;/^\/\/\/?/.test(a)?a=location.protocol+a:b.test(a)||"/"==a.charAt(0)||(a=(d||"")+a);return b.test(a)?a:("/"==a.charAt(0)?x:p)+a}function l(a,d){for(var b in a)a.hasOwnProperty(b)&&(d[b]=a[b]);return d}function k(a,d,b,g){a.onload=a.onreadystatechange=function(){a.readyState&&"complete"!=a.readyState&&"loaded"!=a.readyState||d[b]||(a.onload=a.onreadystatechange=null,g())}}function r(a){a.ready=a.finished=!0;for(var d=0;d<a.finished_listeners.length;d++)a.finished_listeners[d]();
 a.ready_listeners=[];a.finished_listeners=[]}function v(a,b,g,c,n){setTimeout(function(){var f,h=b.real_src,e;if("item"in m){if(!m[0]){setTimeout(arguments.callee,25);return}m=m[0]}f=document.createElement("script");b.type&&(f.type=b.type);b.charset&&(f.charset=b.charset);n?y?(g.elem=f,A?(f.preload=!0,f.onpreload=c):f.onreadystatechange=function(){"loaded"==f.readyState&&c()},f.src=h):n&&0==h.indexOf(x)&&a[d]?(e=new XMLHttpRequest,e.onreadystatechange=function(){4==e.readyState&&(e.onreadystatechange=

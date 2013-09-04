@@ -6,7 +6,7 @@ class Bower:
 
     def __init__(self, conf):
         self.config = conf
-        self.com = puke.sh.Command("./node_modules/bower/bin/bower")
+        self.com = puke.sh.Command("./node_modules/.bin/bower")
         pass
 
 

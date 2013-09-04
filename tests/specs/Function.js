@@ -6,12 +6,15 @@
     var monade = function(desc, obj, property) {
       it(desc, function() {
         runs(function() {
-          expect(property in obj).toBe(true);
+          expect(obj[property]).not.toBeUndefined();
         });
       }
       );
     };
 
+    /**
+     * Function itself
+     */
     describe('Function structure: properties', function() {
       monade('Function has property constructor', Function, 'constructor');
       monade('Function has property length', Function, 'length');

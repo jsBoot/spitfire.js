@@ -14,9 +14,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'dist/tests/toto.js'
+      'dist/gulliver.js',
+      'dist/spitfire-lab-min.js',
+      'dist/burnscars.js',
+      'dist/tests/specs/gulliver.js',
+      'dist/tests/specs/loader.js',
+      'dist/tests/specs/String.js',
+      'dist/tests/specs/Object.js'
     ],
-
 
     // list of files to exclude
     exclude: [

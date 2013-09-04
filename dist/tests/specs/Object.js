@@ -6,12 +6,15 @@
     var monade = function(desc, obj, property) {
       it(desc, function() {
         runs(function() {
-          expect(property in obj).toBe(true);
+          expect(obj[property]).not.toBeUndefined();
         });
       }
       );
     };
 
+    /**
+     * Object itself
+     */
     describe('Object inherits Function: properties', function() {
       monade('Object has property constructor', Object, 'constructor');
       monade('Object has property length', Object, 'length');
@@ -42,6 +45,16 @@
       monade('Object has method isSealed()', Object, 'isSealed');
       monade('Object has method freeze()', Object, 'freeze');
       monade('Object has method isFrozen()', Object, 'isFrozen');
+
+      // ES6
+      monade('Object has method getOwnPropertyDescriptors()', Object, 'getOwnPropertyDescriptors');
+      monade('Object has method getPropertyDescriptor()', Object, 'getPropertyDescriptor');
+      monade('Object has method getPropertyNames()', Object, 'getPropertyNames');
+      monade('Object has method is()', Object, 'is');
+      monade('Object has method assign()', Object, 'assign');
+      monade('Object has method mixin()', Object, 'mixin');
+
+      monade('Object has method setPrototypeOf()', Object, 'setPrototypeOf');
     });
 
     describe('Object instances structure', function() {

@@ -5,7 +5,7 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 'use strict';var requirejs,require,define;
 (function(I){function u(b){return"[object Function]"===R.call(b)}function F(b){return"[object Array]"===R.call(b)}function w(b,h){if(b){var c;for(c=0;c<b.length&&(!b[c]||!h(b[c],c,b));c+=1);}}function J(b,c){if(b){var p;for(p=b.length-1;-1<p&&(!b[p]||!c(b[p],p,b));p-=1);}}function x(b,c){return ga.call(b,c)}function c(b,c){return x(b,c)&&b[c]}function f(b,c){for(var p in b)if(x(b,p)&&c(b[p],p))break}function m(b,c,p,l){c&&f(c,function(c,h){if(p||!x(b,h))l&&"string"!==typeof c?(b[h]||(b[h]={}),m(b[h],

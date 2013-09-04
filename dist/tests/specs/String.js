@@ -6,8 +6,7 @@
     var monade = function(desc, obj, property) {
       it(desc, function() {
         runs(function() {
-          // expect(property in obj).toBe(true);
-          expect(!!obj[property]).toBe(true);
+          expect(obj[property]).not.toBeUndefined();
         });
       }
       );
@@ -48,6 +47,7 @@
       monade('String instance has method valueOf()', exp, 'valueOf');
 
       monade('String instance has property length', exp, 'length');
+
       it('String instance has property [N]', function() {
         runs(function() {
           expect(exp[0]).toEqual('a');
@@ -55,26 +55,26 @@
       });
 
 
-      monade('String instance has method charAt()', new String('a'), 'charAt');
-      monade('String instance has method charCodeAt()', new String('a'), 'charCodeAt');
-      monade('String instance has method concat()', new String('a'), 'concat');
-      monade('String instance has method indexOf()', new String('a'), 'indexOf');
-      monade('String instance has method lastIndexOf()', new String('a'), 'lastIndexOf');
-      monade('String instance has method localeCompare()', new String('a'), 'localeCompare');
-      monade('String instance has method match()', new String('a'), 'match');
-      monade('String instance has method replace()', new String('a'), 'replace');
-      monade('String instance has method search()', new String('a'), 'search');
-      monade('String instance has method slice()', new String('a'), 'slice');
-      monade('String instance has method split()', new String('a'), 'split');
-      monade('String instance has method substr()', new String('a'), 'substr');
-      monade('String instance has method substring()', new String('a'), 'substring');
-      monade('String instance has method toLocaleLowerCase()', new String('a'),
+      monade('String instance has method charAt()', exp, 'charAt');
+      monade('String instance has method charCodeAt()', exp, 'charCodeAt');
+      monade('String instance has method concat()', exp, 'concat');
+      monade('String instance has method indexOf()', exp, 'indexOf');
+      monade('String instance has method lastIndexOf()', exp, 'lastIndexOf');
+      monade('String instance has method localeCompare()', exp, 'localeCompare');
+      monade('String instance has method match()', exp, 'match');
+      monade('String instance has method replace()', exp, 'replace');
+      monade('String instance has method search()', exp, 'search');
+      monade('String instance has method slice()', exp, 'slice');
+      monade('String instance has method split()', exp, 'split');
+      monade('String instance has method substr()', exp, 'substr');
+      monade('String instance has method substring()', exp, 'substring');
+      monade('String instance has method toLocaleLowerCase()', exp,
           'toLocaleLowerCase');
-      monade('String instance has method toLocaleUpperCase()', new String('a'),
+      monade('String instance has method toLocaleUpperCase()', exp,
           'toLocaleUpperCase');
-      monade('String instance has method toLowerCase()', new String('a'), 'toLowerCase');
-      monade('String instance has method toUpperCase()', new String('a'), 'toUpperCase');
-      monade('String instance has method trim()', new String('a'), 'trim');
+      monade('String instance has method toLowerCase()', exp, 'toLowerCase');
+      monade('String instance has method toUpperCase()', exp, 'toUpperCase');
+      monade('String instance has method trim()', exp, 'trim');
       // monade("String instance has method trimLeft()", new String('a'), "trimLeft");
       // monade("String instance has method trimRight()", new String('a'), "trimRight");
 

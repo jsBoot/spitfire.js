@@ -2,7 +2,7 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 "undefined"!=typeof YUI&&(YUI._YUI=YUI);var YUI=function(){var g=0,p=this,r=arguments,u=r.length,m=function(g,n){return g&&g.hasOwnProperty&&g instanceof n},A="undefined"!==typeof YUI_config&&YUI_config;m(p,YUI)?(p._init(),YUI.GlobalConfig&&p.applyConfig(YUI.GlobalConfig),A&&p.applyConfig(A),u||p._setup()):p=new YUI;if(u){for(;g<u;g++)p.applyConfig(r[g]);p._setup()}p.instanceOf=m;return p};
 (function(){var g,p,r="@VERSION@",u=function(){},m=Array.prototype.slice,A={"io.xdrReady":1,"io.xdrResponse":1,"SWF.eventHandler":1},v="undefined"!=typeof window,n=v?window:null,l=v?n.document:null,x=l&&l.documentElement;g=x&&x.className;var B={},F=(new Date).getTime(),E=function(c,e,b,d){c&&c.addEventListener?c.addEventListener(e,b,d):c&&c.attachEvent&&c.attachEvent("on"+e,b)},w=function(c,e,b,d){if(c&&c.removeEventListener)try{c.removeEventListener(e,b,d)}catch(a){}else c&&c.detachEvent&&c.detachEvent("on"+

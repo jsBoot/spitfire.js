@@ -5,6 +5,47 @@
         "type": "git"
     }, 
     "author": "WebItUp", 
+    "testling": {
+        "browsers": {
+            "chrome": [
+                20
+            ], 
+            "opera": [
+                12
+            ], 
+            "ie": [
+                6, 
+                7, 
+                8, 
+                9, 
+                10
+            ], 
+            "firefox": [
+                13, 
+                14, 
+                15, 
+                16, 
+                17, 
+                18, 
+                19, 
+                20
+            ], 
+            "safari": [
+                5.1
+            ]
+        }, 
+        "scripts": [
+            "dist/dependencies/jasmine/jasmine.js", 
+            "dist/dependencies/jasmine/jasmine.tap_reporter.js", 
+            "dist/gulliver.js", 
+            "dist/spitfire-lab-min.js", 
+            "dist/burnscars.js", 
+            "dist/tests/specs/String.js", 
+            "dist/tests/specs/Object.js",
+            "dist/tests/testling.js"
+        ]
+
+    }, 
     "homepage": "http://spitfire.jsboot.com", 
     "directories": {
         "tmp": ".tmp", 
@@ -14,12 +55,13 @@
         "doc": "doc", 
         "build": ".build"
     }, 
+    "version": "1.2.0", 
     "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
-    "keywords": [
-        "shim", 
-        "loader", 
-        "framework", 
-        "es5"
+    "licenses": [
+        {
+            "url": "http://en.wikipedia.org/wiki/MIT_License", 
+            "type": "MIT"
+        }
     ], 
     "maintainers": [
         {
@@ -138,6 +180,15 @@
                 "master"
             ]
         }, 
+        "jasmine-reporters": {
+            "owner": "larrymyers", 
+            "repo": "jasmine-reporters", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
         "json3": {
             "owner": "bestiejs", 
             "repo": "json3", 
@@ -211,22 +262,6 @@
             ]
         }
     }, 
-    "version": "1.2.0", 
-    "licenses": [
-        {
-            "url": "http://en.wikipedia.org/wiki/MIT_License", 
-            "type": "MIT"
-        }
-    ], 
-    "devDependencies": {
-        "fixmyjs": "*", 
-        "karma-browserstack-launcher": "*", 
-        "jshint": "*", 
-        "bower": ">=1.0.0 <2.0.0", 
-        "karma": "*", 
-        "jsdoc": ">=3.0.0"
-    }, 
-    "config": {}, 
     "contributors": [
         {
             "url": "http://www.webitup.fr", 
@@ -239,5 +274,22 @@
             "email": "dev@webitup.fr"
         }
     ], 
+    "keywords": [
+        "shim", 
+        "loader", 
+        "framework", 
+        "es5"
+    ], 
+    "devDependencies": {
+        "fixmyjs": "*", 
+        "browserstack-cli": "*", 
+        "karma-browserstack-launcher": "*", 
+        "jshint": "*", 
+        "bower": ">=1.0.0 <2.0.0", 
+        "karma": "*", 
+        "testem": "*", 
+        "jsdoc": ">=3.0.0"
+    }, 
+    "config": {}, 
     "name": "Spitfire.js"
 }

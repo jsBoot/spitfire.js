@@ -2,11 +2,11 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#70-76156d6de9eb63f17de31b46257813a9ad012490
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 'use strict';(function(b,a){function d(a){v[v.length]=a}function m(a){r.className=r.className.replace(RegExp(" \\b"+a+"\\b"),"")}function h(a,c){for(var b=0,e=a.length;b<e;b++)c.call(a,a[b],b)}function s(){r.className=r.className.replace(/ (w-|eq-|gt-|gte-|lt-|lte-|portrait|no-portrait|landscape|no-landscape)\d+/g,"");var a=b.innerWidth||r.clientWidth,c=b.outerWidth||b.screen.width;n.screen.innerWidth=a;n.screen.outerWidth=c;d("w-"+a);h(g.screens,function(c){a>c?(g.screensCss.gt&&d("gt-"+c),g.screensCss.gte&&
 d("gte-"+c)):a<c?(g.screensCss.lt&&d("lt-"+c),g.screensCss.lte&&d("lte-"+c)):a===c&&(g.screensCss.lte&&d("lte-"+c),g.screensCss.eq&&d("e-q"+c),g.screensCss.gte&&d("gte-"+c))});var c=b.innerHeight||r.clientHeight,e=b.outerHeight||b.screen.height;n.screen.innerHeight=c;n.screen.outerHeight=e;n.feature("portrait",c>a);n.feature("landscape",c<a)}function u(){b.clearTimeout(y);y=b.setTimeout(s,100)}var p=b.document,c=b.navigator,e=b.location,r=p.documentElement,v=[],g={screens:[240,320,480,640,768,800,

@@ -2,7 +2,7 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 'use strict';(function(){var g;"undefined"!=typeof head&&(g=function(){return function(a,b){a.push(b);return head.js.apply(head.js,a)}});"undefined"!=typeof YUI&&(g=function(){var a;YUI().use("get",function(b){a=b});a.Get.options.async=!0;return function(){a.Get.js.apply(a.Get,arguments)}});"undefined"!=typeof yepnope&&(g=function(){return function(a,b){var c=a[a.length-1];yepnope({load:a,callback:function(a){c==a&&b()}})}});"undefined"!=typeof requirejs&&(g=function(){return function(a,b){requirejs(a,
 b)}});var e;"undefined"!=typeof $LAB&&(e=function(){var a=$LAB.sandbox();this.script=function(b){a=a.script(b);return this};this.wait=function(b){a=b?a.wait(b):a.wait();return this}});e||(e=function(){var a=null,b=[],c=!1,d=g(),e=function(){if(!c&&(c=b.shift()))if(c.uris.length)d(c.uris,function(a){var b=c.callback;c=!1;b&&b(a);e()});else{var a=c.callback;c=!1;a&&a();e()}};this.script=function(c){a&&clearTimeout(a);b.length||b.push({uris:[],callback:!1});b[b.length-1].uris.push(c);a=setTimeout(e,

@@ -2,7 +2,7 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 'use strict';(function(a,p){function e(a){u[u.length]=a}function h(a){t.className=t.className.replace(RegExp(" \\b"+a+"\\b"),"")}function k(a,b){for(var c=0,d=a.length;c<d;c++)b.call(a,a[c],c)}function s(){t.className=t.className.replace(/ (w-|eq-|gt-|gte-|lt-|lte-|portrait|no-portrait|landscape|no-landscape)\d+/g,"");var b=a.innerWidth||t.clientWidth,c=a.outerWidth||a.screen.width;n.screen.innerWidth=b;n.screen.outerWidth=c;e("w-"+b);k(g.screens,function(a){b>a?(g.screensCss.gt&&e("gt-"+a),g.screensCss.gte&&
 e("gte-"+a)):b<a?(g.screensCss.lt&&e("lt-"+a),g.screensCss.lte&&e("lte-"+a)):b===a&&(g.screensCss.lte&&e("lte-"+a),g.screensCss.eq&&e("e-q"+a),g.screensCss.gte&&e("gte-"+a))});var c=a.innerHeight||t.clientHeight,d=a.outerHeight||a.screen.height;n.screen.innerHeight=c;n.screen.outerHeight=d;n.feature("portrait",c>b);n.feature("landscape",c<b)}function d(){a.clearTimeout(z);z=a.setTimeout(s,100)}var c=a.document,b=a.navigator,w=a.location,t=c.documentElement,u=[],g={screens:[240,320,480,640,768,800,

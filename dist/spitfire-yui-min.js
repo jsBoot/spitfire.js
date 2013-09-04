@@ -2,11 +2,11 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#70-76156d6de9eb63f17de31b46257813a9ad012490
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 "undefined"!=typeof YUI&&(YUI._YUI=YUI);var YUI=function(){var h=0,c=this,r=arguments,t=r.length,n=function(c,h){return c&&c.hasOwnProperty&&c instanceof h},y="undefined"!==typeof YUI_config&&YUI_config;n(c,YUI)?(c._init(),YUI.GlobalConfig&&c.applyConfig(YUI.GlobalConfig),y&&c.applyConfig(y),t||c._setup()):c=new YUI;if(t){for(;h<t;h++)c.applyConfig(r[h]);c._setup()}c.instanceOf=n;return c};
 (function(){var h,c,r="@VERSION@",t=function(){},n=Array.prototype.slice,y={"io.xdrReady":1,"io.xdrResponse":1,"SWF.eventHandler":1},v="undefined"!=typeof window,p=v?window:null,k=v?p.document:null,m=k&&k.documentElement;h=m&&m.className;var x={},E=(new Date).getTime(),D=function(d,f,b,e){d&&d.addEventListener?d.addEventListener(f,b,e):d&&d.attachEvent&&d.attachEvent("on"+f,b)},w=function(d,f,b,e){if(d&&d.removeEventListener)try{d.removeEventListener(f,b,e)}catch(a){}else d&&d.detachEvent&&d.detachEvent("on"+

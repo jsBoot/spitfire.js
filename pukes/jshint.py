@@ -6,7 +6,7 @@ class jsHint:
     """
 
     def __init__(self):
-        self.com = puke.sh.Command("./node_modules/jshint/bin/jshint")
+        self.com = puke.sh.Command("./node_modules/.bin/jshint")
 
     def go(self, list):
         return self.com('--config', 'pukes/jshint.rc', *list)
@@ -17,7 +17,7 @@ class fixMyJs:
     """
 
     def __init__(self):
-        self.com = puke.sh.Command("./node_modules/fixmyjs/bin/fixmyjs")
+        self.com = puke.sh.Command("./node_modules/.bin/fixmyjs")
 
     def go(self, list):
         return self.com('--indent-pref', 'spaces', '--config', 'pukes/jshint.rc', *list)

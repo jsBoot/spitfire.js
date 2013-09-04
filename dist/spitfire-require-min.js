@@ -5,11 +5,11 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#70-76156d6de9eb63f17de31b46257813a9ad012490
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#70-76156d6de9eb63f17de31b46257813a9ad012490
 */
 'use strict';var requirejs,require,define;
 (function(x){function a(f){return"[object Function]"===Q.call(f)}function v(f){return"[object Array]"===Q.call(f)}function r(f,a){if(f){var d;for(d=0;d<f.length&&(!f[d]||!a(f[d],d,f));d+=1);}}function C(f,a){if(f){var d;for(d=f.length-1;-1<d&&(!f[d]||!a(f[d],d,f));d-=1);}}function t(f,a){return fa.call(f,a)}function d(f,a){return t(f,a)&&f[a]}function h(a,d){for(var c in a)if(t(a,c)&&d(a[c],c))break}function e(a,d,c,k){d&&h(d,function(d,n){if(c||!t(a,n))k&&"string"!==typeof d?(a[n]||(a[n]={}),e(a[n],

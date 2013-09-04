@@ -143,11 +143,13 @@ def tests_build():
 @task("Tests doing")
 def tests():
   puke.display.header("Do the dance baby!")
+  Wrappers.test("bs_firefox_stable_mac,bs_firefox_esr_mac")
+
   # Wrappers.test("bs_ie_10")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
   # Wrappers.test("bs_ie_9")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
   # Wrappers.test("bs_ie_8")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
   # Wrappers.test("bs_ie_7")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
-  Wrappers.test("bs_ie_6")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
+  # Wrappers.test("bs_ie_6")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
 
 @task("Deploy package")
 def deploy():
@@ -155,6 +157,7 @@ def deploy():
 
   yawner.deployer(puke.fs.join('bower_components', 'jasmine/lib/jasmine-core'), destination = 'dependencies/jasmine', withversion = True)
   yawner.deployer(puke.fs.join('bower_components', 'jasmine-bootstrap/src'), destination = 'dependencies/jasmine', withversion = True)
+  yawner.deployer(puke.fs.join('bower_components', 'jasmine-reporters/src/jasmine.tap_reporter.js'), destination = 'dependencies/jasmine', withversion = True)
 
   yawner.deployer(puke.fs.join('bower_components', 'jquery'), destination = 'dependencies/jquery', withversion = True)
   yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs/assets/js'), destination = 'dependencies/bootstrap/js', withversion = True)
@@ -197,7 +200,8 @@ def build():
 
 
   # Get ES6 - not from bower yet, though
-  allshims.merge(puke.find("src/burnscars", filter="*es6*"))
+  # allshims.merge(puke.find("src/burnscars", filter="*es6*"))
+  allshims.merge('bower_components/es6-shim/es6-shim.js')
 
   # ============================
   # Build all-in-one shim

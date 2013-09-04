@@ -1,0 +1,110 @@
+{
+  "framework": "jasmine",
+  "src_files": [
+      "dist/gulliver.js",
+      "dist/spitfire-lab-min.js",
+      "dist/burnscars.js",
+      "dist/tests/specs/String.js",
+      "dist/tests/specs/Object.js"
+  ],
+
+  "on_start": {
+    "command": "node_modules/.bin/browserstack tunnel localhost:<port>",
+    "wait_for_text": "Tunnel is running"
+  },
+
+  "launchers":{
+    "bs_fox_10":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:10.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+    
+    "bs_fox_11":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:11.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+    
+    "bs_fox_12":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:12.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+    
+    "bs_fox_13":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:13.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+    
+    "bs_fox_14":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:14.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_15":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:15.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_16":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:16.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_17":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:17.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_18":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:18.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_19":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:19.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_20":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:20.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_21":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:21.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox_22":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:22.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+
+
+
+    "bs_fox_esr":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:17.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_fox":{
+      "command": "node_modules/.bin/browserstack launch --attach firefox:22.0 --os Windows:XP <url>",
+      "protocol": "browser"
+    },
+
+    "bs_opera":{
+      "command": "node_modules/.bin/browserstack launch --attach opera:12.11 <url>",
+      "protocol": "browser"
+    },
+
+    "bs_chrome":{
+      "command": "node_modules/.bin/browserstack launch --attach chrome:24.0 <url>",
+      "protocol": "browser"
+    }
+  },
+
+
+  "launch_in_ci": ["bs_chrome"],
+
+  "launch_in_dev": []
+}

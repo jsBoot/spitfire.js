@@ -6,7 +6,7 @@ class Karma:
     """
 
     def __init__(self):
-        self.com = puke.sh.Command("./node_modules/karma/bin/karma")
+        self.com = puke.sh.Command("./node_modules/.bin/karma")
 
     def go(self, browsers):
         self.com("start", "pukes/karma.js", "--browsers", browsers)

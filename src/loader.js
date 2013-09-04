@@ -1,11 +1,11 @@
 /**
+ * @file "Any" script loader wrapper.
+ * 
  * The sole purpose of this file is to wrap any "loader" library
  * behind a unified interface.
  * See links for approaches to embeded loader.
  * This must work without any shim support, in most browsers.
  *
- * @file
- * @summary "Any" script loader wrapper.
  * @see https://gist.github.com/603980
  * @see http://www.dustindiaz.com/scriptjs/
  *
@@ -249,21 +249,22 @@
   };
 
   /**
-  * This is meant as a helper to resolve an uri against that of another script.
+  * This is meant as a helper to resolve an uri against that of another script, and does return
+  * the "base" uri of a (previously loaded) script matching a name pattern.
   *
   * @todo Note this is NOT guaranteed to work - the document may NOT be ready at the time
   * this is used...
   * Correct approach would be to timeout and repeat this in case it returns false.
   *
   * @function module:Spitfire/loader.base
-  * @summary Resolve uris relatively to a name matching another script
-  * @param   {String} currentName Name of the script to use as a basis.
-  * @returns {String} resolved uri
+  * @summary Get the base uri of the first script matching a name pattern
+  * @param   {String} pattern Pattern to match the script from which to extract a base uri.
+  * @returns {String} Base uri of the matched script.
   */
-  PvLoader.prototype.base = function(currentName) {
+  PvLoader.prototype.base = function(pattern) {
     var c = document.getElementsByTagName('script');
     var m;
-    var re = new RegExp(currentName);
+    var re = new RegExp(pattern);
     // for(var x = 0, it; (x < c.length) && (it = c[x].src); x++){
     for (var x = 0, it; x < c.length; (it = c[x].getAttribute('src')), x++) {
       if (it && re.test(it)) {
@@ -273,7 +274,7 @@
         break;
       }
     }
-    return m;
+    return m || null;
   };
 
   var idx = 1;

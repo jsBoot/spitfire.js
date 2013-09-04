@@ -1,4 +1,6 @@
 /**
+ * @file Tiny bootstrapper for companion script.
+ *
  * This is the *most minimal* bootstrapper possible.
  * It is meant to serve as a loader for an (actually useful) bootstrapper.
  * Don't use directly unless you know what you freaking do.
@@ -6,16 +8,14 @@
  * Code adapted from getify JSLabs' gister.
  * This must work without any shim support, in most browsers.
  *
- * @file
- * @summary Tiny bootstrapper for companion script.
- *
+ * @see https://gist.github.com/603980
+ * 
+ * @version {PUKE-PACKAGE-VERSION}
  * @author {PUKE-RIGHTS-AUTHOR}
  * @author Getify
- * @version {PUKE-PACKAGE-VERSION}
  *
  * @license {PUKE-RIGHTS-LICENSE}.
  * @copyright {PUKE-RIGHTS-COPYRIGHT}
- * @see https://gist.github.com/603980
  * @name gulliver.js
  * @location {PUKE-GIT-ROOT}/gulliver.js{PUKE-GIT-REVISION}
  */
@@ -61,15 +61,18 @@
         head = head[0]; // reassign from live node list ref to pure node ref --
         // avoids nasty IE bug where changes to DOM invalidate live node lists
       }
-      // Get gulliver itself to guess options
-      var scripts = document.getElementsByTagName('script');
-      var re = new RegExp('(.*)\\/' + (name || 'gulliver') + '((?:-min)?\\.js)');
-      for (var x = 0, baseGulliPath; x < scripts.length; x++) {
-        baseGulliPath = scripts[x];
-        if (baseGulliPath.src && (baseGulliPath = baseGulliPath.src.match(re))) {
-          baseGulliPath.shift();
-          uri = baseGulliPath.shift() + '/' + uri + baseGulliPath.shift();
-          break;
+      // Non absolute uris get resolved against gulliver path - other are left as is
+      if(!/^[a-z]+:\/\//.test(uri)){
+        // Get gulliver itself to guess options
+        var scripts = document.getElementsByTagName('script');
+        var re = new RegExp('(.*)\\/' + (name || 'gulliver') + '((?:-min)?\\.js)');
+        for (var x = 0, baseGulliPath; x < scripts.length; x++) {
+          baseGulliPath = scripts[x];
+          if (baseGulliPath.src && (baseGulliPath = baseGulliPath.src.match(re))) {
+            baseGulliPath.shift();
+            uri = baseGulliPath.shift() + '/' + uri + baseGulliPath.shift();
+            break;
+          }
         }
       }
       var scriptElem = document.createElement('script'),
