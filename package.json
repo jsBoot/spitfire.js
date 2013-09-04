@@ -75,6 +75,7 @@
             "dist/dependencies/jasmine/jasmine.js", 
             "dist/dependencies/jasmine/jasmine.tap_reporter.js", 
             "dist/burnscars.js",
+            "dist/burnscars/es5.shim.unsafe.js",
             "dist/tests/specs/Object.js",
             "dist/tests/specs/Function.js",
             "dist/tests/testling.js"
