@@ -1,51 +1,33 @@
 {
+    "contributors": [
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Mangled Deutz", 
+            "email": "dev@webitup.fr"
+        }, 
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Raildecom", 
+            "email": "dev@webitup.fr"
+        }
+    ], 
+    "keywords": [
+        "shim", 
+        "loader", 
+        "framework", 
+        "es5",
+        "es6",
+    ], 
+    "config": {}, 
+    "name": "Spitfire.js",
     "description": "Javascript shim / loader framework. Making things behave since 1976.", 
     "repository": {
         "url": "https://github.com/jsBoot/spitfire.js.git", 
         "type": "git"
     }, 
     "author": "WebItUp", 
-    "testling": {
-        "browsers": {
-            "chrome": [
-                20
-            ], 
-            "opera": [
-                12
-            ], 
-            "ie": [
-                6, 
-                7, 
-                8, 
-                9, 
-                10
-            ], 
-            "firefox": [
-                13, 
-                14, 
-                15, 
-                16, 
-                17, 
-                18, 
-                19, 
-                20
-            ], 
-            "safari": [
-                5.1
-            ]
-        }, 
-        "scripts": [
-            "dist/dependencies/jasmine/jasmine.js", 
-            "dist/dependencies/jasmine/jasmine.tap_reporter.js", 
-            "dist/gulliver.js", 
-            "dist/spitfire-lab-min.js", 
-            "dist/burnscars.js", 
-            "dist/tests/specs/String.js", 
-            "dist/tests/specs/Object.js",
-            "dist/tests/testling.js"
-        ]
 
-    }, 
+
     "homepage": "http://spitfire.jsboot.com", 
     "directories": {
         "tmp": ".tmp", 
@@ -70,7 +52,113 @@
             "email": "dev@webitup.fr"
         }
     ], 
+
     "dependencies": {}, 
+
+    "devDependencies": {
+        "fixmyjs": "*", 
+        "browserstack-cli": "*", 
+        "karma-browserstack-launcher": "*", 
+        "jshint": "*", 
+        "bower": ">=1.0.0 <2.0.0", 
+        "karma": "*", 
+        "testem": "*", 
+        "jsdoc": ">=3.0.0"
+    }, 
+
+    "testling": {
+        "browsers": {
+            "chrome": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15,
+                16,
+                17,
+                18,
+                19,
+                20,
+                21,
+                22,
+                23,
+                24,
+                25,
+                "canary"
+            ], 
+            "opera": [
+                10,
+                10.5,
+                11,
+                11.5,
+                11.6,
+                12,
+                "next"
+            ], 
+            "ie": [
+                6, 
+                7, 
+                8, 
+                9, 
+                10
+            ], 
+            "firefox": [
+                3,
+                3.5,
+                3.6,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14, 
+                15, 
+                16, 
+                17, 
+                18, 
+                19,
+                "nightly"
+            ], 
+            "safari": [
+                4,
+                "5.0.5",
+                5.1,
+                6.0
+            ],
+            "android-browser": [
+                4.2
+            ],
+            "iphone": [
+                6.0
+            ],
+            "ipad": [
+                6.0
+            ]
+        }, 
+        "scripts": [
+            "dist/dependencies/jasmine/jasmine.js", 
+            "dist/dependencies/jasmine/jasmine.tap_reporter.js", 
+            "dist/burnscars.js", 
+            "dist/tests/specs/String.js", 
+            "dist/tests/specs/Object.js",
+            "dist/tests/testling.js"
+        ]
+
+    }, 
+
+
     "bower": {
         "jquery": {
             "owner": "components", 
@@ -261,35 +349,5 @@
                 "2.3.2"
             ]
         }
-    }, 
-    "contributors": [
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Mangled Deutz", 
-            "email": "dev@webitup.fr"
-        }, 
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Raildecom", 
-            "email": "dev@webitup.fr"
-        }
-    ], 
-    "keywords": [
-        "shim", 
-        "loader", 
-        "framework", 
-        "es5"
-    ], 
-    "devDependencies": {
-        "fixmyjs": "*", 
-        "browserstack-cli": "*", 
-        "karma-browserstack-launcher": "*", 
-        "jshint": "*", 
-        "bower": ">=1.0.0 <2.0.0", 
-        "karma": "*", 
-        "testem": "*", 
-        "jsdoc": ">=3.0.0"
-    }, 
-    "config": {}, 
-    "name": "Spitfire.js"
+    }
 }
