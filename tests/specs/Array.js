@@ -1,5 +1,5 @@
 (function() {
-  /*global it:true, xit:true, describe:true, runs:true, expect:true*/
+  /*global it:false, describe:false, runs:false, expect:false*/
   /*jshint supernew:true*/
   'use strict';
 
@@ -7,7 +7,7 @@
     var monade = function(desc, obj, property) {
       it(desc, function() {
         runs(function() {
-          expect(property in obj).toBe(true);
+          expect(obj[property]).not.toBeUndefined();
         });
       }
       );
@@ -38,6 +38,7 @@
     /**
    * Set of generic tests to be used on array(-like) objects
    */
+/*
     var basechecks = function(exp) {
       monade('Array instance has property constructor', exp, 'constructor');
       monade('Array instance has property length', exp, 'length');
@@ -94,6 +95,7 @@
     describe('Array instance via array literal (base structure)', function() {
       basechecks([]);
     });
+*/
 
 /*
     xdescribe('Supports array comprehension', function() {

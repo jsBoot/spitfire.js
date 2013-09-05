@@ -80,8 +80,8 @@
             "dist/tests/specs/Function.js",
             "dist/tests/specs/String.js", 
             "dist/tests/specs/Array.js", 
-            "dist/tests/specs/Math.js",
-            "dist/tests/specs/Globals.js",
+            "dist/tests/specs/Math.js", 
+            "dist/tests/specs/Globals.js", 
             "dist/tests/testling.js"
         ]
 
