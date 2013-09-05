@@ -1,5 +1,5 @@
 (function() {
-  /*global it:true, describe:true, runs:true, expect:true*/
+  /*global it:false, describe:false, runs:false, expect:false*/
   'use strict';
 
   describe('Object basics test suite', function() {

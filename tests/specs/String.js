@@ -1,5 +1,5 @@
 (function() {
-  /*global it:true, describe:true, runs:true, expect:true*/
+  /*global it:false, describe:false, runs:false, expect:false*/
   'use strict';
 
   describe('String basics test suite', function() {
@@ -31,6 +31,7 @@
     describe('String structure', function() {
       monade('String has property prototype', String, 'prototype');
       monade('String has method fromCharCode', String, 'fromCharCode');
+      monade('String has method fromCodePoint()', String, 'fromCodePoint');
     });
 
     /**
@@ -68,15 +69,20 @@
       monade('String instance has method split()', exp, 'split');
       monade('String instance has method substr()', exp, 'substr');
       monade('String instance has method substring()', exp, 'substring');
-      monade('String instance has method toLocaleLowerCase()', exp,
-          'toLocaleLowerCase');
-      monade('String instance has method toLocaleUpperCase()', exp,
-          'toLocaleUpperCase');
+      monade('String instance has method toLocaleLowerCase()', exp, 'toLocaleLowerCase');
+      monade('String instance has method toLocaleUpperCase()', exp, 'toLocaleUpperCase');
       monade('String instance has method toLowerCase()', exp, 'toLowerCase');
       monade('String instance has method toUpperCase()', exp, 'toUpperCase');
       monade('String instance has method trim()', exp, 'trim');
       // monade("String instance has method trimLeft()", new String('a'), "trimLeft");
       // monade("String instance has method trimRight()", new String('a'), "trimRight");
+
+      monade('String instance has method codePointAt()', exp, 'codePointAt');
+      monade('String instance has method repeat()', exp, 'repeat');
+      monade('String instance has method startsWith()', exp, 'startsWith');
+      monade('String instance has method endsWith()', exp, 'endsWith');
+      monade('String instance has method contains()', exp, 'contains');
+      monade('String instance has method toArray()', exp, 'toArray');
 
     };
 

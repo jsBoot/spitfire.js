@@ -38,7 +38,7 @@
     /**
    * Set of generic tests to be used on array(-like) objects
    */
-/*
+
     var basechecks = function(exp) {
       monade('Array instance has property constructor', exp, 'constructor');
       monade('Array instance has property length', exp, 'length');
@@ -95,7 +95,6 @@
     describe('Array instance via array literal (base structure)', function() {
       basechecks([]);
     });
-*/
 
 /*
     xdescribe('Supports array comprehension', function() {

@@ -1,5 +1,5 @@
 (function() {
-  /*global it:true, describe:true, runs:true, expect:true*/
+  /*global it:false, describe:false, runs:false, expect:false*/
   'use strict';
 
   describe('Function basics test suite', function() {
