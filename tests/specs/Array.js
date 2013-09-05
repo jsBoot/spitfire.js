@@ -1,6 +1,5 @@
 (function() {
   /*global it:false, describe:false, runs:false, expect:false*/
-  /*jshint supernew:true*/
   'use strict';
 
   describe('Array basics test suite', function() {
@@ -16,7 +15,7 @@
     /**
    * Array itself
    */
-    describe('Array inherits Function: properties', function() {
+    /*describe('Array inherits Function: properties', function() {
       monade('Array has property constructor', Array, 'constructor');
       monade('Array has property length', Array, 'length');
     });
@@ -33,7 +32,7 @@
       monade('Array has property prototype', Array, 'prototype');
       // Javascript 1.8.5
       monade('Array has method isArray()', Array, 'isArray');
-    });
+    });*/
 
     /**
    * Set of generic tests to be used on array(-like) objects
