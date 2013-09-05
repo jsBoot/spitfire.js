@@ -82,7 +82,7 @@
       monade('String instance has method startsWith()', exp, 'startsWith');
       monade('String instance has method endsWith()', exp, 'endsWith');
       monade('String instance has method contains()', exp, 'contains');
-      monade('String instance has method toArray()', exp, 'toArray');
+      // monade('String instance has method toArray()', exp, 'toArray');
 
     };
 
