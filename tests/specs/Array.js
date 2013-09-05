@@ -118,6 +118,9 @@
       }
     });
 */
+
+/*
+
     describe('Constructor', function() {
       it('Constructor is consistent', function() {
         runs(function() {
@@ -350,7 +353,7 @@
         });
       });
     });
-
+*/
     // Consistency and
     // Can be constructed by using new Array(), [], or as the result of a function call returning
     // an array
