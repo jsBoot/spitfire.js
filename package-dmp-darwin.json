@@ -6,6 +6,6 @@
     "tmp": ".tmp",
     "doc": "doc",
     "dist": "dist"
-  }
-
+  },
+  "config": {}
 }
