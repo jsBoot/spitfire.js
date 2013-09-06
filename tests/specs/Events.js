@@ -18,7 +18,7 @@
       });
     });
 
-    var dclresult = false;
+/*    var dclresult = false;
     document.addEventListener('DOMContentLoaded', function() {dclresult = true;}, false);
 
     // XXX untestable due to the async nature of our loading strategy
@@ -36,7 +36,7 @@
         expect(loadresult).toBe(true);
       });
     });
-
+*/
 
 
   });
