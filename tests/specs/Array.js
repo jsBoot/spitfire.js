@@ -119,8 +119,6 @@
     });
 */
 
-/*
-
     describe('Constructor', function() {
       it('Constructor is consistent', function() {
         runs(function() {
@@ -164,7 +162,7 @@
         });
       });
     });
-
+/*
     describe('Push', function() {
       it('Simple value', function() {
         runs(function() {
