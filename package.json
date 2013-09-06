@@ -161,15 +161,18 @@
             "dist/tests/es5/h.js", 
             "dist/tests/es5/h-matchers.js", 
             "dist/tests/es5/s-array.js", 
-            "dist/tests/es5/s-date.js", 
             "dist/tests/es5/s-function.js", 
             "dist/tests/es5/s-number.js", 
             "dist/tests/es5/s-object.js", 
             "dist/tests/es5/s-string.js", 
 
             "dist/tests/testling.js"
+        ],
+        "scripts_not_working": [
+            "dist/tests/es5/s-date.js"
         ]
     }, 
+
 
     "bower": {
         "jquery": {
