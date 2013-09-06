@@ -9,12 +9,12 @@ from pukes.git import Git
 from pukes.jsdoc import jsDoc
 from pukes.karma import Karma
 
+# Monkey patch while puke2 is still wonky
+import pukes.monkey
+
 import re
 import json
 import os
-
-# Monkey patch while puke2 is still wonky
-import monkey
 
 class Wrappers:
     """ Simple helpers to streamline common web tasks onto our idiosyncrasy
@@ -30,32 +30,13 @@ class Wrappers:
         for burne in list:
             puke.web.minify(burne, re.sub(r"(.*)[.]([^.]+)$", r"\1-min.\2", burne), mode=mode)
 
-        # list = puke.find(
-        #     path, filter="*.js", exclude="*-min.js,%s" % exclude)
-        # for burne in list:
-        #     print burne
-        #     print re.sub(r"(.*).js$", r"\1-min.js", burne)
-        #     puke.web.minify(
-        #         str(burne), re.sub(r"(.*).js$", r"\1-min.js", burne), mode=mode)
-
-        # list = puke.find(
-        #     path, filter="*.css", exclude="*-min.css,%s" % exclude)
-        # for burne in list:
-        #     print burne
-        #     print re.sub(r"(.*).js$", r"\1-min.js", burne)
-        #     puke.web.minify(
-        #         str(burne), re.sub(r"(.*).js$", r"\1-min.js", burne), mode=mode)
-
     @staticmethod
     def hint(path, exclude=''):
         list = puke.find(
             path, filter="*.js", exclude="*-min.js,%s" % exclude)
         ret = puke.web.hint(list)
         if ret:
-            # print ret.stderr
-            # print ret.stdout
             puke.display.fail(ret)
-            # puke.log.critical(ret)
         else:
             puke.display.info("You passed the dreaded hinter!")
 
@@ -94,7 +75,7 @@ class Wrappers:
 
 
     @staticmethod
-    def cleaner(paths):
+    def clean(paths):
         for (key, path) in paths:
             if not key == "src" and not key == "tests":
                 resp = puke.display.prompt('Delete %s? y/[N]' % path, default = 'N')
@@ -119,6 +100,8 @@ class Wrappers:
         for i in browsers:
           puke.display.header("Testing: %s" % i)
           c.go(i)
+
+
 
 class Yawn:
 
@@ -268,6 +251,10 @@ class Yawn:
                     key.replace('_', '-').upper(), str(value))
         return rep
 
+
+    def paths(self):
+        return self.config.paths
+
     def deployer(self, src, filter = "", exclude = "", withversion=False, destination=False):
         list = puke.find(src, filter = filter, exclude = exclude)
         dist = self.config.paths.dist
@@ -284,32 +271,3 @@ class Yawn:
         puke.copy(list, d)
 
 
-
-
-
-
-
-
-# ==================================================================
-# Global helpers for puke
-# ==================================================================
-
-# ------------------------------------------------------------------
-# Common yak soup
-# ------------------------------------------------------------------
-
-class Helpers:
-
-
-    # Cleans every "ROOT" folder cautiously
-    @staticmethod
-    def cleaner():
-        for (key, path) in Yak.paths.items():
-            if not key == "src" and not key == "tests":
-                resp = prompt('Delete %s? y/[N]' % path, 'N')
-                if resp == 'y':
-                    try:
-                        FileSystem.remove(path)
-                        console.info('Deleted %s' % path)
-                    except:
-                        puke.display.fail('Failed removing %s' % path)

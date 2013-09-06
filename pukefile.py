@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 global help
-from helpers import Helpers as help, Yawn, Wrappers
+from helpers import Yawn, Wrappers
 import re
 import json
 
@@ -86,35 +86,43 @@ def hint():
 @task("Tidy")
 def tidy():
   puke.display.header("Tidying ur shit")
-  Wrappers.tidy("src")
-  Wrappers.tidy("tests")
+  puke.web.tidy("src")
+  puke.web.tidy("tests")
+  # Wrappers.tidy("src")
+  # Wrappers.tidy("tests")
+
+
+    # def tidy(path, exclude=''):
+    #     list = puke.find(
+    #         path, filter="*.js", exclude="*-min.js,%s" % exclude)
+    #     puke.display.info(puke.web.tidy(list))
 
 @task("Stats (on the build folder)")
 def stats():
   puke.display.header("Numbers!")
-  Wrappers.stats(yawner.config.paths.build)
+  Wrappers.stats(yawner.paths().build)
 
 @task("Rm temporary and output directories")
 def clean():
   puke.display.header("Cleanup")
-  Wrappers.cleaner(yawner.config.paths.items())
+  Wrappers.clean(yawner.paths().items())
 
 @task("Minting")
 def mint():
   puke.display.header("Minificying")
-  Wrappers.mint(yawner.config.paths.build, filter = "*yui*,*yepnope*,*ie9*", exclude = "*-min.*", mode = puke.web.NOT_STRICT)
-  Wrappers.mint(yawner.config.paths.build, exclude = "*yui*,*yepnope*,*ie9*,*/specs/*,*/es5/*,*-min.*")
+  Wrappers.mint(yawner.paths().build, filter = "*yui*,*yepnope*,*ie9*", exclude = "*-min.*", mode = puke.web.NOT_STRICT)
+  Wrappers.mint(yawner.paths().build, exclude = "*yui*,*yepnope*,*ie9*,*/specs/*,*/es5/*,*-min.*")
 
 @task("jsDocking")
 def doc():
   puke.display.header("Documenting")
 
   source = puke.find("src")
-  destination = puke.fs.join(yawner.config.paths.tmp, 'doc')
+  destination = puke.fs.join(yawner.paths().tmp, 'doc')
   replace = yawner.replacer()
   puke.copy(source, destination, replace = replace)
 
-  Wrappers.doc(destination, "bower_components/ink-docstrap/template/", yawner.config.paths.doc)
+  Wrappers.doc(destination, "bower_components/ink-docstrap/template/", yawner.paths().doc)
 
 
 
@@ -128,17 +136,15 @@ def tests_build():
   # ============================
   replace = yawner.replacer()
 
-  list = puke.find(yawner.config.paths.tests, filter="*.js,*.html,*.css", exclude="*xxx*")
-  # puke.copy(list, puke.fs.join(yawner.config.paths.build, 'tests'), replace = replace)
-
-  puke.copy(list, puke.fs.join(yawner.config.paths.build, 'tests'));
+  list = puke.find(yawner.paths().tests, filter="*.js,*.html,*.css", exclude="*xxx*")
+  puke.copy(list, puke.fs.join(yawner.paths().build, 'tests'), replace = replace)
 
   b1 = puke.fs.join('bower_components', 'es5-shim', 'tests', 'spec')
   b2 = puke.fs.join('bower_components', 'es5-shim', 'tests', 'helpers')
   es5 = puke.find(b1, filter = '*.js')
   es5.merge(puke.find(b2, filter = '*.js'))
 
-  puke.copy(es5, puke.fs.join(yawner.config.paths.build, 'tests', 'es5'));
+  puke.copy(es5, puke.fs.join(yawner.paths().build, 'tests', 'es5'));
 
 @task("Tests doing")
 def tests():
@@ -153,15 +159,15 @@ def tests():
 
 @task("Deploy package")
 def deploy():
-  yawner.deployer(yawner.config.paths.build, withversion = True)
+  yawner.deployer(yawner.paths().build, withversion = True)
 
-  yawner.deployer(puke.fs.join('bower_components', 'jasmine/lib/jasmine-core'), destination = 'dependencies/jasmine', withversion = True)
-  yawner.deployer(puke.fs.join('bower_components', 'jasmine-bootstrap/src'), destination = 'dependencies/jasmine', withversion = True)
-  yawner.deployer(puke.fs.join('bower_components', 'jasmine-reporters/src'), destination = 'dependencies/jasmine', withversion = True)
+  yawner.deployer(puke.fs.join('bower_components', 'jasmine', 'lib', 'jasmine-core'), destination = 'dependencies/jasmine', withversion = True)
+  yawner.deployer(puke.fs.join('bower_components', 'jasmine-bootstrap', 'src'), destination = 'dependencies/jasmine', withversion = True)
+  yawner.deployer(puke.fs.join('bower_components', 'jasmine-reporters', 'src'), destination = 'dependencies/jasmine', withversion = True)
 
   yawner.deployer(puke.fs.join('bower_components', 'jquery'), destination = 'dependencies/jquery', withversion = True)
-  yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs/assets/js'), destination = 'dependencies/bootstrap/js', withversion = True)
-  yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs/assets/css'), destination = 'dependencies/bootstrap/css', withversion = True)
+  yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs', 'assets', 'js'), destination = 'dependencies/bootstrap/js', withversion = True)
+  yawner.deployer(puke.fs.join('bower_components', 'bootstrap', 'docs', 'assets', 'css'), destination = 'dependencies/bootstrap/css', withversion = True)
 
   yawner.deployer(puke.fs.join('bower_components', 'PIE', 'build'), destination = 'dependencies/pie', withversion = True)
   yawner.deployer(puke.fs.join('bower_components', 'ie7'), destination = 'dependencies/ie7', withversion = True)
@@ -173,8 +179,9 @@ def build():
   puke.display.header("Building")
 
   source = puke.find("src")
-  destination = yawner.config.paths.build
+  destination = yawner.paths().build
   replace = yawner.replacer()
+
   puke.copy(source, destination, replace = replace)
 
   # Get everything but es6 shims, which depend on es5
@@ -183,10 +190,10 @@ def build():
   # bower_components/es5-2.1.0/
   for elem in [
       'console-shim/console-shim.js',
-      'es5-shim/es5-shim.js',
-      # 'es6-shim/es6-shim.js',
       'json3/lib/json3.js',
       'stacktrace.js/stacktrace.js',
+      'es5-shim/es5-shim.js',
+      # 'es6-shim/es6-shim.js',
       'xmlhttprequest/XMLHttpRequest.js'
     ]:
     it = puke.fs.join('bower_components', elem)
@@ -206,7 +213,7 @@ def build():
   # ============================
   # Build all-in-one shim
   # ============================
-  puke.combine(allshims, puke.fs.join(destination, 'burnscars.js'), replace=replace)
+  puke.combine(allshims, puke.fs.join(destination, 'burnscars.js'), replace = replace)
 
   # ============================
   # Build the stylesheet shims
