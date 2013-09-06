@@ -179,7 +179,7 @@
         });
       });
 
-      it('Infinity is read only (1.8.5)', function() {
+/*      it('Infinity is read only (1.8.5)', function() {
         runs(function() {
           try {
             Number.POSITIVE_INFINITY = 'ass';
@@ -197,7 +197,7 @@
             expect(true).toBe(true);
           }
         });
-      });
+      });*/
     });
 
     /*    runs(function(){
