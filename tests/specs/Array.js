@@ -162,7 +162,7 @@
         });
       });
     });
-/*
+
     describe('Push', function() {
       it('Simple value', function() {
         runs(function() {
@@ -303,7 +303,7 @@
         });
       });
     });
-
+/*
     describe('Sort', function() {
       xit('Sorting whole shebang array', function() {
         runs(function() {

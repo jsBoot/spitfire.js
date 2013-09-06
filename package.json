@@ -69,6 +69,12 @@
         "browsers": {
             "chrome": [
                 25
+            ],
+            "iphone": [
+                6.0
+            ],
+            "ipad": [
+                6.0
             ]
         }, 
         "scripts": [
