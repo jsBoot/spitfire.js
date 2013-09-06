@@ -1,4 +1,9 @@
 {
+    "name": "spitfire.js",
+    "version": "1.2.0", 
+    "description": "Javascript shim / loader framework. Making things behave since 1976.", 
+    "author": "WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)", 
+    "homepage": "http://spitfire.jsboot.com", 
     "contributors": [
         {
             "url": "http://www.webitup.fr", 
@@ -18,26 +23,10 @@
         "es5",
         "es6"
     ], 
-    "config": {}, 
-    "name": "Spitfire.js",
-    "description": "Javascript shim / loader framework. Making things behave since 1976.", 
     "repository": {
         "url": "https://github.com/jsBoot/spitfire.js.git", 
         "type": "git"
     }, 
-    "author": "WebItUp", 
-
-
-    "homepage": "http://spitfire.jsboot.com", 
-    "directories": {
-        "tmp": ".tmp", 
-        "src": "src", 
-        "tests": "tests", 
-        "dist": "dist", 
-        "doc": "doc", 
-        "build": ".build"
-    }, 
-    "version": "1.2.0", 
     "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
     "licenses": [
         {
@@ -52,18 +41,34 @@
             "email": "dev@webitup.fr"
         }
     ], 
+    "scripts": {
+      "preinstall": "puke2 build && puke2 tests_build && puke2 hint && puke2 mint",
+      "test": "puke2 tests",
+      "minify": "puke2 mint",
+      "install": "puke2 deploy"
+    },
+
+    "directories": {
+        "tmp": ".tmp", 
+        "src": "src", 
+        "tests": "tests", 
+        "dist": "dist", 
+        "doc": "doc", 
+        "build": ".build"
+    }, 
+    "config": {}, 
 
     "dependencies": {}, 
 
     "devDependencies": {
         "fixmyjs": "*", 
+        "jshint": "*", 
+        "jsdoc": ">=3.0.0",
+        "bower": ">=1.0.0 <2.0.0", 
         "browserstack-cli": "*", 
         "karma-browserstack-launcher": "*", 
-        "jshint": "*", 
-        "bower": ">=1.0.0 <2.0.0", 
         "karma": "*", 
-        "testem": "*", 
-        "jsdoc": ">=3.0.0"
+        "testem": "*"
     }, 
 
     "testling": {
@@ -175,15 +180,6 @@
 
 
     "bower": {
-        "jquery": {
-            "owner": "components", 
-            "repo": "jquery", 
-            "active": "2.0.3", 
-            "private": false, 
-            "versions": [
-                "2.0.3"
-            ]
-        }, 
         "console-shim": {
             "owner": "kayahr", 
             "repo": "console-shim", 
@@ -238,15 +234,6 @@
                 "4.2.0"
             ]
         }, 
-        "jasmine": {
-            "owner": "pivotal", 
-            "repo": "jasmine", 
-            "active": "1.3.1", 
-            "private": false, 
-            "versions": [
-                "1.3.1"
-            ]
-        }, 
         "PIE": {
             "owner": "lojjic", 
             "repo": "PIE", 
@@ -283,15 +270,6 @@
                 "master"
             ]
         }, 
-        "jasmine-reporters": {
-            "owner": "larrymyers", 
-            "repo": "jasmine-reporters", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
         "json3": {
             "owner": "bestiejs", 
             "repo": "json3", 
@@ -308,24 +286,6 @@
             "private": false, 
             "versions": [
                 "3.11.0"
-            ]
-        }, 
-        "jasmine-bootstrap": {
-            "owner": "esbie", 
-            "repo": "jasmine-bootstrap", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "docstrap": {
-            "owner": "terryweiss", 
-            "repo": "docstrap", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
             ]
         }, 
         "xmlhttprequest": {
@@ -349,6 +309,52 @@
         "headjs": {
             "owner": "headjs", 
             "repo": "headjs", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+
+        "jasmine-reporters": {
+            "owner": "larrymyers", 
+            "repo": "jasmine-reporters", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "jasmine": {
+            "owner": "pivotal", 
+            "repo": "jasmine", 
+            "active": "1.3.1", 
+            "private": false, 
+            "versions": [
+                "1.3.1"
+            ]
+        }, 
+        "jquery": {
+            "owner": "components", 
+            "repo": "jquery", 
+            "active": "2.0.3", 
+            "private": false, 
+            "versions": [
+                "2.0.3"
+            ]
+        }, 
+        "jasmine-bootstrap": {
+            "owner": "esbie", 
+            "repo": "jasmine-bootstrap", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "docstrap": {
+            "owner": "terryweiss", 
+            "repo": "docstrap", 
             "active": "master", 
             "private": false, 
             "versions": [
