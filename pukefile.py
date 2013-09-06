@@ -143,7 +143,7 @@ def tests_build():
 @task("Tests doing")
 def tests():
   puke.display.header("Do the dance baby!")
-  Wrappers.test("bs_firefox_stable_mac,bs_firefox_esr_mac")
+  Wrappers.test("bs_firefox_stable_mac")
 
   # Wrappers.test("bs_ie_10")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
   # Wrappers.test("bs_ie_9")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
@@ -197,7 +197,7 @@ def build():
   it = puke.fs.join('bower_components', 'es5-shim/es5-sham.js')
   dest = puke.fs.join(destination, 'burnscars', 'es5.shim.unsafe.js')
   puke.fs.copyfile(it, dest)
-
+  allshims.merge(it)
 
   # Get ES6 - not from bower yet, though
   # allshims.merge(puke.find("src/burnscars", filter="*es6*"))
