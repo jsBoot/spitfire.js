@@ -15,7 +15,7 @@
     /**
    * Array itself
    */
-    /*describe('Array inherits Function: properties', function() {
+    describe('Array inherits Function: properties', function() {
       monade('Array has property constructor', Array, 'constructor');
       monade('Array has property length', Array, 'length');
     });
@@ -32,12 +32,12 @@
       monade('Array has property prototype', Array, 'prototype');
       // Javascript 1.8.5
       monade('Array has method isArray()', Array, 'isArray');
-    });*/
+    });
 
     /**
    * Set of generic tests to be used on array(-like) objects
    */
-/*
+
     var basechecks = function(exp) {
       monade('Array instance has property constructor', exp, 'constructor');
       monade('Array instance has property length', exp, 'length');
