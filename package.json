@@ -65,35 +65,8 @@
         "testem": "*", 
         "jsdoc": ">=3.0.0"
     }, 
+
     "testling": {
-        "browsers": {
-            "chrome": [
-                25
-            ],
-            "iphone": [
-                6.0
-            ],
-            "ipad": [
-                6.0
-            ]
-        }, 
-        "scripts": [
-            "dist/dependencies/jasmine/jasmine.js", 
-            "dist/dependencies/jasmine/jasmine.tap_reporter.js", 
-            "dist/burnscars.js",
-            "dist/burnscars/es5.shim.unsafe.js",
-            "dist/tests/specs/Object.js",
-            "dist/tests/specs/Function.js",
-            "dist/tests/specs/String.js", 
-            "dist/tests/specs/Array.js", 
-            "dist/tests/specs/Math.js", 
-            "dist/tests/specs/Globals.js", 
-            "dist/tests/testling.js"
-        ]
-
-    }, 
-
-    "testling_dep": {
         "browsers": {
             "chrome": [
                 4,
@@ -181,16 +154,14 @@
             "dist/burnscars.js",
             "dist/burnscars/es5.shim.unsafe.js",
             "dist/tests/specs/Object.js",
-            "dist/tests/specs/Function.js", 
+            "dist/tests/specs/Function.js",
             "dist/tests/specs/String.js", 
-            "dist/tests/specs/Array.js",
-            "dist/tests/specs/Math.js",
-            "dist/tests/specs/Globals.js",
+            "dist/tests/specs/Array.js", 
+            "dist/tests/specs/Math.js", 
+            "dist/tests/specs/Globals.js", 
             "dist/tests/testling.js"
         ]
-
     }, 
-
 
     "bower": {
         "jquery": {

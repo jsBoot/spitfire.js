@@ -303,7 +303,7 @@
         });
       });
     });
-/*
+
     describe('Sort', function() {
       xit('Sorting whole shebang array', function() {
         runs(function() {
@@ -351,7 +351,7 @@
         });
       });
     });
-*/
+
     // Consistency and
     // Can be constructed by using new Array(), [], or as the result of a function call returning
     // an array
