@@ -305,7 +305,7 @@
     });
 
     describe('Sort', function() {
-      xit('Sorting whole shebang array', function() {
+/*      xit('Sorting whole shebang array', function() {
         runs(function() {
           var fun = new Function();
           var ftoo = function() {};
@@ -332,7 +332,7 @@
           }
           // console.warn(q);
         });
-      });
+      });*/
       it('Sorting with custom comparison callback', function() {
         runs(function() {
           var s = function(a, b) {
