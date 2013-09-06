@@ -60,7 +60,7 @@
   // Maximum function complexity
   "maxcomplexity": 10,
   // Maximum line length
-  "maxlen": 120,
+  "maxlen": 100,
 
 
   /******** Relaxing options we DO use ********/

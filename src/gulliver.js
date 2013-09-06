@@ -9,7 +9,7 @@
  * This must work without any shim support, in most browsers.
  *
  * @see https://gist.github.com/603980
- * 
+ *
  * @version {PUKE-PACKAGE-VERSION}
  * @author {PUKE-RIGHTS-AUTHOR}
  * @author Getify
@@ -62,7 +62,7 @@
         // avoids nasty IE bug where changes to DOM invalidate live node lists
       }
       // Non absolute uris get resolved against gulliver path - other are left as is
-      if(!/^[a-z]+:\/\//.test(uri)){
+      if (!/^[a-z]+:\/\//.test(uri)) {
         // Get gulliver itself to guess options
         var scripts = document.getElementsByTagName('script');
         var re = new RegExp('(.*)\\/' + (name || 'gulliver') + '((?:-min)?\\.js)');

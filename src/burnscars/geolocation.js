@@ -310,7 +310,8 @@ https://maps.googleapis.com/maps/api/browserlocation/json?browser=firefox&sensor
 -dd-8e-31-9f%7Cssid:Encapsula%C3%83%C2%A7i%C3%83%C2%B2n%7Css:-58&wifi=mac:2e-f1-f8-cc-32-83%7Cssid:
 freephonie%7Css:-60&wifi=mac:2e-f1-f8-cc-32-82%7Cssid:FreeWifi%7Css:-61&wifi=mac:2e-f1-f8-cc-32-80%
 7Cssid:freebox_DHXAKI%7Css:-62&wifi=mac:10-9a-dd-8e-3a-dd%7Cssid:Encapsula%C3%83%C2%A7i%C3%83%C2%B2n
-%7Css:-64&wifi=mac:f4-ca-e5-f3-cd-2c%7Cssid:Freebox-4B5180%7Css:-66&wifi=mac:f4-ca-e5-f3-cd-2d%7Cssid
+%7Css:-64&wifi=mac:f4-ca-e5-f3-cd-2c%7Cssid:Freebox-4B5180%7Css:-66&wifi=mac:f4-ca-e5-f3-cd-2d%7Cssi
+d
 :FreeWifi%7Css:-67&wifi=mac:82-73-d9-2f-f8-8a%7Cssid:FreeWifi%7Css:-68&wifi=mac:00-24-d4-e8-b5-24%7C
 ssid:Freebox-AE3CFB%7Css:-69&wifi=mac:82-73-d9-2f-f8-8b%7Cssid:freephonie%7Css:-70&wifi=mac:82-73-d9
 -2f-f8-88%7Cssid:myWifi%7Css:-70&wifi=mac:00-24-d4-e8-b5-25%7Cssid:FreeWifi%7Css:-70&wifi=mac:56-2e

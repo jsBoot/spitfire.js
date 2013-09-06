@@ -1,6 +1,6 @@
 /**
  * @file "Any" script loader wrapper.
- * 
+ *
  * The sole purpose of this file is to wrap any "loader" library
  * behind a unified interface.
  * See links for approaches to embeded loader.
