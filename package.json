@@ -1,9 +1,23 @@
 {
     "name": "spitfire.js",
     "version": "1.2.0", 
-    "description": "Javascript shim / loader framework. Making things behave since 1976.", 
-    "author": "WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)", 
     "homepage": "http://spitfire.jsboot.com", 
+    "description": "Javascript shim / loader framework. Making things behave since 1976.", 
+    "keywords": [
+        "shim", 
+        "loader", 
+        "framework", 
+        "es5",
+        "es6"
+    ], 
+    "author": "WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)", 
+    "maintainers": [
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Mangled Deutz", 
+            "email": "dev@webitup.fr"
+        }
+    ], 
     "contributors": [
         {
             "url": "http://www.webitup.fr", 
@@ -16,13 +30,6 @@
             "email": "dev@webitup.fr"
         }
     ], 
-    "keywords": [
-        "shim", 
-        "loader", 
-        "framework", 
-        "es5",
-        "es6"
-    ], 
     "repository": {
         "url": "https://github.com/jsBoot/spitfire.js.git", 
         "type": "git"
@@ -32,13 +39,6 @@
         {
             "url": "http://en.wikipedia.org/wiki/MIT_License", 
             "type": "MIT"
-        }
-    ], 
-    "maintainers": [
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Mangled Deutz", 
-            "email": "dev@webitup.fr"
         }
     ], 
     "scripts": {
