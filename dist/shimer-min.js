@@ -1,8 +1,8 @@
 /*
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
- @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
+ @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
 */
 'use strict';(function(){var c="function"===typeof define&&define.amd,a="object"==typeof exports&&exports;c||a?c&&define("Spitfire",a={}):a=this.Spitfire||(this.Spitfire={});var f={},g=[];a.add=function(a,b){b in f||(f[b]=[]);f[b].push(a)};a.use=function(a){if(!(a&&a in f))throw"INVALID_CATEGORY";for(var b=0;b<f[a].length;b++)g.push(f[a][b])};a.boot=function(a){for(var b=[],d=0,e;d<g.length&&(e=g[d]);d++)e.test&&(e.patch?e.patch():b.push("burnscars/"+e.uri+(a?".js":"-min.js")));return b};a.XHR="xhr";
 a.add({test:!0,uri:"xmlhttprequest"},a.XHR);a.JSON="json";a.add({test:!0,uri:"json3"},a.JSON);a.UNSAFE="unsafe";a.add({test:!Function.isGenerator,uri:"function.isgenerator"},a.UNSAFE);a.add({test:!Object.preventExtensions||!Object.isSealed||!Object.isFrozen||!Object.seal||!Object.freeze,uri:"es5.shim.unsafe"},a.UNSAFE);a.SAFE="safe";var c=void 0===[].unshift("test")||2!=[1,2].splice(0).length||!Array.isArray||!Array.prototype.forEach||!Array.prototype.map||!Array.prototype.filter||!Array.prototype.every||

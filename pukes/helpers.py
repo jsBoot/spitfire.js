@@ -3,14 +3,14 @@
 # Re-name
 import puke2 as puke
 
-from pukes.config import Config
-from pukes.bower import Bower
-from pukes.git import Git
-from pukes.jsdoc import jsDoc
-from pukes.karma import Karma
+from config import Config
+from bower import Bower
+from git import Git
+from jsdoc import jsDoc
+from karma import Karma
 
 # Monkey patch while puke2 is still wonky
-import pukes.monkey
+import monkey
 
 import re
 import json
@@ -140,7 +140,12 @@ class Yawn:
         self.config = r
 
         # Bower wrapping
-        self.bower = Bower(self.config.bower)
+        try:
+            self.bower = Bower(self.config.bower)
+        except Exception as e:
+            puke.sh.npm.install()
+            self.bower = Bower(self.config.bower)
+
 
     # Dependencies management
     def air_search(self, keyword):
@@ -149,6 +154,7 @@ class Yawn:
 
     def air_init(self):
         puke.display.header("Initializing dependencies")
+        puke.sh.npm.install()
         self.bower.init()
 
     def air_update(self):
@@ -264,9 +270,8 @@ def versions(k):
   yawner.air_versions(k)
 
 def init():
-  puke.sh.npm.install()
   yawner.air_init()
-  # Need to build...
+  # Need to build that crap - this is spitfire spécifid...
   puke.sh.ant(_cwd = 'bower_components/PIE')
 
 def update():

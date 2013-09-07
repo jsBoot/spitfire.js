@@ -2068,7 +2068,7 @@ var requirejs, require, define;
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  * @name loader.js
- * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#110-c97dca6c9d2d1df027d1e30b2735de7f3639259a
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
  */
 
 /**
@@ -2414,7 +2414,7 @@ var requirejs, require, define;
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  * @name shimer.js
- * @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#110-c97dca6c9d2d1df027d1e30b2735de7f3639259a
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
  */
 
 (function() {

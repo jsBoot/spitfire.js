@@ -8,14 +8,14 @@
         var done = false;
 
         runs(function() {
-          gulliver(function(){
+          gulliver(function() {
             done = true;
           });
         });
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(false);
         });
       });
@@ -24,14 +24,14 @@
         var done = false;
 
         runs(function() {
-          gulliver(function(){
+          gulliver(function() {
             done = true;
           }, 'nonexistent');
         });
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(false);
         });
       });
@@ -40,14 +40,14 @@
         var done = false;
 
         runs(function() {
-          gulliver(function(){
+          gulliver(function() {
             done = true;
           }, 'http://google.fr/stuff');
         });
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(false);
         });
       });
@@ -58,14 +58,14 @@
         var done = false;
 
         runs(function() {
-          gulliver(function(){
+          gulliver(function() {
             done = true;
           }, 'tests/specs/gulliver-empty');
         });
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(true);
         });
       });
@@ -75,7 +75,7 @@
         var done = false;
 
         runs(function() {
-          gulliver(function(){
+          gulliver(function() {
             done = true;
           }, '../../tests/specs/gulliver-empty',
           'jasmine'
@@ -84,7 +84,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(true);
         });
       });

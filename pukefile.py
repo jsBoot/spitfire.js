@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 import puke2 as puke
-from helpers import yawner, Helpers
+from pukes.helpers import yawner, Helpers
 
 @task("Default task")
 def default():
@@ -20,9 +20,9 @@ def all():
   puke.tasks.execute("tests_build")
   puke.tasks.execute("mint")
   puke.tasks.execute("deploy")
-  puke.tasks.execute("tests")
   puke.tasks.execute("doc")
   puke.tasks.execute("stats")
+  puke.tasks.execute("tests")
 
 
 @task("Hint")

@@ -24,7 +24,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(true).toBe(true);
         });
       });
@@ -37,7 +37,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           var g = getComputedStyle(document.body);
           expect(g.color).toBe('rgb(50, 50, 50)');
         });
@@ -52,7 +52,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           var g = getComputedStyle(document.body);
           expect(g.color).toBe('rgb(75, 75, 75)');
         });
@@ -67,7 +67,7 @@
           Spitfire.loader = Spitfire.loader.fork();
 
           var ret = Spitfire.loader.script('inexistent');
-          ret.wait(function(){
+          ret.wait(function() {
             done = true;
           });
           expect(ret).toBe(Spitfire.loader);
@@ -75,7 +75,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(false);
         });
       });
@@ -88,7 +88,7 @@
           Spitfire.loader = Spitfire.loader.fork();
 
           var ret = Spitfire.loader.script('specs/loader-empty.js');
-          ret.wait(function(){
+          ret.wait(function() {
             done = true;
           });
           expect(ret).toBe(Spitfire.loader);
@@ -96,7 +96,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(true);
         });
       });
@@ -110,7 +110,7 @@
 
           var ret = Spitfire.loader.script('specs/loader-empty.js?v=1');
           ret = Spitfire.loader.script('specs/loader-empty.js?v=2');
-          ret.wait(function(){
+          ret.wait(function() {
             done = true;
           });
           expect(ret).toBe(Spitfire.loader);
@@ -118,7 +118,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(true);
         });
       });
@@ -131,11 +131,11 @@
           Spitfire.loader = Spitfire.loader.fork();
 
           var ret = Spitfire.loader.script('specs/loader-empty.js?v=3');
-          ret.wait(function(){
+          ret.wait(function() {
             done++;
           });
           ret = Spitfire.loader.script('specs/loader-empty.js?v=4');
-          ret.wait(function(){
+          ret.wait(function() {
             done++;
           });
           expect(ret).toBe(Spitfire.loader);
@@ -143,7 +143,7 @@
 
         waits(500);
 
-        runs(function(){
+        runs(function() {
           expect(done).toBe(2);
         });
       });
