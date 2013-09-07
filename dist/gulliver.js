@@ -9,15 +9,15 @@
  * This must work without any shim support, in most browsers.
  *
  * @see https://gist.github.com/603980
- * 
+ *
  * @version 1.2.0
- * @author WebItUp
+ * @author WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)
  * @author Getify
  *
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
- * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
+ * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  * @name gulliver.js
- * @location https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#71-c593d6c757eea5029021d6e84ca826b701734848
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/gulliver.js#110-c97dca6c9d2d1df027d1e30b2735de7f3639259a
  */
 
 
@@ -62,7 +62,7 @@
         // avoids nasty IE bug where changes to DOM invalidate live node lists
       }
       // Non absolute uris get resolved against gulliver path - other are left as is
-      if(!/^[a-z]+:\/\//.test(uri)){
+      if (!/^[a-z]+:\/\//.test(uri)) {
         // Get gulliver itself to guess options
         var scripts = document.getElementsByTagName('script');
         var re = new RegExp('(.*)\\/' + (name || 'gulliver') + '((?:-min)?\\.js)');

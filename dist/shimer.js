@@ -8,13 +8,13 @@
  * @see https://github.com/bestiejs/
  * @see http://es5.github.com/#x15.4.4.13
  *
- * @author WebItUp
+ * @author WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)
  * @version 1.2.0
  *
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
- * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
+ * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  * @name shimer.js
- * @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#68-08f77f2c49e745669f67a33ef0c45cf7038c4383
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#110-c97dca6c9d2d1df027d1e30b2735de7f3639259a
  */
 
 (function() {

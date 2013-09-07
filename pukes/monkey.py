@@ -3,6 +3,9 @@ from jshint import *
 from closure import *
 
 def hint(files):
+  if isinstance(files, str):
+    files = puke.find(files, filter="*.js", exclude="*-min.js")
+
   h = jsHint()
   try:
     h.go(files)
@@ -16,17 +19,12 @@ def hint(files):
   except Exception as e:
     return e.stderr or e.stdout
 
-  return
+  return ""
 
 
 def tidy(files):
-
-  h = fixMyJs()
-  try:
-    h.go(files)
-  except Exception as e:
-    return e.stderr or e.stdout
-
+  if isinstance(files, str):
+    files = puke.find(files, filter="*.js", exclude="*-min.js")
 
   h = fixJsStyle()
   try:
@@ -34,7 +32,13 @@ def tidy(files):
   except Exception as e:
     return e.stderr or e.stdout
 
-  return
+  h = fixMyJs()
+  try:
+    h.go(files)
+  except Exception as e:
+    return e.stderr or e.stdout
+
+  return ""
 
 def blanket(path):
   print "Not implemented by puke"

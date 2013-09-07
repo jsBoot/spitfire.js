@@ -20,4 +20,5 @@ class fixMyJs:
         self.com = puke.sh.Command("./node_modules/.bin/fixmyjs")
 
     def go(self, list):
-        return self.com('--indent-pref', 'spaces', '--config', 'pukes/jshint.rc', *list)
+        # Right now, escodegen doesn't support line length control - so, using legacy
+        return self.com('--indent-pref', 'spaces', '--legacy', '--config', 'pukes/jshint.rc', *list)

@@ -42,10 +42,8 @@
         }
     ], 
     "scripts": {
-      "preinstall": "puke2 build && puke2 tests_build && puke2 hint && puke2 mint",
       "test": "puke2 tests",
-      "minify": "puke2 mint",
-      "install": "puke2 deploy"
+      "minify": "puke2 mint"
     },
 
     "directories": {

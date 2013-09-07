@@ -16,7 +16,7 @@ import re
 import json
 import os
 
-class Wrappers:
+class Helpers:
     """ Simple helpers to streamline common web tasks onto our idiosyncrasy
     """
 
@@ -29,23 +29,6 @@ class Wrappers:
             path, filter=filter, exclude="*-min.js,*-min.css,%s" % exclude)
         for burne in list:
             puke.web.minify(burne, re.sub(r"(.*)[.]([^.]+)$", r"\1-min.\2", burne), mode=mode)
-
-    @staticmethod
-    def hint(path, exclude=''):
-        list = puke.find(
-            path, filter="*.js", exclude="*-min.js,%s" % exclude)
-        ret = puke.web.hint(list)
-        if ret:
-            puke.display.fail(ret)
-        else:
-            puke.display.info("You passed the dreaded hinter!")
-
-    @staticmethod
-    def tidy(path, exclude=''):
-        list = puke.find(
-            path, filter="*.js", exclude="*-min.js,%s" % exclude)
-        puke.display.info(puke.web.tidy(list))
-
 
     @staticmethod
     def stats(path, exclude=''):
@@ -270,4 +253,34 @@ class Yawn:
 
         puke.copy(list, d)
 
+
+global yawner
+yawner = Yawn()
+
+def search(k):
+  yawner.air_search(k)
+
+def versions(k):
+  yawner.air_versions(k)
+
+def init():
+  puke.sh.npm.install()
+  yawner.air_init()
+  # Need to build...
+  puke.sh.ant(_cwd = 'bower_components/PIE')
+
+def update():
+  puke.sh.npm.install()
+  yawner.air_update()
+
+def install(uri, version = "master", local = None, private = False):
+  if not local:
+    local = uri.split('/').pop()
+  yawner.air_add(local, uri, version, private)
+
+puke.tasks.task(search)
+puke.tasks.task(versions)
+puke.tasks.task(init)
+puke.tasks.task(update)
+puke.tasks.task(install)
 

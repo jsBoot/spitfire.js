@@ -3698,7 +3698,7 @@ YUI.Env.aliases = {
 }, '@VERSION@');
 /**
  * @file "Any" script loader wrapper.
- * 
+ *
  * The sole purpose of this file is to wrap any "loader" library
  * behind a unified interface.
  * See links for approaches to embeded loader.
@@ -3707,13 +3707,13 @@ YUI.Env.aliases = {
  * @see https://gist.github.com/603980
  * @see http://www.dustindiaz.com/scriptjs/
  *
- * @author WebItUp
+ * @author WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)
  * @version 1.2.0
  *
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
- * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp</a>
+ * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  * @name loader.js
- * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#71-c593d6c757eea5029021d6e84ca826b701734848
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#110-c97dca6c9d2d1df027d1e30b2735de7f3639259a
  */
 
 /**

@@ -1,57 +1,8 @@
 #!/usr/bin/env puke
 # -*- coding: utf8 -*-
 
-global help
-from helpers import Yawn, Wrappers
-import re
-import json
-
-global yawner
-yawner = Yawn()
-
-def search(k):
-  yawner.air_search(k)
-
-def versions(k):
-  yawner.air_versions(k)
-
-def init():
-  puke.sh.npm.install()
-  yawner.air_init()
-  # Need to build...
-  puke.sh.ant(_cwd = 'bower_components/PIE')
-
-def update():
-  puke.sh.npm.install()
-  yawner.air_update()
-
-def install(uri, version = "master", local = None, private = False):
-  if not local:
-    local = uri.split('/').pop()
-  yawner.air_add(local, uri, version, private)
-
-puke.tasks.task(search)
-puke.tasks.task(versions)
-puke.tasks.task(init)
-puke.tasks.task(update)
-puke.tasks.task(install)
-
-# b = Bower(yawner.config.bower)
-# print b.list()
-# b.init()
-# print b.list()
-# b.add("kriskowal", "es5-shim", "master")
-# b.add("kriskowal", "es5-shim", "2.1.0")
-# b.add("webitup", "massmotionmedia", "master", True)
-# print "toto"
-
-
-
-
-
-
 import puke2 as puke
-
+from helpers import yawner, Helpers
 
 @task("Default task")
 def default():
@@ -74,44 +25,37 @@ def all():
   puke.tasks.execute("stats")
 
 
-
-
-
 @task("Hint")
 def hint():
   puke.display.header("Hinting all ur mess")
-  Wrappers.hint("src")
-  # Wrappers.hint("tests")
+
+  ret = puke.web.hint("src")
+  if ret:
+      puke.display.fail(ret)
+  else:
+      puke.display.info("You passed the dreaded hinter!")
 
 @task("Tidy")
 def tidy():
   puke.display.header("Tidying ur shit")
-  puke.web.tidy("src")
-  puke.web.tidy("tests")
-  # Wrappers.tidy("src")
-  # Wrappers.tidy("tests")
-
-
-    # def tidy(path, exclude=''):
-    #     list = puke.find(
-    #         path, filter="*.js", exclude="*-min.js,%s" % exclude)
-    #     puke.display.info(puke.web.tidy(list))
+  puke.display.info(puke.web.tidy("src"))
+  puke.display.info(puke.web.tidy("tests"))
 
 @task("Stats (on the build folder)")
 def stats():
   puke.display.header("Numbers!")
-  Wrappers.stats(yawner.paths().build)
+  Helpers.stats(yawner.paths().build)
 
 @task("Rm temporary and output directories")
 def clean():
   puke.display.header("Cleanup")
-  Wrappers.clean(yawner.paths().items())
+  Helpers.clean(yawner.paths().items())
 
 @task("Minting")
 def mint():
   puke.display.header("Minificying")
-  Wrappers.mint(yawner.paths().build, filter = "*yui*,*yepnope*,*ie9*", exclude = "*-min.*", mode = puke.web.NOT_STRICT)
-  Wrappers.mint(yawner.paths().build, exclude = "*yui*,*yepnope*,*ie9*,*/specs/*,*/es5/*,*-min.*")
+  Helpers.mint(yawner.paths().build, filter = "*yui*,*yepnope*,*ie9*", exclude = "*-min.*", mode = puke.web.NOT_STRICT)
+  Helpers.mint(yawner.paths().build, exclude = "*yui*,*yepnope*,*ie9*,*/specs/*,*/es5/*,*-min.*")
 
 @task("jsDocking")
 def doc():
@@ -122,10 +66,7 @@ def doc():
   replace = yawner.replacer()
   puke.copy(source, destination, replace = replace)
 
-  Wrappers.doc(destination, "bower_components/ink-docstrap/template/", yawner.paths().doc)
-
-
-
+  Helpers.doc(destination, "bower_components/ink-docstrap/template/", yawner.paths().doc)
 
 @task("Tests building")
 def tests_build():
@@ -149,13 +90,13 @@ def tests_build():
 @task("Tests doing")
 def tests():
   puke.display.header("Do the dance baby!")
-  Wrappers.test("bs_firefox_stable_mac")
+  Helpers.test("bs_firefox_stable_mac")
 
-  # Wrappers.test("bs_ie_10")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
-  # Wrappers.test("bs_ie_9")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
-  # Wrappers.test("bs_ie_8")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
-  # Wrappers.test("bs_ie_7")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
-  # Wrappers.test("bs_ie_6")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
+  # Helpers.test("bs_ie_10")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
+  # Helpers.test("bs_ie_9")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
+  # Helpers.test("bs_ie_8")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
+  # Helpers.test("bs_ie_7")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
+  # Helpers.test("bs_ie_6")#"bs_firefox_stable_mac,bs_firefox_esr_mac")
 
 @task("Deploy package")
 def deploy():
