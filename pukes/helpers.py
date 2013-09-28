@@ -297,14 +297,16 @@ def run():
     repo = clean.pop()
     owner = clean.pop()
     tag = yawner.config.git.revision.replace('#', ':')
-
     imagename = "%s/%s" % (owner, repo)
 
+    # First, build the image
     c = client.Client()
     id = c.build('.', tag='%s%s' % (imagename, tag), rm = True)
     if not id:
         raise Exception("NOT GOOD!")
-    #'-no-cache',
+
+    # Success?
+    # 
 
     # If the build succeeds
     running = c.containers(all = False)
