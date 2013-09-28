@@ -2,11 +2,11 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
 */
 "undefined"!=typeof YUI&&(YUI._YUI=YUI);var YUI=function(){var h=0,c=this,r=arguments,t=r.length,n=function(c,h){return c&&c.hasOwnProperty&&c instanceof h},y="undefined"!==typeof YUI_config&&YUI_config;n(c,YUI)?(c._init(),YUI.GlobalConfig&&c.applyConfig(YUI.GlobalConfig),y&&c.applyConfig(y),t||c._setup()):c=new YUI;if(t){for(;h<t;h++)c.applyConfig(r[h]);c._setup()}c.instanceOf=n;return c};
 (function(){var h,c,r="@VERSION@",t=function(){},n=Array.prototype.slice,y={"io.xdrReady":1,"io.xdrResponse":1,"SWF.eventHandler":1},v="undefined"!=typeof window,p=v?window:null,k=v?p.document:null,m=k&&k.documentElement;h=m&&m.className;var x={},E=(new Date).getTime(),D=function(d,f,b,e){d&&d.addEventListener?d.addEventListener(f,b,e):d&&d.attachEvent&&d.attachEvent("on"+f,b)},w=function(d,f,b,e){if(d&&d.removeEventListener)try{d.removeEventListener(f,b,e)}catch(a){}else d&&d.detachEvent&&d.detachEvent("on"+

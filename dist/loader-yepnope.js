@@ -577,7 +577,7 @@ var docElement            = doc.documentElement,
  * @license <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  * @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  * @name loader.js
- * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ * @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
  */
 
 /**

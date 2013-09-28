@@ -1,23 +1,5 @@
 {
-    "name": "spitfire.js",
-    "version": "1.2.0", 
-    "homepage": "http://spitfire.jsboot.com", 
     "description": "Javascript shim / loader framework. Making things behave since 1976.", 
-    "keywords": [
-        "shim", 
-        "loader", 
-        "framework", 
-        "es5",
-        "es6"
-    ], 
-    "author": "WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)", 
-    "maintainers": [
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Mangled Deutz", 
-            "email": "dev@webitup.fr"
-        }
-    ], 
     "contributors": [
         {
             "url": "http://www.webitup.fr", 
@@ -30,80 +12,83 @@
             "email": "dev@webitup.fr"
         }
     ], 
-    "repository": {
-        "url": "https://github.com/jsBoot/spitfire.js.git", 
-        "type": "git"
-    }, 
-    "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
-    "licenses": [
-        {
-            "url": "http://en.wikipedia.org/wiki/MIT_License", 
-            "type": "MIT"
-        }
-    ], 
-    "scripts": {
-      "test": "puke2 tests",
-      "minify": "puke2 mint"
-    },
-
-    "directories": {
-        "tmp": ".tmp", 
-        "src": "src", 
-        "tests": "tests", 
-        "dist": "dist", 
-        "doc": "doc", 
-        "build": ".build"
-    }, 
-    "config": {}, 
-
-    "dependencies": {}, 
-
-    "devDependencies": {
-        "fixmyjs": "*", 
-        "jshint": "*", 
-        "jsdoc": ">=3.0.0",
-        "bower": ">=1.0.0 <2.0.0", 
-        "browserstack-cli": "*", 
-        "karma-browserstack-launcher": "*", 
-        "karma": "*", 
-        "testem": "*"
-    }, 
-
+    "author": "WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)", 
     "testling": {
+        "scripts_not_working": [
+            "dist/tests/es5/s-date.js"
+        ], 
         "browsers": {
+            "ipad": [
+                6.0
+            ], 
+            "firefox": [
+                3, 
+                3.5, 
+                3.6, 
+                4, 
+                5, 
+                6, 
+                7, 
+                8, 
+                9, 
+                10, 
+                11, 
+                12, 
+                13, 
+                14, 
+                15, 
+                16, 
+                17, 
+                18, 
+                19, 
+                20, 
+                "nightly"
+            ], 
             "chrome": [
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13,
-                14,
-                15,
-                16,
-                17,
-                18,
-                19,
-                20,
-                21,
-                22,
-                23,
-                24,
-                25,
+                4, 
+                5, 
+                6, 
+                7, 
+                8, 
+                9, 
+                10, 
+                11, 
+                12, 
+                13, 
+                14, 
+                15, 
+                16, 
+                17, 
+                18, 
+                19, 
+                20, 
+                21, 
+                22, 
+                23, 
+                24, 
+                25, 
                 "canary"
             ], 
             "opera": [
-                10,
-                10.5,
-                11,
-                11.5,
-                11.6,
-                12,
+                10, 
+                10.5, 
+                11, 
+                11.5, 
+                11.6, 
+                12, 
                 "next"
+            ], 
+            "iphone": [
+                6.0
+            ], 
+            "safari": [
+                4, 
+                "5.0.5", 
+                5.1, 
+                6.0
+            ], 
+            "android-browser": [
+                4.2
             ], 
             "ie": [
                 6, 
@@ -111,52 +96,14 @@
                 8, 
                 9, 
                 10
-            ], 
-            "firefox": [
-                3,
-                3.5,
-                3.6,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13,
-                14, 
-                15, 
-                16, 
-                17, 
-                18, 
-                19,
-                20,
-                "nightly"
-            ], 
-            "safari": [
-                4,
-                "5.0.5",
-                5.1,
-                6.0
-            ],
-            "android-browser": [
-                4.2
-            ],
-            "iphone": [
-                6.0
-            ],
-            "ipad": [
-                6.0
             ]
         }, 
         "scripts": [
             "dist/dependencies/jasmine/jasmine.js", 
             "dist/dependencies/jasmine/jasmine.tap_reporter.js", 
-            "dist/burnscars.js",
-            "dist/tests/specs/Object.js",
-            "dist/tests/specs/Function.js",
+            "dist/burnscars.js", 
+            "dist/tests/specs/Object.js", 
+            "dist/tests/specs/Function.js", 
             "dist/tests/specs/String.js", 
             "dist/tests/specs/Array.js", 
             "dist/tests/specs/Math.js", 
@@ -168,16 +115,156 @@
             "dist/tests/es5/s-number.js", 
             "dist/tests/es5/s-object.js", 
             "dist/tests/es5/s-string.js", 
-
             "dist/tests/testling.js"
-        ],
-        "scripts_not_working": [
-            "dist/tests/es5/s-date.js"
         ]
     }, 
-
-
+    "homepage": "http://spitfire.jsboot.com", 
+    "directories": {
+        "tmp": ".tmp", 
+        "src": "src", 
+        "tests": "tests", 
+        "dist": "dist", 
+        "doc": "doc", 
+        "build": ".build"
+    }, 
+    "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
+    "repository": {
+        "url": "https://github.com/jsBoot/spitfire.js.git", 
+        "type": "git"
+    }, 
+    "keywords": [
+        "shim", 
+        "loader", 
+        "framework", 
+        "es5", 
+        "es6"
+    ], 
+    "maintainers": [
+        {
+            "url": "http://www.webitup.fr", 
+            "name": "Mangled Deutz", 
+            "email": "dev@webitup.fr"
+        }
+    ], 
+    "dependencies": {}, 
     "bower": {
+        "bootstrap": {
+            "owner": "twbs", 
+            "repo": "bootstrap", 
+            "active": "2.3.2", 
+            "private": false, 
+            "versions": [
+                "2.3.2"
+            ]
+        }, 
+        "json3": {
+            "owner": "bestiejs", 
+            "repo": "json3", 
+            "active": "3.2.5", 
+            "private": false, 
+            "versions": [
+                "3.2.5"
+            ]
+        }, 
+        "xmlhttprequest": {
+            "owner": "ilinsky", 
+            "repo": "xmlhttprequest", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "javascript-stacktrace": {
+            "owner": "eriwen", 
+            "repo": "javascript-stacktrace", 
+            "active": "0.5.3", 
+            "private": false, 
+            "versions": [
+                "0.5.3"
+            ]
+        }, 
+        "yepnope_js": {
+            "owner": "SlexAxton", 
+            "repo": "yepnope.js", 
+            "active": "1.5.4", 
+            "private": false, 
+            "versions": [
+                "1.5.4"
+            ]
+        }, 
+        "PIE": {
+            "owner": "lojjic", 
+            "repo": "PIE", 
+            "active": "1.0.0", 
+            "private": false, 
+            "versions": [
+                "1.0.0"
+            ]
+        }, 
+        "yui3": {
+            "owner": "yui", 
+            "repo": "yui3", 
+            "active": "3.11.0", 
+            "private": false, 
+            "versions": [
+                "3.11.0"
+            ]
+        }, 
+        "jasmine-reporters": {
+            "owner": "larrymyers", 
+            "repo": "jasmine-reporters", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "docstrap": {
+            "owner": "terryweiss", 
+            "repo": "docstrap", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "jasmine": {
+            "owner": "pivotal", 
+            "repo": "jasmine", 
+            "active": "1.3.1", 
+            "private": false, 
+            "versions": [
+                "1.3.1"
+            ]
+        }, 
+        "jasmine-bootstrap": {
+            "owner": "esbie", 
+            "repo": "jasmine-bootstrap", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "headjs": {
+            "owner": "headjs", 
+            "repo": "headjs", 
+            "active": "master", 
+            "private": false, 
+            "versions": [
+                "master"
+            ]
+        }, 
+        "jquery": {
+            "owner": "components", 
+            "repo": "jquery", 
+            "active": "2.0.3", 
+            "private": false, 
+            "versions": [
+                "2.0.3"
+            ]
+        }, 
         "console-shim": {
             "owner": "kayahr", 
             "repo": "console-shim", 
@@ -205,24 +292,6 @@
                 "2.1.0"
             ]
         }, 
-        "javascript-stacktrace": {
-            "owner": "eriwen", 
-            "repo": "javascript-stacktrace", 
-            "active": "0.5.3", 
-            "private": false, 
-            "versions": [
-                "0.5.3"
-            ]
-        }, 
-        "yepnope_js": {
-            "owner": "SlexAxton", 
-            "repo": "yepnope.js", 
-            "active": "1.5.4", 
-            "private": false, 
-            "versions": [
-                "1.5.4"
-            ]
-        }, 
         "html5-boilerplate": {
             "owner": "h5bp", 
             "repo": "html5-boilerplate", 
@@ -230,15 +299,6 @@
             "private": false, 
             "versions": [
                 "4.2.0"
-            ]
-        }, 
-        "PIE": {
-            "owner": "lojjic", 
-            "repo": "PIE", 
-            "active": "1.0.0", 
-            "private": false, 
-            "versions": [
-                "1.0.0"
             ]
         }, 
         "ie7": {
@@ -250,45 +310,9 @@
                 "master"
             ]
         }, 
-        "requirejs": {
-            "owner": "jrburke", 
-            "repo": "requirejs", 
-            "active": "2.1.8", 
-            "private": false, 
-            "versions": [
-                "2.1.8"
-            ]
-        }, 
         "LABjs": {
             "owner": "getify", 
             "repo": "LABjs", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "json3": {
-            "owner": "bestiejs", 
-            "repo": "json3", 
-            "active": "3.2.5", 
-            "private": false, 
-            "versions": [
-                "3.2.5"
-            ]
-        }, 
-        "yui3": {
-            "owner": "yui", 
-            "repo": "yui3", 
-            "active": "3.11.0", 
-            "private": false, 
-            "versions": [
-                "3.11.0"
-            ]
-        }, 
-        "xmlhttprequest": {
-            "owner": "ilinsky", 
-            "repo": "xmlhttprequest", 
             "active": "master", 
             "private": false, 
             "versions": [
@@ -304,69 +328,37 @@
                 "0.8.0"
             ]
         }, 
-        "headjs": {
-            "owner": "headjs", 
-            "repo": "headjs", 
-            "active": "master", 
+        "requirejs": {
+            "owner": "jrburke", 
+            "repo": "requirejs", 
+            "active": "2.1.8", 
             "private": false, 
             "versions": [
-                "master"
-            ]
-        }, 
-
-        "jasmine-reporters": {
-            "owner": "larrymyers", 
-            "repo": "jasmine-reporters", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "jasmine": {
-            "owner": "pivotal", 
-            "repo": "jasmine", 
-            "active": "1.3.1", 
-            "private": false, 
-            "versions": [
-                "1.3.1"
-            ]
-        }, 
-        "jquery": {
-            "owner": "components", 
-            "repo": "jquery", 
-            "active": "2.0.3", 
-            "private": false, 
-            "versions": [
-                "2.0.3"
-            ]
-        }, 
-        "jasmine-bootstrap": {
-            "owner": "esbie", 
-            "repo": "jasmine-bootstrap", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "docstrap": {
-            "owner": "terryweiss", 
-            "repo": "docstrap", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "bootstrap": {
-            "owner": "twbs", 
-            "repo": "bootstrap", 
-            "active": "2.3.2", 
-            "private": false, 
-            "versions": [
-                "2.3.2"
+                "2.1.8"
             ]
         }
-    }
+    }, 
+    "version": "1.2.0", 
+    "scripts": {
+        "test": "puke2 run", 
+        "minify": "puke2 mint"
+    }, 
+    "licenses": [
+        {
+            "url": "http://en.wikipedia.org/wiki/MIT_License", 
+            "type": "MIT"
+        }
+    ], 
+    "devDependencies": {
+        "jsdoc": ">=3.0.0", 
+        "fixmyjs": "*", 
+        "browserstack-cli": "*", 
+        "karma-browserstack-launcher": "*", 
+        "bower": ">=1.0.0 <2.0.0", 
+        "karma": "*", 
+        "testem": "*", 
+        "jshint": "*"
+    }, 
+    "config": {}, 
+    "name": "spitfire.js"
 }

@@ -5,11 +5,11 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
 */
 'use strict';var requirejs,require,define;
 (function(x){function a(f){return"[object Function]"===Q.call(f)}function v(f){return"[object Array]"===Q.call(f)}function r(f,a){if(f){var d;for(d=0;d<f.length&&(!f[d]||!a(f[d],d,f));d+=1);}}function C(f,a){if(f){var d;for(d=f.length-1;-1<d&&(!f[d]||!a(f[d],d,f));d-=1);}}function t(f,a){return fa.call(f,a)}function d(f,a){return t(f,a)&&f[a]}function h(a,d){for(var c in a)if(t(a,c)&&d(a[c],c))break}function e(a,d,c,k){d&&h(d,function(d,n){if(c||!t(a,n))k&&"string"!==typeof d?(a[n]||(a[n]={}),e(a[n],

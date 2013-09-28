@@ -2,11 +2,11 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name shimer.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/shimer.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
 */
 (function(f,a,p){function m(a){return!a||"loaded"==a||"complete"==a||"uninitialized"==a}function q(){var a=t.shift();v=1;a?a.t?h(function(){("c"==a.t?r.injectCss:r.injectJs)(a.s,0,a.a,a.x,a.e,1)},0):(a(),q()):v=0}function u(c,b,d,e,f,L,l){function B(a){if(!C&&m(n.readyState)&&(D.r=C=1,!v&&q(),n.onload=n.onreadystatechange=null,a)){"img"!=c&&h(function(){E.removeChild(n)},50);for(var d in s[b])if(s[b].hasOwnProperty(d))s[b][d].onload()}}l=l||r.errorTimeout;var n=a.createElement(c),C=0,z=0,D={t:d,s:b,
 e:f,a:L,x:l};1===s[b]&&(z=1,s[b]=[]);"object"==c?n.data=b:(n.src=b,n.type=c);n.width=n.height="0";n.onerror=n.onload=n.onreadystatechange=function(){B.call(this,z)};t.splice(e,0,D);"img"!=c&&(z||2===s[b]?(E.insertBefore(n,F?null:k),h(B,l)):s[b].push(n))}function d(a,c,b,h,d){v=0;c=c||"j";w(a)?u("c"==c?M:G,a,c,this.i++,b,h,d):(t.splice(this.i++,0,a),1==t.length&&q());return this}function b(){var a=r;a.loader={load:d,i:0};return a}var c=a.documentElement,h=f.setTimeout,k=a.getElementsByTagName("script")[0],

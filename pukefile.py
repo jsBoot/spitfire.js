@@ -135,6 +135,9 @@ def deploy():
     yawner.deployer(
         puke.fs.join('bower_components', 'bootstrap', 'docs', 'assets', 'css'),
         destination='dependencies/bootstrap/css', withversion=True)
+    yawner.deployer(
+        puke.fs.join('bower_components', 'bootstrap', 'docs', 'assets', 'img'),
+        destination='dependencies/bootstrap/css', withversion=True)
 
     yawner.deployer(puke.fs.join('bower_components', 'PIE', 'build'),
                     destination='dependencies/pie', withversion=True)

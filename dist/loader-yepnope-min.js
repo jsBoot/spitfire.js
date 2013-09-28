@@ -2,7 +2,7 @@
  <a href="http://en.wikipedia.org/wiki/MIT_License">MIT</a>.
  @copyright All rights reserved <a href="http://www.webitup.fr">copyright WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)</a>
  @name loader.js
- @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#111-0f8cc49a5082f7c6a0ca6ae84a9d585ad117fcd2
+ @location https://github.com/jsBoot/spitfire.js/blob/master/src/loader.js#114-c9d8e7426563d7cfb3f9030fb5eea7bc5f6994ad
 */
 (function(l,e,u){function r(a){return!a||"loaded"==a||"complete"==a||"uninitialized"==a}function s(){var a=n.shift();v=1;a?a.t?m(function(){("c"==a.t?p.injectCss:p.injectJs)(a.s,0,a.a,a.x,a.e,1)},0):(a(),s()):v=0}function z(a,b,c,d,l,L,h){function C(f){if(!D&&r(k.readyState)&&(g.r=D=1,!v&&s(),k.onload=k.onreadystatechange=null,f)){"img"!=a&&m(function(){E.removeChild(k)},50);for(var c in q[b])if(q[b].hasOwnProperty(c))q[b][c].onload()}}h=h||p.errorTimeout;var k=e.createElement(a),D=0,A=0,g={t:c,s:b,
 e:l,a:L,x:h};1===q[b]&&(A=1,q[b]=[]);"object"==a?k.data=b:(k.src=b,k.type=a);k.width=k.height="0";k.onerror=k.onload=k.onreadystatechange=function(){C.call(this,A)};n.splice(d,0,g);"img"!=a&&(A||2===q[b]?(E.insertBefore(k,F?null:t),m(C,h)):q[b].push(k))}function c(a,b,c,d,e){v=0;b=b||"j";w(a)?z("c"==b?M:G,a,b,this.i++,c,d,e):(n.splice(this.i++,0,a),1==n.length&&s());return this}function b(){var a=p;a.loader={load:c,i:0};return a}var d=e.documentElement,m=l.setTimeout,t=e.getElementsByTagName("script")[0],

@@ -8,6 +8,7 @@ from bower import Bower
 from git import Git
 from jsdoc import jsDoc
 from karma import Karma
+from error import GenericError
 
 # Monkey patch while puke2 is still wonky
 import monkey
@@ -286,8 +287,52 @@ def install(uri, version="master", local=None, private=False):
         local = uri.split('/').pop()
     yawner.air_add(local, uri, version, private)
 
+
+# Only if in a docker environment, and must be run as root obviously
+# Contains a host nginx dependent snippet
+def run():
+    from docker import client
+
+    clean = re.sub('[.]git$', '', yawner.config.repository.url).split('/')
+    repo = clean.pop()
+    owner = clean.pop()
+    tag = yawner.config.git.revision.replace('#', ':')
+
+    imagename = "%s/%s" % (owner, repo)
+
+    c = client.Client()
+    id = c.build('.', tag='%s%s' % (imagename, tag), rm = True)
+    if not id:
+        raise Exception("NOT GOOD!")
+    #'-no-cache',
+
+    # If the build succeeds
+    running = c.containers(all = False)
+    for i in running:
+      im = i['Image'].split(':')
+      im = im.pop(0)
+      if im == imagename:
+         c.stop(i)
+
+    hostname = "%s" % imagename.replace("/", ".")
+    container = c.create_container("%s%s" % (imagename, tag), command = "", detach=True, hostname=hostname)#, ports=)
+    c.start(container)
+    port = c.inspect_container(container)['NetworkSettings']
+    ip = port['IPAddress']
+    port = port['PortMapping']['Tcp']['80']
+    nginx = """upstream %s {
+        server %s;
+}
+""" % (imagename.replace('/', '.'), ip)
+    puke.fs.writefile('/etc/nginx/sites-enabled/nouwave.%s' % imagename.replace('/', '.'), nginx)
+    puke.sh.service('nginx', 'reload')
+
+
 puke.tasks.task(search)
 puke.tasks.task(versions)
 puke.tasks.task(init)
 puke.tasks.task(update)
 puke.tasks.task(install)
+
+puke.tasks.task(run)
+
