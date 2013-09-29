@@ -326,7 +326,7 @@ def run():
         server %s;
 }
 """ % (imagename.replace('/', '.'), ip)
-    puke.fs.writefile('/etc/nginx/sites-enabled/nouwave.%s' % imagename.replace('/', '.'), nginx)
+    puke.fs.writefile('/etc/nginx/conf.d/nouwave.%s' % imagename.replace('/', '.'), nginx)
     puke.sh.service('nginx', 'reload')
 
 
