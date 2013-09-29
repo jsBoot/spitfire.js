@@ -300,7 +300,7 @@ def run():
     imagename = "%s/%s" % (owner, repo)
 
     # First, build the image
-    c = client.Client()
+    c = client.Client(base_url='unix://var/run/docker.sock')
     id = c.build('.', tag='%s%s' % (imagename, tag), rm = True)
     if not id:
         raise Exception("NOT GOOD!")
