@@ -340,7 +340,7 @@
     }, 
     "version": "1.2.0", 
     "scripts": {
-        "test": "puke2 run", 
+        "test": "", 
         "minify": "puke2 mint"
     }, 
     "licenses": [

@@ -297,10 +297,11 @@ def run():
     repo = clean.pop()
     owner = clean.pop()
     tag = yawner.config.git.revision.replace('#', ':')
-    imagename = "%s/%s" % (owner, repo)
+    imagename = "docker.sn.ackitup.net:443/%s/%s" % (owner, repo)
 
     # First, build the image
-    c = client.Client(base_url='unix://var/run/docker.sock')
+    c = client.Client()
+    # base_url='unix://var/run/docker.sock')
     id = c.build('.', tag='%s%s' % (imagename, tag), rm = True)
     if not id:
         raise Exception("NOT GOOD!")
