@@ -330,7 +330,7 @@ def run():
 }
 """ % (shortname.replace('/', '.'), ip)
 
-    puke.fs.writefile('/etc/nginx/conf.d/nouwave.%s' % shortname.replace('/', '.'), nginx)
+    puke.fs.writefile('/etc/nginx/conf.d/nouwave.%s.conf' % shortname.replace('/', '.'), nginx)
 #    puke.sh.service('nginx', 'reload')
 
 
