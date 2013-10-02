@@ -297,6 +297,7 @@ def run():
     repo = clean.pop()
     owner = clean.pop()
     tag = yawner.config.git.revision.replace('#', ':')
+    shortname = "%s/%s" % (owner, repo)
     imagename = "docker.sn.ackitup.net:443/%s/%s" % (owner, repo)
 
     # First, build the image
@@ -326,8 +327,9 @@ def run():
     nginx = """upstream %s {
         server %s;
 }
-""" % (imagename.replace('/', '.'), ip)
-    puke.fs.writefile('/etc/nginx/conf.d/nouwave.%s' % imagename.replace('/', '.'), nginx)
+""" % (shortname.replace('/', '.'), ip)
+
+    puke.fs.writefile('/etc/nginx/conf.d/nouwave.%s' % shortname.replace('/', '.'), nginx)
 #    puke.sh.service('nginx', 'reload')
 
 
