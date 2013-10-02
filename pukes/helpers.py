@@ -314,7 +314,8 @@ def run():
     running = c.containers(all = False)
     for i in running:
       im = i['Image'].split(':')
-      im = im.pop(0)
+      im.pop()
+      im = ':'.join(im)
       if im == imagename:
          c.stop(i)
 
