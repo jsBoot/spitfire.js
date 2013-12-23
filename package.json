@@ -5,14 +5,10 @@
             "url": "http://www.webitup.fr", 
             "name": "Mangled Deutz", 
             "email": "dev@webitup.fr"
-        }, 
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Raildecom", 
-            "email": "dev@webitup.fr"
         }
     ], 
     "author": "WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)", 
+
     "testling": {
         "scripts_not_working": [
             "dist/tests/es5/s-date.js"
@@ -146,198 +142,51 @@
             "email": "dev@webitup.fr"
         }
     ], 
-    "dependencies": {}, 
-    "bower": {
-        "bootstrap": {
-            "owner": "twbs", 
-            "repo": "bootstrap", 
-            "active": "2.3.2", 
-            "private": false, 
-            "versions": [
-                "2.3.2"
-            ]
-        }, 
-        "json3": {
-            "owner": "bestiejs", 
-            "repo": "json3", 
-            "active": "3.2.5", 
-            "private": false, 
-            "versions": [
-                "3.2.5"
-            ]
-        }, 
-        "xmlhttprequest": {
-            "owner": "ilinsky", 
-            "repo": "xmlhttprequest", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "javascript-stacktrace": {
-            "owner": "eriwen", 
-            "repo": "javascript-stacktrace", 
-            "active": "0.5.3", 
-            "private": false, 
-            "versions": [
-                "0.5.3"
-            ]
-        }, 
-        "yepnope_js": {
-            "owner": "SlexAxton", 
-            "repo": "yepnope.js", 
-            "active": "1.5.4", 
-            "private": false, 
-            "versions": [
-                "1.5.4"
-            ]
-        }, 
-        "PIE": {
-            "owner": "lojjic", 
-            "repo": "PIE", 
-            "active": "1.0.0", 
-            "private": false, 
-            "versions": [
-                "1.0.0"
-            ]
-        }, 
-        "yui3": {
-            "owner": "yui", 
-            "repo": "yui3", 
-            "active": "3.11.0", 
-            "private": false, 
-            "versions": [
-                "3.11.0"
-            ]
-        }, 
-        "jasmine-reporters": {
-            "owner": "larrymyers", 
-            "repo": "jasmine-reporters", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "docstrap": {
-            "owner": "terryweiss", 
-            "repo": "docstrap", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "jasmine": {
-            "owner": "pivotal", 
-            "repo": "jasmine", 
-            "active": "1.3.1", 
-            "private": false, 
-            "versions": [
-                "1.3.1"
-            ]
-        }, 
-        "jasmine-bootstrap": {
-            "owner": "esbie", 
-            "repo": "jasmine-bootstrap", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "headjs": {
-            "owner": "headjs", 
-            "repo": "headjs", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "jquery": {
-            "owner": "components", 
-            "repo": "jquery", 
-            "active": "2.0.3", 
-            "private": false, 
-            "versions": [
-                "2.0.3"
-            ]
-        }, 
-        "console-shim": {
-            "owner": "kayahr", 
-            "repo": "console-shim", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "normalize_css": {
-            "owner": "necolas", 
-            "repo": "normalize.css", 
-            "active": "2.1.3", 
-            "private": false, 
-            "versions": [
-                "2.1.3"
-            ]
-        }, 
-        "es5-shim": {
-            "owner": "kriskowal", 
-            "repo": "es5-shim", 
-            "active": "2.1.0", 
-            "private": false, 
-            "versions": [
-                "2.1.0"
-            ]
-        }, 
-        "html5-boilerplate": {
-            "owner": "h5bp", 
-            "repo": "html5-boilerplate", 
-            "active": "4.2.0", 
-            "private": false, 
-            "versions": [
-                "4.2.0"
-            ]
-        }, 
-        "ie7": {
-            "owner": "jsBoot", 
-            "repo": "ie7", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "LABjs": {
-            "owner": "getify", 
-            "repo": "LABjs", 
-            "active": "master", 
-            "private": false, 
-            "versions": [
-                "master"
-            ]
-        }, 
-        "es6-shim": {
-            "owner": "paulmillr", 
-            "repo": "es6-shim", 
-            "active": "0.8.0", 
-            "private": false, 
-            "versions": [
-                "0.8.0"
-            ]
-        }, 
-        "requirejs": {
-            "owner": "jrburke", 
-            "repo": "requirejs", 
-            "active": "2.1.8", 
-            "private": false, 
-            "versions": [
-                "2.1.8"
-            ]
-        }
+    "dependencies": {
+      }, 
+
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jasmine": "~0.5.2",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-yuidoc": "~0.5.0",
+    "grunt-fixmyjs": "~0.1.0",
+    "fixmyjs": "~0.11.0",
+    "chalk": "~0.2.1",
+    "grunt-bower-task": "~0.3.2",
+
+        "jsdoc": ">=3.0.0", 
+        "fixmyjs": "*", 
+        "browserstack-cli": "*", 
+        "karma-browserstack-launcher": "*", 
+        "bower": ">=1.0.0 <2.0.0", 
+        "karma": "*", 
+        "testem": "*", 
+        "jshint": "*"
     }, 
+  "todo_installer_point_interrogation":{  
+    "grunt-contrib-cssmin": "~0.6.2",
+    "grunt-contrib-csslint": "~0.1.2",
+    "grunt-contrib-handlebars": "~0.5.11",
+    "grunt-contrib-imagemin": "~0.3.0",
+    "grunt-mxmlc": "~0.2.0"
+    },
+  "utilite_fonctionnelle_a_verifier":{
+    "grunt-jsbeautifier": "~0.2.2",    
+    
+    "bower": "~1.2.7",
+    "browserstack-cli": "*",
+    "karma-browserstack-launcher": "*",
+    "karma": "*",
+    "testem": "*",
+    "jshint": "*"
+   },
+
     "version": "1.2.0", 
     "scripts": {
         "test": "", 
@@ -349,16 +198,6 @@
             "type": "MIT"
         }
     ], 
-    "devDependencies": {
-        "jsdoc": ">=3.0.0", 
-        "fixmyjs": "*", 
-        "browserstack-cli": "*", 
-        "karma-browserstack-launcher": "*", 
-        "bower": ">=1.0.0 <2.0.0", 
-        "karma": "*", 
-        "testem": "*", 
-        "jshint": "*"
-    }, 
     "config": {}, 
     "name": "spitfire.js"
 }
