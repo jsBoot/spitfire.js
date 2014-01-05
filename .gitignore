@@ -2,21 +2,18 @@
 .DS_Store
 
 # Build systems
-.pukecache/
-bower_components
+dependencies
 node_modules
-*/.sass-cache/*
+.build
+.tmp
 
 # IDE
-*.sublime-project
 *.sublime-workspace
 
 # Build scories
 *.py[co]
-build/
-.build/
-.tmp/
-tmp/*
 *.egg
 *.egg-info
+
+# Oldies
 *xxx*

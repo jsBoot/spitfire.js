@@ -1,0 +1,409 @@
+#!/bin/bash
+# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+# P.O.SH - a piece of shcript
+# (c) 2012 Mangled Deutz <dev@webitup.fr>
+# Distributed under the terms of the WTF-PL: do wtf you want with that code
+# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★
+
+# UI helpers
+ui::fatal(){
+  tput setaf 1
+  for i in "$@"; do
+    echo "FATAL: $i"
+  done
+  tput op
+  exit 1
+}
+
+ui::info(){
+  tput setaf 2
+  for i in "$@"; do
+    echo "INFO: $i"
+  done
+  tput op
+}
+
+ui::warning(){
+  tput setaf 3
+  for i in "$@"; do
+    echo "WARNING: $i"
+  done
+  tput op
+}
+
+ui::text(){
+  for i in "$@"; do
+    echo "$i"
+  done
+}
+
+ui::code(){
+  for i in "$@"; do
+    echo "    \$ $i"
+  done
+}
+
+ui::confirm(){
+  for i in "$@"; do
+    echo "$i"
+  done
+  echo "Press enter now."
+  # read
+}
+
+ui::ask(){
+  echo
+  read -p "$1" $2
+}
+
+ui::section(){
+  if [[ ! -n "$@" ]]
+    then
+    return
+  fi
+  tput setaf 2
+  echo "____________________________________________________________________________________________"
+  for i in "$@"; do
+    echo "| $i"
+  done
+  echo "____________________________________________________________________________________________"
+  echo ""
+  tput op
+}
+
+ui::header(){
+  if [[ ! -n "$@" ]]
+    then
+    return
+  fi
+  tput setaf 2
+  echo "★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★"
+  for i in "$@"; do
+    echo "★ $i"
+  done
+  echo "★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★"
+  echo ""
+  tput op
+}
+
+# Base system installers / output
+if [[ `uname` == "Darwin" ]]; then
+  export PACKMAN="brew"
+elif [[ `uname` == "Linux" ]]; then
+  export PACKMAN="apt-get"
+else
+  export PACKMAN="nopackman"
+fi
+
+system::ensure::nopackman(){
+  ui::fatal "... but... no supported package manager for platform `uname`. Please install required packages manually."
+}
+
+system::ensure::apt-get(){
+  ui::fatal "... but... unsupported linux (no apt-get!). Please install required packages manually."
+}
+
+system::ensure::brew(){
+  ui::warning "... but... you are missing homebrew."
+  ui::confirm "We will install it in ~/bin/homebrew."
+
+  mkdir -p ~/bin/homebrew
+  mkdir -p ~/tmp/homebrewcache
+  mkdir -p ~/tmp/homebrewtemp
+  cd ~/bin
+  curl -L https://github.com/mxcl/homebrew/tarball/master | tar xz --strip 1 -C homebrew
+  cd -
+
+  ui::ask "Your github api token for homebrew?" token
+
+  echo "" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "# ★ P.O.SH ＆＆ homebrew ★" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "export PATH=~/bin/homebrew/bin:~/bin/homebrew/sbin:\${PATH}" >> ~/.profile
+  echo "export HOMEBREW_GITHUB_API_TOKEN=$token" >> ~/.profile
+  echo "export HOMEBREW_CACHE=~/tmp/homebrewcache" >> ~/.profile
+  echo "export HOMEBREW_TEMP=~/tmp/homebrewtemp" >> ~/.profile
+  echo "source \`brew --repository\`/Library/Contributions/brew_bash_completion.sh" >> ~/.profile
+
+  source ~/.profile
+
+  brew tap homebrew/versions
+  brew tap josegonzalez/php
+}
+
+system::ensure(){
+  if [ -z "`which $PACKMAN`" ]; then
+    eval system::ensure::${PACKMAN}
+  fi
+}
+
+system::install(){
+  $PACKMAN install $1
+  if [ ! -z "$2" ]; then
+    eval ${2}
+  fi
+}
+
+system::update(){
+  $PACKMAN update
+  $PACKMAN upgrade
+  $PACKMAN cleanup
+}
+
+# Top-level helpers for installation at various layers
+require::system(){
+  binary=$1
+  package=$2
+  if [ -z "$package" ]; then
+    package=$1
+  fi
+  ui::info "Checking system package $package"
+  if [ -z "`which $binary`" ]; then
+    ui::warning "$binary is missing"
+    ui::confirm "We will try to \"$PACKMAN install $package\" now."
+
+    system::ensure
+    system::install $package $3
+  fi
+}
+
+# post::flex(){
+#   # Post installation for flex
+#   mkdir -p ~/.ant/lib
+#   ln -s `brew --repository`/Cellar/flex_sdk/*/libexec/ant/lib/flexTasks.jar ~/.ant/lib
+
+#   echo "" >> ~/.profile
+#   echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+#   echo "# ★ P.O.SH ＆＆ flex ★" >> ~/.profile
+#   echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+#   echo "export PATH=\`brew --repository\`/Cellar/flex_sdk/4.6.0.23201/libexec/bin:\${PATH}" >> ~/.profile
+#   echo "export FLEX_HOME=\`brew --repository\`/Cellar/flex_sdk/4.6.0.23201/libexec" >> ~/.profile
+#   source ~/.profile
+# }
+
+post::mobile(){
+  echo "" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "# ★ P.O.SH ＆＆ mobile ★" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "export ANDROID_HOME=\`brew --repository\`/opt/android-sdk" >> ~/.profile
+  echo "source \`brew --repository\`/etc/bash_completion.d/adb-completion.bash" >> ~/.profile
+  source ~/.profile
+}
+
+post::node(){
+  echo "" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "# ★ P.O.SH ＆＆ node ★" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "export NPM_CONFIG_CACHE=~/tmp/npm" >> ~/.profile
+  source ~/.profile
+}
+
+post::rbenv(){
+  echo "" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "# ★ P.O.SH ＆＆ rbenv ★" >> ~/.profile
+  echo "# ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★" >> ~/.profile
+  echo "export RBENV_ROOT=\`brew --repository\`/var/rbenv" >> ~/.profile
+  echo "if which rbenv > /dev/null; then eval \"\$(rbenv init -)\"; fi" >> ~/.profile
+
+  source ~/.profile
+
+  require::system ruby-build
+  require::system rbenv-gem-rehash
+
+  rbenv install 2.0.0-p353
+  rbenv global 2.0.0-p353
+  gem update --system
+}
+
+# require::system::flex(){
+#   require::system mxmlc flex_sdk post::flex
+# }
+
+require::system::mobile(){
+  require::system android android-sdk post::mobile
+  require::system ndk-build android-ndk
+  require::system ios-sim
+}
+
+require::system::node(){
+  require::system node node post::node
+}
+
+require::system::rbenv(){
+  require::system rbenv rbenv post::rbenv
+}
+
+require::npm(){
+  npmbinary=$1
+  npmpackage=$2
+  if [ -z "$npmpackage" ]; then
+    npmpackage=$1
+  fi
+  ui::info "Checking npm package $npmpackage"
+  if [ -z "`which $npmbinary`" ]; then
+    ui::warning "$npmbinary is missing"
+    ui::confirm "We will try to \"npm install -g $npmpackage\" now."
+
+    npm install -g $npmpackage
+  fi
+}
+
+require::gem(){
+  gembinary=$1
+  gempackage=$2
+  if [ -z "$gempackage" ]; then
+    gempackage=$1
+  fi
+  ui::info "Checking gem package $gempackage"
+  if [ -z "`which $gembinary`" ]; then
+    ui::warning "$gembinary is missing"
+    ui::confirm "We will try to \"gem install $gempackage\" now."
+
+    gem install $gempackage $3
+  fi
+}
+
+update(){
+  system::ensure
+  system::update
+
+  if [ ! -z "`which npm`" ]; then
+    npm update -g > /dev/null
+  fi
+
+  if [ ! -z "`which gem`" ]; then
+    gem update --system
+    gem update
+  fi
+
+  if [ ! -z "`which pip`" ]; then
+    pip freeze --local | cut -d = -f 1  | xargs pip install -U
+  fi
+
+  if [ ! -z "`which pip3`" ]; then
+    pip3 freeze --local | cut -d = -f 1  | xargs pip install -U
+  fi
+
+  # pip freeze --local | grep -v '^\-e' | grep -v "closure-linter" | grep -v "puke2" | cut -d = -f 1  | xargs pip install -U
+  # purge
+}
+
+init::mobile(){
+  ui::header "Movile development"
+
+  require::system::mobile
+
+  require::system::node
+  require::npm phonegap
+}
+
+init::scaffold(){
+  ui::header "Scaffolding dev"
+
+  require::system::node
+  require::npm yo
+}
+
+init::client(){
+  ui::header "Client-side web-dev initialization"
+
+  require::system::rbenv
+  require::gem sass "sass --pre"
+  require::gem compass "compass compass-sourcemaps --pre"
+
+  require::system::node
+  require::npm grunt grunt-cli
+  require::npm bower
+
+  npm install
+  bower install
+}
+
+init::python(){
+  ui::header "Python development"
+
+  require::system pip python
+  require::system python3
+  require::system pypy
+  require::system jython
+  require::system python24
+  require::system python31
+  require::system python32
+}
+
+init::cpp(){
+  ui::header "C++ development"
+
+  require::system qmake qt
+  require::system doxygen
+  require::system swig
+}
+
+help(){
+  ui::header "P.O.SH help"
+  ui::section "Purpose and use"
+  ui::text "The purpose of P.O.SH is to intervene before, or outside the scope of \"regular\" development environments."
+  ui::text "In other words, it:"
+  ui::text " - manages the installation and maintenance of package managers (brew)"
+  ui::text " - manages the agnostic installation and upgrading of development tools"
+  ui::text " - express system agnostic commands to install more of these tools simply"
+  ui::text "Put otherwise, it gives you one-liners to setup project specific dev-envs and get you to work."
+  ui::text "This is not scaffolding, and not here to replace package managers themselves."
+  ui::text "Usage:"
+  ui::code "./kingpin COMMAND"
+
+  ui::section "Main commands"
+  ui::text "This help..."
+  ui::code "./kingpin --help"
+  ui::text "Update all installed system components"
+  ui::code "./kingpin update"
+  ui::text "Call this specific project initialization routine"
+  ui::code "./kingpin init"
+
+  ui::section "Stacks commands"
+  ui::text "Install QT/cpp dev-env"
+  ui::code "./kingpin init::cpp"
+  ui::text "Install python library dev-env"
+  ui::code "./kingpin init::python"
+  ui::text "Install client side dev-env"
+  ui::code "./kingpin init::client"
+  ui::text "Scaffolding (yo)"
+  ui::code "./kingpin init::scaffold"
+  ui::text "Mobile dev env"
+  ui::code "./kingpin init::mobile"
+}
+
+init(){
+  # Mix and match what you need for this specific project
+  # init::client
+  # init::mobile
+  # init::scaffold
+  # init::python
+  # init::cpp
+
+  init::client
+
+  # Special: need to build PIEcss from source
+  require::system ant
+  cd dependencies/pie
+  ant
+
+  # Avoid grunt watch hitting the roof
+  ulimit -n 10480
+}
+
+command=${1#-}
+command=${command#-}
+
+case $command in
+    *)
+      if ! $command || [ -z "$command" ]; then
+        help
+        exit 1
+      fi
+    ;;
+esac

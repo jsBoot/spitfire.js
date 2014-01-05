@@ -9,13 +9,13 @@
  * @see https://gist.github.com/603980
  * @see http://www.dustindiaz.com/scriptjs/
  *
- * @author {PUKE-RIGHTS-AUTHOR}
- * @version {PUKE-PACKAGE-VERSION}
+ * @version <%= pkg.version %>
+ * @author <%= pkg.author.name %>
  *
- * @license {PUKE-RIGHTS-LICENSE}.
- * @copyright {PUKE-RIGHTS-COPYRIGHT}
+ * @license <%= pkg.license %>
+ * @copyright <%= grunt.template.today("dd-mm-yyyy") %> <%= pkg.author.name %> all rights reserved
  * @name loader.js
- * @location {PUKE-GIT-ROOT}/loader.js{PUKE-GIT-REVISION}
+ * @location https://github.com/<%= pkg.author.name %>/<%= pkg.name %>/src/lib/loader.js#git.revision
  */
 
 /**
@@ -57,8 +57,8 @@
       var Y;
       YUI().use('get', function(o) {
         Y = o;
+        Y.Get.options.async = true;
       });
-      Y.Get.options.async = true;
       return function() {
         Y.Get.js.apply(Y.Get, arguments);
       };

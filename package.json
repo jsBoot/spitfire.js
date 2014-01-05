@@ -1,203 +1,113 @@
 {
-    "description": "Javascript shim / loader framework. Making things behave since 1976.", 
-    "contributors": [
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Mangled Deutz", 
-            "email": "dev@webitup.fr"
-        }
-    ], 
-    "author": "WebItUp <dev@webitup.fr> (http://www.webitup.fr/lab)", 
-
-    "testling": {
-        "scripts_not_working": [
-            "dist/tests/es5/s-date.js"
-        ], 
-        "browsers": {
-            "ipad": [
-                6.0
-            ], 
-            "firefox": [
-                3, 
-                3.5, 
-                3.6, 
-                4, 
-                5, 
-                6, 
-                7, 
-                8, 
-                9, 
-                10, 
-                11, 
-                12, 
-                13, 
-                14, 
-                15, 
-                16, 
-                17, 
-                18, 
-                19, 
-                20, 
-                "nightly"
-            ], 
-            "chrome": [
-                4, 
-                5, 
-                6, 
-                7, 
-                8, 
-                9, 
-                10, 
-                11, 
-                12, 
-                13, 
-                14, 
-                15, 
-                16, 
-                17, 
-                18, 
-                19, 
-                20, 
-                21, 
-                22, 
-                23, 
-                24, 
-                25, 
-                "canary"
-            ], 
-            "opera": [
-                10, 
-                10.5, 
-                11, 
-                11.5, 
-                11.6, 
-                12, 
-                "next"
-            ], 
-            "iphone": [
-                6.0
-            ], 
-            "safari": [
-                4, 
-                "5.0.5", 
-                5.1, 
-                6.0
-            ], 
-            "android-browser": [
-                4.2
-            ], 
-            "ie": [
-                6, 
-                7, 
-                8, 
-                9, 
-                10
-            ]
-        }, 
-        "scripts": [
-            "dist/dependencies/jasmine/jasmine.js", 
-            "dist/dependencies/jasmine/jasmine.tap_reporter.js", 
-            "dist/burnscars.js", 
-            "dist/tests/specs/Object.js", 
-            "dist/tests/specs/Function.js", 
-            "dist/tests/specs/String.js", 
-            "dist/tests/specs/Array.js", 
-            "dist/tests/specs/Math.js", 
-            "dist/tests/specs/Globals.js", 
-            "dist/tests/es5/h.js", 
-            "dist/tests/es5/h-matchers.js", 
-            "dist/tests/es5/s-array.js", 
-            "dist/tests/es5/s-function.js", 
-            "dist/tests/es5/s-number.js", 
-            "dist/tests/es5/s-object.js", 
-            "dist/tests/es5/s-string.js", 
-            "dist/tests/testling.js"
-        ]
-    }, 
-    "homepage": "http://spitfire.jsboot.com", 
-    "directories": {
-        "tmp": ".tmp", 
-        "src": "src", 
-        "tests": "tests", 
-        "dist": "dist", 
-        "doc": "doc", 
-        "build": ".build"
-    }, 
-    "bugs": "https://github.com/jsBoot/spitfire.js/issues", 
-    "repository": {
-        "url": "https://github.com/jsBoot/spitfire.js.git", 
-        "type": "git"
-    }, 
-    "keywords": [
-        "shim", 
-        "loader", 
-        "framework", 
-        "es5", 
-        "es6"
-    ], 
-    "maintainers": [
-        {
-            "url": "http://www.webitup.fr", 
-            "name": "Mangled Deutz", 
-            "email": "dev@webitup.fr"
-        }
-    ], 
-    "dependencies": {
-      }, 
-
+  "name": "spitfire.js",
+  "version": "1.3.0",
+  "description": "Javascript shim / loader framework. Making things behave since 1976.",
+  "keywords": [
+    "shim",
+    "loader",
+    "framework",
+    "es5",
+    "es6"
+  ],
+  "author": {
+    "name": "WebItUp",
+    "email": "dev@webitup.fr",
+    "url": "http://www.webitup.fr/lab"
+  },
+  "maintainers": [
+    {
+      "name": "Mangled Deutz",
+      "email": "dev@webitup.fr",
+      "url": "https://twitter.com/MangledDeutz"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Mangled Deutz",
+      "email": "dev@webitup.fr",
+      "url": "https://twitter.com/MangledDeutz"
+    }
+  ],
+  "bugs": "https://github.com/jsBoot/spitfire.js/issues",
+  "homepage": "http://spitfire.jsboot.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jsBoot/spitfire.js.git"
+  },
+  "dependencies": {},
+  "license": "MIT",
+  "main": "dist/spitfire.min.js",
+  "readmeFilename": "README.md",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jasmine": "~0.5.2",
-    "grunt-contrib-concat": "~0.3.0",
+    "matchdep": "~0.3.0",
+    "grunt": "~0.4.2",
     "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-jshint": "~0.6.4",
-    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-watch": "~0.5.3",
+    "grunt-notify": "~0.2.16",
+    "time-grunt": "~0.2.0",
+    "grunt-contrib-sass": "~0.6.0",
+    "grunt-contrib-imagemin": "~0.4.0",
+    "grunt-contrib-htmlmin": "~0.1.3",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-contrib-csslint": "~0.2.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "jshint-stylish": "~0.1.3",
     "grunt-contrib-yuidoc": "~0.5.0",
+    "grunt-contrib-jasmine": "~0.5.2",
+    "grunt-template-jasmine-istanbul": "~0.2.5",
+    "grunt-ember-handlebars": "~0.7.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-jinja": "~0.3.0",
+    "karma-script-launcher": "~0.1.0",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-firefox-launcher": "~0.1.3",
+    "karma-html2js-preprocessor": "~0.1.0",
+    "karma-jasmine": "~0.1.5",
+    "karma-coffee-preprocessor": "~0.1.2",
+    "requirejs": "~2.1.9",
+    "karma-requirejs": "~0.2.1",
+    "karma-phantomjs-launcher": "~0.1.1",
+    "karma": "~0.10.9",
+    "grunt-karma": "~0.6.2",
+    "karma-safari-launcher": "~0.1.1",
+    "karma-opera-launcher": "~0.1.0",
+    "karma-osx-reporter": "0.0.4",
+    "karma-sauce-launcher": "~0.1.7"
+  },
+  "out": {
+    "grunt-bower-task": "~0.3.4",
+    "grunt-svgmin": "~0.2.0",
+    "grunt-concurrent": "~0.4.0",
+    "load-grunt-tasks": "~0.2.0",
+    "grunt-contrib-compass": "~0.7.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "handlebars": "~1.1.2",
+    "ember-template-compiler": "~1.3.0-beta.3",
+    "grunt-ember-templates": "~0.4.18",
+    "grunt-contrib-handlebars": "~0.5.11",
+    "grunt-mxmlc": "~0.2.0",
+    "grunt-contrib-clean": "~0.5.0",
     "grunt-fixmyjs": "~0.1.0",
     "fixmyjs": "~0.11.0",
     "chalk": "~0.2.1",
-    "grunt-bower-task": "~0.3.2",
-
-        "jsdoc": ">=3.0.0", 
-        "fixmyjs": "*", 
-        "browserstack-cli": "*", 
-        "karma-browserstack-launcher": "*", 
-        "bower": ">=1.0.0 <2.0.0", 
-        "karma": "*", 
-        "testem": "*", 
-        "jshint": "*"
-    }, 
-  "todo_installer_point_interrogation":{  
-    "grunt-contrib-cssmin": "~0.6.2",
-    "grunt-contrib-csslint": "~0.1.2",
-    "grunt-contrib-handlebars": "~0.5.11",
-    "grunt-contrib-imagemin": "~0.3.0",
-    "grunt-mxmlc": "~0.2.0"
-    },
-  "utilite_fonctionnelle_a_verifier":{
-    "grunt-jsbeautifier": "~0.2.2",    
-    
-    "bower": "~1.2.7",
+    "jsdoc": ">=3.0.0",
     "browserstack-cli": "*",
     "karma-browserstack-launcher": "*",
+    "bower": ">=1.0.0 <2.0.0",
     "karma": "*",
     "testem": "*",
-    "jshint": "*"
-   },
-
-    "version": "1.2.0", 
-    "scripts": {
-        "test": "", 
-        "minify": "puke2 mint"
-    }, 
-    "licenses": [
-        {
-            "url": "http://en.wikipedia.org/wiki/MIT_License", 
-            "type": "MIT"
-        }
-    ], 
-    "config": {}, 
-    "name": "spitfire.js"
+    "grunt-jsbeautifier": "~0.2.2"
+  },
+  "directories": {
+    "tmp": ".tmp",
+    "src": "src",
+    "tests": "tests",
+    "dist": "dist",
+    "doc": "doc",
+    "build": ".build"
+  },
+  "config": {
+    "ln": "en-us"
+  }
 }

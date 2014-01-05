@@ -8,13 +8,13 @@
  * @see https://github.com/bestiejs/
  * @see http://es5.github.com/#x15.4.4.13
  *
- * @author {PUKE-RIGHTS-AUTHOR}
- * @version {PUKE-PACKAGE-VERSION}
+ * @version <%= pkg.version %>
+ * @author <%= pkg.author.name %>
  *
- * @license {PUKE-RIGHTS-LICENSE}.
- * @copyright {PUKE-RIGHTS-COPYRIGHT}
+ * @license <%= pkg.license %>
+ * @copyright <%= grunt.template.today("dd-mm-yyyy") %> <%= pkg.author.name %> all rights reserved
  * @name shimer.js
- * @location {PUKE-GIT-ROOT}/shimer.js{PUKE-GIT-REVISION}
+ * @location https://github.com/<%= pkg.author.name %>/<%= pkg.name %>/src/lib/shimer.js#git.revision
  */
 
 (function() {
@@ -172,18 +172,16 @@
    *   var uris = Spitfire.boot();
    * @summary Give uris to shims.
    * @see module:Spitfire.use
-   * @param   {Boolean} [useFull=false] If true, request non-minified versions of the shims.
-   * Useful for debugging only.
    * @returns Array<String> An array of uris to load in order to obtain the shims.
    */
-  root.boot = function(useFull) {
+  root.boot = function() {
     var uris = [];
     for (var x = 0, shim; (x < toBeLoaded.length) && (shim = toBeLoaded[x]); x++) {
       if (shim.test) {
         if (shim.patch)
           shim.patch();
         else
-          uris.push('burnscars/' + shim.uri + (useFull ? '.js' : '-min.js'));
+          uris.push('burnscars/' + shim.uri + '.js');
       }
     }
     return uris;
@@ -228,10 +226,10 @@
    * @type {String}
    */
   root.UNSAFE = 'unsafe';
-  root.add({
-    test: !Function.isGenerator,
-    uri: 'function.isgenerator'
-  }, root.UNSAFE);
+  // root.add({
+  //   test: !Function.isGenerator,
+  //   uri: 'function.isgenerator'
+  // }, root.UNSAFE);
   root.add({
     test:
         !Object.preventExtensions ||
@@ -239,7 +237,7 @@
         !Object.isFrozen ||
         !Object.seal ||
         !Object.freeze,
-    uri: 'es5.shim.unsafe'
+    uri: 'es5-sham'
   }, root.UNSAFE);
 
   /**
@@ -378,38 +376,14 @@
   // separate for now
   // ==========
   root.add({
-    test: !Object.getPrototypeOf,
-    uri: 'object.getprototypeof'
-  }, root.SAFE);
-
-  root.add({
-    test: !Object.getOwnPropertyDescriptor,
-    uri: 'object.getownpropertydescriptor'
-  }, root.SAFE);
-
-  root.add({
-    test: !Object.getOwnPropertyNames,
-    uri: 'object.getownpropertynames'
-  }, root.SAFE);
-
-  root.add({
-    test: !Object.create,
-    uri: 'object.create'
-  }, root.SAFE);
-
-  root.add({
-    test: !Object.defineProperty,
-    uri: 'object.defineproperty'
-  }, root.SAFE);
-
-  root.add({
-    test: !Object.defineProperties,
-    uri: 'object.defineproperties'
-  }, root.SAFE);
-
-  root.add({
-    test: !Object.isExtensible,
-    uri: 'object.isextensible'
+    test: !Object.getPrototypeOf ||
+        !Object.getOwnPropertyDescriptor ||
+        !Object.getOwnPropertyNames ||
+        !Object.create ||
+        !Object.defineProperty ||
+        !Object.defineProperties ||
+        !Object.isExtensible,
+    uri: 'es5-sham'
   }, root.SAFE);
 
   // ==========
@@ -445,7 +419,7 @@
   // ==========
   root.add({
     test: es5Tests,
-    uri: 'es5.shim'
+    uri: 'es5-shim'
   }, root.SAFE);
 
 
@@ -485,9 +459,6 @@
     uri: 'console'
   }, root.SAFE);
 
-  // Use all safe shims by default
-  root.use(root.SAFE);
-
   // ==========
   // Request animation frame
   // ==========
@@ -497,34 +468,22 @@
     uri: 'animationframe'
   }, root.SAFE);
 
+  // ES6
   root.add({
-    test: !Array.from || !Array.of,
-    uri: 'es6.array'
-  }, root.SAFE);
-
-  root.add({
-    // XXX incomplete
-    test: !Math.acosh || !Math.asinh || !Math.atanh || !Math.cosh || !Math.sinh || !Math.tanh ||
-        !Math.expm1,
-    uri: 'es6.math'
-  }, root.SAFE);
-
-  root.add({
-    test: !Number.isFinite || !Number.isInteger || !Number.isNaN || !Number.toInteger,
-    uri: 'es6.number'
-  }, root.SAFE);
-
-  root.add({
-    test: !Object.getOwnPropertyDescriptors || !Object.getPropertyDescriptor ||
-        !Object.getPropertyNames || !Object.is || !Object.isnt,
-    uri: 'es6.object'
-  }, root.SAFE);
-
-  root.add({
-    test: !String.prototype.repeat || !String.prototype.startsWith ||
+    test:
+        !Array.from || !Array.of ||
+        !Math.acosh || !Math.asinh || !Math.atanh || !Math.cosh || !Math.sinh || !Math.tanh ||
+        !Math.expm1 ||
+        !Number.isFinite || !Number.isInteger || !Number.isNaN || !Number.toInteger ||
+        !Object.getOwnPropertyDescriptors || !Object.getPropertyDescriptor ||
+        !Object.getPropertyNames || !Object.is || !Object.isnt ||
+        !String.prototype.repeat || !String.prototype.startsWith ||
         !String.prototype.endsWith || !String.prototype.contains,
-    uri: 'es6.string'
+    uri: 'es6-shim'
   }, root.SAFE);
+
+  // Use all safe shims by default
+  root.use(root.SAFE);
 
   // IE at large doesn't support additional arguments on settimeout.
   // This can't be shimed independtly considering we work synchronously for now with loader

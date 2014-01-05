@@ -1,24 +1,29 @@
-Spitfire.js
+spitfire.js
 =============
 
 About
--------------
+--------
 
 Javascript shim / loader framework.
 
 Making things behave since 1976.
 
-For the impatients
--------------
+TL;DR
+--------
 
-Get the content of the "dist" folder, and make it available on your server as "/whatever/dist". Include "spitfire-lab-min.js" in your page.
+Using Bower:
+
+    bower install spitfire.js
+
+
+Make the content of the "dist" folder available on your server. Include "spitfire-lab-min.js" in your page.
 
 
 ```
 <!doctype html>
 <html>
 <head>
-  <script src="//base-url-to-spitfire-lib-folder/spitfire-labjs-min.js"></script>
+  <script src="//base-url/spitfire-labjs-min.js"></script>
   <script type="text/javascript">
     var shims = Spitfire.boot();
     var baseUri = Spitfire.loader.base('spitfire-labjs');
@@ -44,9 +49,6 @@ Now, you can enjoy in any browser (at least, that's the purpose):
 - localStorage
 - geolocation API
 - others
-
-Problem
--------------
 
 There exist numerous projects providing "shims" for various "aspects" of the modern web.
 
@@ -170,14 +172,22 @@ One of these files (gulliver-min.js, spitfire(-[^-]+)?-min.js, loader(-[^-]+)?-m
 How to build
 -------------
 
-- you need a working python + pip environment
-- install puke: `pip install puke`
-- clone: `git clone https://github.com/jsBoot/spitfire.js`
-- build it as-is: `cd spitfire.js; puke all`
+Clone:
+`git clone https://github.com/jsBoot/spitfire.js`
 
-You can customize stuff by using a config-USERNAME-OSNAME.json file (see package.json to see what you can override).
+Setup base environment once (short answer):
+`./kingpin init`
 
-In case you would want to upgrade the dependencies, you should do that using Airstrip.
+Then:
+`grunt`
+or
+`grunt test`
+or
+`grunt all`
+or
+`grunt watch` (automatically build when modified)
+
+Alternatively to the "short answer", you may manually install nodejs and ant, then npm install grunt-cli and bower, then gem install sass, compass, and compass-sourcemaps (all --pre).
 
 How to contribute
 -------------
@@ -186,13 +196,18 @@ Issues, or forks + pull requests.
 
 Be sure to add tests for what you want "shimed".
 
-If the problem is an ES5 feature / bug, get upstream instead. Same goes for console, XHR, and JSON3.
+If the problem is an ES5 feature / bug, get upstream instead. Same goes for console, XHR, JSON3, etc.
+
+History
+-------------
+
+Loren ipsum.
 
 License
 -------------
 
 MIT.
-
+See `LICENSE.md` in this directory.
 
 About the shims
 -------------
@@ -267,4 +282,3 @@ Technology
 -------------
 
 We use puke (https://github.com/webitup/puke), a (inhouse) versatile python build system, and airstrip (https://github.com/jsBoot/airstrip.js), a javascript dependency manager built on-top of puke.
-

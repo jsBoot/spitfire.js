@@ -1,0 +1,11 @@
+@import 'compass/css3';
+
+$experimental-support-for-svg: true;
+$images_dir: "../images";
+
+body {
+  min-height: 800px;
+//  padding-top: 60px;
+  background: transparent center center no-repeat fixed;
+  @include background-image(url("#{$images_dir}/logo.png"), linear-gradient(top left, #2e2e47, #fdffff));
+}

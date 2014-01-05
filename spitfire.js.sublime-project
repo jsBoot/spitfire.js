@@ -1,0 +1,27 @@
+{
+  "folders":
+  [
+    {
+      "path": ".",
+      "folder_exclude_patterns":
+      [
+        ".git",
+        // "dependencies",
+        "node_modules",
+        ".tmp",
+        // ".build",
+        // "dist",
+        "doc"
+      ],
+
+      "file_exclude_patterns": ["*.sublime-workspace"]
+    }
+  ],
+
+  "settings":
+  {
+    "rulers": [100, 120],
+    "tab_size": 2,
+    "translate_tabs_to_spaces": true
+  }
+}
