@@ -1,6 +1,6 @@
 {
   "name": "spitfirejs",
-  "version": "0.0.1",
+  "version": "1.3.0",
   "dependencies": {
     "normalize-css": "1.1.3",
     "html5-boilerplate": "4.3.0",
@@ -27,7 +27,7 @@
     "yuidoc-bootstrap-theme": "kevinlacotaco/yuidoc-bootstrap-theme",
     "bootstrap": "3.0.3"
   },
-  "main": "dist/spitfire-min.js",
+  "main": "build/burnscars.js",
   "ignore": [
     "**/.*",
     "node_modules",

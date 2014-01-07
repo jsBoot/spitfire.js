@@ -3,7 +3,7 @@
   /*global Spitfire, jasmine, require*/
   'use strict';
 
-  var spitfireBaseUrl = '../${= url.base}/';
+  var spitfireBaseUrl = '../../lib/';
 
   // If you want to use Spitfire, have "use-spitfire" somehow in the url (eg: url#use-*)
   var useSpitfire = !!location.href.match(/use-spitfire/);
@@ -41,11 +41,11 @@
     // And so is our event testing...
     loader.wait()
     .script('specs/Events.js')
-    .script('es5-shim/s-array.js')
-    .script('es5-shim/s-function.js')
-    .script('es5-shim/s-string.js')
-    .script('es5-shim/s-object.js')
-    .script('es5-shim/s-date.js');
+    .script('specs/s-array.js')
+    .script('specs/s-function.js')
+    .script('specs/s-string.js')
+    .script('specs/s-object.js')
+    .script('specs/s-date.js');
 
     var h = document.getElementsByTagName('html')[0];
     h.className = h.className.replace(/miniboot/, '');
@@ -76,18 +76,18 @@
     loader.style('../css/bootstrap.css');
     loader.style('../css/bootstrap-theme.css');
     loader.style('../css/jasmine-bootstrap.css');
-    loader.style('../css/spitfire.css');
+    loader.style('../css/base.css');
 
-    loader.script('../js/jasmine.js')
-    loader.script('../js/jquery.js')
-    .wait();
+    loader.script('../js/jasmine.js');
+    loader.script('../js/jquery.js');
+    loader.wait();
     // loader.script('../dependencies/jasmine/jasmine-html.js')
     // .wait();
 
-    loader.script('../js/bootstrap.js')
-    loader.script('../js/jasmine-bootstrap.js')
+    loader.script('../js/bootstrap.js');
+    loader.script('../js/jasmine-bootstrap.js');
     // Monkey patching so we can pass the spoofed doc object instead
-    .wait(function(){
+    loader.wait(function(){
       jasmine.BootstrapReporter.prototype.getLocation = function() {
         return document.location;
       };
@@ -103,8 +103,8 @@
     .script('specs/Math.js')
     .script('specs/Globals.js')
 
-    .script('es5-shim/h.js')
-    .script('es5-shim/h-matchers.js');
+    .script('specs/h.js')
+    .script('specs/h-matchers.js');
 
     // If we are told to use-* a shiming shcript, load it as well
     if (useSpitfire)

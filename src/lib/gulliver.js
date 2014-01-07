@@ -10,14 +10,14 @@
  *
  * @see https://gist.github.com/603980
  *
- * @version <%= pkg.version %>
- * @author <%= pkg.author.name %>
+ * @version ${= pkg.version }
+ * @author ${= pkg.author.name }
  * @author Getify
  *
- * @license <%= pkg.license %>
- * @copyright <%= grunt.template.today("dd-mm-yyyy") %> <%= pkg.author.name %> all rights reserved
+ * @license ${= pkg.license }
+ * @copyright ${= grunt.template.today("dd-mm-yyyy") } ${= pkg.author.name } all rights reserved
  * @name gulliver.js
- * @location https://github.com/<%= pkg.author.name %>/<%= pkg.name %>/src/lib/gulliver.js#git.revision
+ * @location https://github.com/${= pkg.author.name }/${= pkg.name }/src/lib/gulliver.js#git.revision
  */
 
 

@@ -34,8 +34,9 @@
 
       it('undefined has no enumerable members', function() {
         runs(function() {
+          /*jshint forin:false*/
           for (var i in undefined)
-            expect(false).toBe(true);
+            expect(false).toBe(true || i); // Just to keep lint happy :/
           expect(true).toBe(true);
         });
       });
@@ -74,13 +75,13 @@
           expect(isNaN(Number.NaN)).toBe(true);
         });
       });
-      it("typeof NaN == 'number'", function() {
+      it('typeof NaN == "number"', function() {
         runs(function() {
           expect(typeof NaN).toBe('number');
           expect(typeof Number.NaN).toBe('number');
         });
       });
-      it("NaN.toString() == 'NaN'", function() {
+      it('NaN.toString() == "NaN"', function() {
         runs(function() {
           expect(NaN.toString()).toBe('NaN');
           expect(Number.NaN.toString()).toBe('NaN');

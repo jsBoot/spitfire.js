@@ -9,13 +9,13 @@
  * @see https://gist.github.com/603980
  * @see http://www.dustindiaz.com/scriptjs/
  *
- * @version <%= pkg.version %>
- * @author <%= pkg.author.name %>
+ * @version ${= pkg.version }
+ * @author ${= pkg.author.name }
  *
- * @license <%= pkg.license %>
- * @copyright <%= grunt.template.today("dd-mm-yyyy") %> <%= pkg.author.name %> all rights reserved
+ * @license ${= pkg.license }
+ * @copyright ${= grunt.template.today("dd-mm-yyyy") } ${= pkg.author.name } all rights reserved
  * @name loader.js
- * @location https://github.com/<%= pkg.author.name %>/<%= pkg.name %>/src/lib/loader.js#git.revision
+ * @location https://github.com/${= pkg.author.name }/${= pkg.name }/src/lib/loader.js#git.revision
  */
 
 /**

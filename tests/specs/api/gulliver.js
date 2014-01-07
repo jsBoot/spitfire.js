@@ -1,5 +1,5 @@
 (function() {
-  /*global it:false, describe:false, runs:false, expect:false, waits:false*/
+  /*global it:false, describe:false, runs:false, expect:false, waits:false, gulliver:false*/
   'use strict';
 
   describe('Gulliver', function() {

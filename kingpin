@@ -314,6 +314,7 @@ init::client(){
   require::system::rbenv
   require::gem sass "sass --pre"
   require::gem compass "compass compass-sourcemaps --pre"
+  require::gem jsduck
 
   require::system::node
   require::npm grunt grunt-cli

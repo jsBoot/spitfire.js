@@ -1,1 +1,0 @@
-'use strict';(function(){Array.from||(Array.from=function(a){a=Object(a);for(var c=[],b=0,d=a.length>>>0;b<d;b++)b in a&&(c[b]=a[b]);return c});Array.of||(Array.of=function(){return Array.prototype.slice.call(arguments)})})();

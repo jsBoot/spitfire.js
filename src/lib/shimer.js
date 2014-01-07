@@ -8,17 +8,17 @@
  * @see https://github.com/bestiejs/
  * @see http://es5.github.com/#x15.4.4.13
  *
- * @version <%= pkg.version %>
- * @author <%= pkg.author.name %>
+ * @version ${= pkg.version }
+ * @author ${= pkg.author.name }
  *
- * @license <%= pkg.license %>
- * @copyright <%= grunt.template.today("dd-mm-yyyy") %> <%= pkg.author.name %> all rights reserved
+ * @license ${= pkg.license }
+ * @copyright ${= grunt.template.today("dd-mm-yyyy") } ${= pkg.author.name } all rights reserved
  * @name shimer.js
- * @location https://github.com/<%= pkg.author.name %>/<%= pkg.name %>/src/lib/shimer.js#git.revision
+ * @location https://github.com/${= pkg.author.name }/${= pkg.name }/src/lib/shimer.js#git.revision
  */
 
 (function() {
-  /*jshint evil:true, browser:true, maxstatements:50,maxcomplexity:60*/
+  /*jshint evil:true, browser:true, maxstatements:50,maxcomplexity:70*/
   /*global define:false, exports:false*/
   'use strict';
 
@@ -236,7 +236,14 @@
         !Object.isSealed ||
         !Object.isFrozen ||
         !Object.seal ||
-        !Object.freeze,
+        !Object.freeze ||
+        !Object.getPrototypeOf ||
+        !Object.getOwnPropertyDescriptor ||
+        !Object.getOwnPropertyNames ||
+        !Object.create ||
+        !Object.defineProperty ||
+        !Object.defineProperties ||
+        !Object.isExtensible,
     uri: 'es5-sham'
   }, root.UNSAFE);
 
@@ -371,22 +378,6 @@
    */
 
   // ==========
-  // Objects - although these are available in es5-sham,
-  // they are bundled with other, riskier shams, so let's keep it
-  // separate for now
-  // ==========
-  root.add({
-    test: !Object.getPrototypeOf ||
-        !Object.getOwnPropertyDescriptor ||
-        !Object.getOwnPropertyNames ||
-        !Object.create ||
-        !Object.defineProperty ||
-        !Object.defineProperties ||
-        !Object.isExtensible,
-    uri: 'es5-sham'
-  }, root.SAFE);
-
-  // ==========
   // Events
   // ==========
   root.add({
@@ -444,6 +435,7 @@
   // Console
   // ==========
   root.add({
+    // XXX verify this works properly and doesn't slow IE
     test: !window.console || eval('/*@cc_on @_jscript_version <= 9@*/') || !(function() {
       var ok = true;
       var props = [

@@ -1,5 +1,6 @@
 (function() {
   /*global it:false, describe:false, runs:false, expect:false*/
+  /*jshint -W053 */
   'use strict';
 
   describe('String basics test suite', function() {

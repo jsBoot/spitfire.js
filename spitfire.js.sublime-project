@@ -6,15 +6,18 @@
       "folder_exclude_patterns":
       [
         ".git",
-        // "dependencies",
         "node_modules",
+        // Ignore temp folder
         ".tmp",
-        // ".build",
-        // "dist",
-        "doc"
+        // Ignore bower source deps
+        "dependencies",
+        // Ignore build rep
+        "build",
+        // Ignore dist rep
+        "dist"
       ],
 
-      "file_exclude_patterns": ["*.sublime-workspace"]
+      "file_exclude_patterns": ["*.sublime-workspace", "sauce_connect.log"]
     }
   ],
 

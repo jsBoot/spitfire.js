@@ -1,5 +1,5 @@
 (function() {
-  /*global it:true, xit:true, describe:true, expect:true*/
+  /*global it:true, describe:true, expect:true*/
   'use strict';
 
   describe('Events', function() {

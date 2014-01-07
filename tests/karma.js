@@ -1,7 +1,10 @@
 // Karma configuration
 // Generated on Mon Sep 02 2013 12:27:16 GMT+0200 (CEST)
 
+/*globals module:false*/
 module.exports = function(config) {
+  /*jshint camelcase:false*/
+  'use strict';
 
   config.set({
 
@@ -14,88 +17,85 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // Shimer
-      '../${= url.base}/burnscars.js',
+      '../../lib/burnscars.js',
 
       // Tests
-      'specs/*.js',
-
-      // es5-shim tests
-      'es5-shim/h*.js',
-      'es5-shim/s-*.js',
+      'specs/*.js'
     ],
 
     // list of files to exclude
     exclude: [
-
     ],
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
-    // OSX reporter is too buggy (socket hang, etc) and none of the growls work as expected - also, conflicts with grunt-notify anyhow
+    // OSX reporter is too buggy (socket hang, etc) and none of the growls work as expected
+    // - also, conflicts with grunt-notify anyhow
     reporters: ['progress'],
-
 
     // web server port
     port: 9876,
 
-
     // enable / disable colors in the output (reporters and logs)
     colors: true,
 
-
     // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN ||
+    // config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_WARN,
-
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,//true,
 
-
-
-
     // define browsers
-    customLaunchersBS: {
+    customLaunchers: {
 
       bs_firefox_old_mac: {
         base: 'BrowserStack',
         browser: 'firefox',
         browser_version: '10.0',
         os: 'OS X',
-        os_version: 'Snow Leopard'
+        os_version: 'Mavericks'
       },
       bs_firefox_esr_mac: {
         base: 'BrowserStack',
         browser: 'firefox',
-        browser_version: '17.0',
+        browser_version: '24.0',
         os: 'OS X',
-        os_version: 'Snow Leopard'
+        os_version: 'Mavericks'
       },
-      bs_firefox_stable_mac: {
+      bs_firefox_25_mac: {
         base: 'BrowserStack',
         browser: 'firefox',
-        browser_version: '21.0',
+        browser_version: '25.0',
         os: 'OS X',
-        os_version: 'Snow Leopard'
+        os_version: 'Mavericks'
       },
 
 
       /*Safaris*/
-      bs_safari_4_mac: {
+      bs_safari_7_mac: {
         base: 'BrowserStack',
         browser: 'safari',
-        browser_version: '4.0',
+        browser_version: '7',
         os: 'OS X',
-        os_version: 'Snow Leopard'
+        os_version: 'Mavericks'
       },
 
-      bs_safari_5_mac: {
+      bs_safari_61_mac: {
         base: 'BrowserStack',
         browser: 'safari',
-        browser_version: '5.0',
+        browser_version: '6.1',
         os: 'OS X',
-        os_version: 'Snow Leopard'
+        os_version: 'Mountain Lion'
+      },
+
+      bs_safari_6_mac: {
+        base: 'BrowserStack',
+        browser: 'safari',
+        browser_version: '6.0',
+        os: 'OS X',
+        os_version: 'Lion'
       },
 
       bs_safari_51_mac: {
@@ -106,35 +106,21 @@ module.exports = function(config) {
         os_version: 'Snow Leopard'
       },
 
-      bs_safari_6_mac: {
-        base: 'BrowserStack',
-        browser: 'safari',
-        browser_version: '6.0',
-        os: 'OS X',
-        os_version: 'Mountain Lion'
-      },
 
       /*IEs*/
-      bs_ie_6: {
+      bs_ie_11: {
         base: 'BrowserStack',
         browser: 'ie',
-        browser_version: '6.0',
+        browser_version: '11.0',
         os: 'Windows',
-        os_version: 'XP'
+        os_version: '8.1'
       },
-      bs_ie_7: {
+      bs_ie_10: {
         base: 'BrowserStack',
         browser: 'ie',
-        browser_version: '7.0',
+        browser_version: '10.0',
         os: 'Windows',
-        os_version: 'XP'
-      },
-      bs_ie_8: {
-        base: 'BrowserStack',
-        browser: 'ie',
-        browser_version: '8.0',
-        os: 'Windows',
-        os_version: '7'
+        os_version: '8'
       },
       bs_ie_9: {
         base: 'BrowserStack',
@@ -143,38 +129,29 @@ module.exports = function(config) {
         os: 'Windows',
         os_version: '7'
       },
-      bs_ie_10: {
+      bs_ie_8: {
         base: 'BrowserStack',
         browser: 'ie',
-        browser_version: '10.0',
+        browser_version: '8.0',
         os: 'Windows',
         os_version: '7'
-      }
-      /*,
-      bs_iphone5: {
+      },
+      bs_ie_7: {
         base: 'BrowserStack',
-        device: 'iPhone 5',
-        os: 'ios',
-        os_version: '6.0'
-      }*/
-    },
-
-/*    browsers: [
-      'ChromeCanary',
-      'bs_firefox_stable_mac',
-      'bs_firefox_esr_mac',
-      'bs_firefox_old_mac'
-    ],*/
-
-    // ['bs_firefox_old_mac', 'bs_firefox_esr_mac', 'bs_firefox_stable_mac'],
-// , 'bs_iphone5'],
-
-
+        browser: 'ie',
+        browser_version: '7.0',
+        os: 'Windows',
+        os_version: 'XP'
+      },
+      bs_ie_6: {
+        base: 'BrowserStack',
+        browser: 'ie',
+        browser_version: '6.0',
+        os: 'Windows',
+        os_version: 'XP'
+      },
 
     // global config for SauceLabs
-
-    // define SL browsers
-    customLaunchers: {
       sl_chrome: {
         base: 'SauceLabs',
         browserName: 'chrome',
@@ -195,11 +172,12 @@ module.exports = function(config) {
         platform: 'linux',
         version: '25'
       },
+
       sl_firefoxesr: {
         base: 'SauceLabs',
         browserName: 'firefox',
         platform: 'linux',
-        version: '17'
+        version: '24'
       },
 
       sl_ie11: {
@@ -208,7 +186,6 @@ module.exports = function(config) {
         platform: 'windows 8.1',
         version: '11'
       },
-
       sl_ie10: {
         base: 'SauceLabs',
         browserName: 'internet explorer',
@@ -304,42 +281,11 @@ module.exports = function(config) {
       },
     },
 
-
     browsers: [
-/*
-      'sl_chrome',
-      'sl_opera',
-      'sl_firefox',
-      'sl_safari7',
-      'sl_android',
-      'sl_ios7',
-      'sl_ie11'
-      'sl_firefoxesr',
-      'sl_safari6',
-      'sl_safari5',
-      'sl_ie10',
-      'PhantomJS',
-      'Chrome',
-      'ChromeCanary',
-      'Firefox',
-      'Opera',
-      'Safari'
-*/
     ],
-
-    // Start these browsers, currently available:
-    // - Chrome
-    // - ChromeCanary
-    // - Firefox
-    // - Opera
-    // - Safari (only Mac)
-    // - PhantomJS
-    // - IE (only Windows)
-    // browsers: ['BrowserStack'],
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 60000,
-
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit

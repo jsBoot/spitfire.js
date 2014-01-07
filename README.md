@@ -13,20 +13,22 @@ TL;DR
 
 Using Bower:
 
-    bower install spitfire.js
+    bower install jsBoot/spitfire.js
 
 
-Make the content of the "dist" folder available on your server. Include "spitfire-lab-min.js" in your page.
+Make the content of the "build" folder available on your server. Include "burnscars.js" and "burnscars.css" in your page.
 
-
+Or use the loader, by including spitfire-lab.js
 ```
 <!doctype html>
 <html>
 <head>
-  <script src="//base-url/spitfire-labjs-min.js"></script>
+  <script src="//base-url/spitfire-lab.js"></script>
   <script type="text/javascript">
+    // Detect needed shims
     var shims = Spitfire.boot();
-    var baseUri = Spitfire.loader.base('spitfire-labjs');
+    var baseUri = Spitfire.loader.base('spitfire-lab');
+    // Loade them
     for(var x = 0; x < shims.length; x++)
       Spitfire.loader.script(baseUri + '/' + shims[x]);
     Spitfire.loader.wait(function(){
@@ -49,6 +51,9 @@ Now, you can enjoy in any browser (at least, that's the purpose):
 - localStorage
 - geolocation API
 - others
+
+Problem
+-------------
 
 There exist numerous projects providing "shims" for various "aspects" of the modern web.
 
@@ -91,8 +96,8 @@ Spitfire.use(Spitfire.JSON);
 // Enforce XHR replacement shim instead of native implementation, no matter what
 Spitfire.use(Spitfire.XHR);
 
-// To use non-minified versions of the shims, pass true
-var shims = Spitfire.boot(true);
+// Getting the requested list of shims
+var shims = Spitfire.boot();
 
 // Load your shims, then, the way you want
 ```
@@ -143,16 +148,16 @@ gulliver(function(){
 API: Advanced embedding strategies
 -------------
 
-If you prefer to use modules (and requirejs), just embed instead "spitfire-require-min.js".
+If you prefer to use modules (and requirejs), just embed instead "spitfire-require.js".
 
-You can also use "spitfire-yui-min.js", "spitfire-head-min.js", or "spitfire-yepnope-min.js" for alternative loaders.
+You can also use "spitfire-yui.js", "spitfire-head.js", or "spitfire-yepnope.js" for alternative loaders.
 
 The API is exactly the same - but the bundled loader differ.
 Note that if "require" exists in the global scope, we switch to a module API instead - you must then require 'Spitfire' and 'Spitfire/loader' instead of namespaces.
 
-If you prefer to use your own copy of your favorite loader (assuming its supported - that is: labjs, requires, yahoo loader, yepnope and headjs), just embed the "spitfire-min.js" file which just contains the API and wrapper, and no actual loader backend.
+If you prefer to use your own copy of your favorite loader (assuming its supported - that is: labjs, requires, yahoo loader, yepnope and headjs), just embed the "spitfire.js" file which just contains the API and wrapper, and no actual loader backend.
 
-If you don't care at all about the loader API, just embed "shimer-min.js" to get the Spitfire module/namespace with no loader (it's then your responsibility to load the uris).
+If you don't care at all about the loader API, just embed "shimer.js" to get the Spitfire module/namespace with no loader (it's then your responsibility to load the uris).
 
 On the other hand, if you just want a loader and NOT the shiming API, use loader-something.js.
 
@@ -165,9 +170,9 @@ gulliver(function(){
 
 ```
 
-Finally, if you just don't care at all about conditional testing or loading at all, and just want a shim-it-all file, simply use the burnscars-min.js file directly. Conversely, there is a burnscars.css file that reset css (normalize + h5bp fragment).
+Finally, if you just don't care at all about conditional testing or loading at all, and just want a shim-it-all file, simply use the burnscars.js file directly. Conversely, there is a burnscars.css file that reset css (normalize + h5bp fragment).
 
-One of these files (gulliver-min.js, spitfire(-[^-]+)?-min.js, loader(-[^-]+)?-min.js, shimer-min.js, burnscars.(?:js|css), along with the burnscars folder if you use on-demand shiming) is all that is needed for distribution.
+One of these files (gulliver.js, spitfire(-[^-]+)?.js, loader(-[^-]+)?.js, shimer.js, burnscars.(?:js|css), along with the burnscars folder if you use on-demand shiming) is all that is needed for distribution - save source maps / source.
 
 How to build
 -------------
@@ -180,12 +185,6 @@ Setup base environment once (short answer):
 
 Then:
 `grunt`
-or
-`grunt test`
-or
-`grunt all`
-or
-`grunt watch` (automatically build when modified)
 
 Alternatively to the "short answer", you may manually install nodejs and ant, then npm install grunt-cli and bower, then gem install sass, compass, and compass-sourcemaps (all --pre).
 
@@ -201,7 +200,7 @@ If the problem is an ES5 feature / bug, get upstream instead. Same goes for cons
 History
 -------------
 
-Loren ipsum.
+Internal WebItUp project.
 
 License
 -------------
@@ -224,7 +223,7 @@ Most of the actual shiming code is provided by third-party library and sources, 
 - http://developer.mozilla.org
 - others
 
-See the pukefile, the dependencies folder, individual burnscars/ files for information.
+See the bower.json file and the dependencies folder, individual burnscars/ files for information.
 All of them use a MIT compatible license, or public domain.
 
 The loader API is largely inspired by that of labjs.
@@ -236,21 +235,9 @@ Uses jasmine.
 
 Bundles in es5-shim tests as well.
 
-You need to build (puke all) to have the tests deployed.
+Navigate your browser to app/tests.
 
-Navigate your browser to lib/tests/All.html
-
-It will default to use loader-lab, unless you add params in the url to specify another loader
-(eg: #loader-requirejs).
-
-The following additional fragments options are supported in the url:
-- use shimer as well: #use-spitfire
-- use shimer with unsafe shims: #use-spitfire-full
-- use shimer as a monolith: #use-monolith
-- to use ES5-shim only: #use-es5
-- to use minified versions of the shims: #use-min
-
-You can combine any of these (though use-spitfire obviously implies use-es5).
+It will default to use loader-lab.
 
 About the bugs
 -------------
@@ -261,7 +248,7 @@ Except for Labjs, the loaders are rarely tested.
 Versioning and API
 -------------
 
-We use semantic versioning (semver), and the uri by default contain only the MAJOR.MINOR part of the version.
+We use semantic versioning (semver).
 
 Existing shims fixing / enhancing will trigger a REVISION bump.
 
@@ -271,14 +258,3 @@ Changes to the Spitfire API will trigger a MAJOR bump.
 
 Build system change and undocumented features change will NOT trigger a version bump.
 
-
-Server availability
--------------
-
-Spitfire will be made available, prebuilt, under a jsboot domain - though, unless you use the jsBoot stack, you should rather use it on your own server infrastructure...
-
-
-Technology
--------------
-
-We use puke (https://github.com/webitup/puke), a (inhouse) versatile python build system, and airstrip (https://github.com/jsBoot/airstrip.js), a javascript dependency manager built on-top of puke.

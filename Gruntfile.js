@@ -1,6 +1,6 @@
 (function(){
   /*global require:false, module:false*/
-  /*jshint maxstatements:70*/
+  /*jshint maxstatements:100*/
   'use strict';
 
   // (function(){
@@ -68,46 +68,6 @@
   //   };
   // })();
 
-
-
-  // var kp = require('kingpin');
-  // kp.copy();
-
-
-  // var toto = [{
-  //       expand: true,
-  //       flatten: true,
-  //       src: [
-  //         '!<%= files.avoid %>'
-  //         '<%= dirs.dependencies %>/bootstrap/dist/**/*',
-  //         '<%= dirs.dependencies %>/jquery/jquery.js',
-  //         '<%= dirs.dependencies %>/jasmine/lib/jasmine-core/jasmine.js',
-  //         '<%= dirs.dependencies %>/jasmine/lib/jasmine-core/jasmine-html.js',
-  //         '<%= dirs.dependencies %>/jasmine-bootstrap/src/jasmine-bootstrap.js',
-  //         '<%= dirs.dependencies %>/jasmine-reporters/src/*.js',
-  //         '<%= dirs.dependencies %>/jasmine/lib/jasmine-core/jasmine.css',
-  //         '<%= dirs.dependencies %>/jasmine-bootstrap/src/jasmine-bootstrap.css'
-  //       ],
-  //       dest: '<%= dirs.build %>/source.app.dependencies',
-  //       rename: function(dest, src){
-  //         return dest + '/' + src.split('.').pop() + '/' + src.toLowerCase();
-  //       }
-  //     }, {
-  //       expand: true,
-  //       flatten: true,
-  //       src: [
-  //         '<%= dirs.dependencies %>/es5-shim/tests/helpers/h.js',
-  //         '<%= dirs.dependencies %>/es5-shim/tests/helpers/h-matchers.js',
-  //         '<%= dirs.dependencies %>/es5-shim/tests/spec/*.js'
-  //       ],
-  //       dest: '<%= dirs.build %>/source.app.dependencies/tests'
-  //     }]
-
-  // kp.copy(toto);
-  // return;
-
-
-
   // var path = require('path');
   // var fs = require('fs');
 
@@ -140,7 +100,7 @@
           accessKey: '4912202d-7be7-415b-8a15-46a1985e09e8'
         },
         browserStack: {
-          username: 'olivier@webitup.fr',
+          username: 'MangledDeutz',//olivier@webitup.fr',
           accessKey: '5TV8Z0CWyrGcRaw5BeSd'
         }
       },
@@ -160,8 +120,7 @@
       },
 
       url: {
-        base: '../' + grunt.file.readJSON('package.json').version,
-        source: 'file:///Users/dmp/dev/jsboot/spitfire.js/.build/'
+        source: '/spitfire.js/'
       },
 
       // Banner
@@ -418,7 +377,7 @@
         'helpers/h-matchers.js',
         'spec/*.js'
       ],
-      dest: '<%= dirs.build %>/source.app/dependencies/tests/es5-shim'
+      dest: '<%= dirs.build %>/source.app/dependencies/tests/specs'
     });
 
 
@@ -474,7 +433,7 @@
           '<%= dirs.build %>/source.lib/dependencies/js/' + name + '.js',
           '<%= dirs.build %>/source.lib/loader.js'
         ],
-        dest: '<%= dirs.build %>/<%= pkg.version %>/loader-' + shortName + '.js'
+        dest: '<%= dirs.build %>/lib/loader-' + shortName + '.js'
       });
       files.push({
         src: [
@@ -482,7 +441,7 @@
           '<%= dirs.build %>/source.lib/loader.js',
           '<%= dirs.build %>/source.lib/shimer.js'
         ],
-        dest: '<%= dirs.build %>/<%= pkg.version %>/spitfire-' + shortName + '.js'
+        dest: '<%= dirs.build %>/lib/spitfire-' + shortName + '.js'
       });
     });
 
@@ -491,7 +450,7 @@
         '<%= dirs.build %>/source.lib/loader.js',
         '<%= dirs.build %>/source.lib/shimer.js'
       ],
-      dest: '<%= dirs.build %>/<%= pkg.version %>/spitfire.js'
+      dest: '<%= dirs.build %>/lib/spitfire.js'
     });
 
     // Handle simple deps and source
@@ -503,7 +462,7 @@
         '!**/animationframe.js', '!**/{' + loaders.join(',') + '}.js'
       ],
       filter: 'isFile',
-      dest: '<%= dirs.build %>/<%= pkg.version %>',
+      dest: '<%= dirs.build %>/lib',
       rename: function(dest, src){
         if(/dependencies/.test(src))
           src = 'burnscars/' + src.split('/').pop();
@@ -517,7 +476,7 @@
         '<%= dirs.build %>/source.lib/dependencies/js/store.js',
         '<%= dirs.build %>/source.lib/burnscars/activate-store.js'
       ],
-      dest: '<%= dirs.build %>/<%= pkg.version %>/burnscars/localstorage.js'
+      dest: '<%= dirs.build %>/lib/burnscars/localstorage.js'
     });
 
     files.push({
@@ -525,7 +484,7 @@
         '<%= dirs.build %>/source.lib/dependencies/js/animationframe.js',
         '<%= dirs.build %>/source.lib/burnscars/activate-animationframe.js'
       ],
-      dest: '<%= dirs.build %>/<%= pkg.version %>/burnscars/animationframe.js'
+      dest: '<%= dirs.build %>/lib/burnscars/animationframe.js'
     });
 
     // Order matter for concatenation
@@ -545,7 +504,7 @@
         '<%= dirs.build %>/source.lib/burnscars/activate-animationframe.js',
         '<%= dirs.build %>/source.lib/burnscars/activate-store.js'
       ],
-      dest: '<%= dirs.build %>/<%= pkg.version %>/burnscars.js'
+      dest: '<%= dirs.build %>/lib/burnscars.js'
     });
 
     grunt.config('uglify.libbuild', {
@@ -560,7 +519,7 @@
           '<%= dirs.build %>/source.lib/dependencies/css/main.css'
         ],
         filter: 'isFile',
-        dest: '<%= dirs.build %>/<%= pkg.version %>/burnscars.css'
+        dest: '<%= dirs.build %>/lib/burnscars.css'
       }]
     });
 
@@ -569,7 +528,7 @@
         expand: true,
         flatten: true,
         src: '<%= dirs.build %>/source.lib/dependencies/htc/*.htc',
-        dest: '<%= dirs.build %>/<%= pkg.version %>/burnscars'
+        dest: '<%= dirs.build %>/lib/burnscars'
       }]
     });
 
@@ -747,9 +706,13 @@
 
     grunt.registerTask('default', ['build']);
 
+    grunt.registerTask('hint', ['jshint']);// , 'csslint']); // XXX csslint is crap
 
+    grunt.registerTask('doc', ['jsdoc:compile']);
 
+    grunt.registerTask('test', ['karma:base', 'jasmine:coverage']);
 
+    grunt.registerTask('test-all', ['karma:local', 'jasmine:coverage']);
 
     // Process hbs
     // grunt.config('ember_handlebars.src', {
@@ -775,6 +738,54 @@
 
 
 
+    /**
+     * Documentation - yui not tested
+     */
+    grunt.config('yuidoc', {
+      compile: {
+        name: '<%= pkg.name %> API',
+        description: '<%= pkg.description %>',
+        version: '<%= pkg.version %>',
+        url: '<%= pkg.homepage %>',
+        options: {
+          // paths: '<%= dirs.build %>/source.lib',
+          paths: 'src/lib/xxx.doc-test/',
+          outdir: '<%= dirs.build %>/doc/yui',
+          themedir: '<%= dirs.dependencies %>/yuidoc-bootstrap-theme',
+          helpers: ['<%= dirs.dependencies %>/yuidoc-bootstrap-theme/helpers/helpers.js']
+        }
+      }
+    });
+
+    grunt.config('jsdoc', {
+      compile : {
+        src: [
+          '<%= dirs.build %>/source.lib/*.js'
+        ],
+        options: {
+          destination: '<%= dirs.build %>/doc/jsdoc'
+        }
+      }
+    });
+
+    grunt.config('jsduck', {
+      compile: {
+        // source paths with your code
+        src: [
+          'src/lib/xxx.doc-test/*.js'
+        ],
+
+        // docs output dir
+        dest: '<%= dirs.build %>/doc/duck',
+
+        // extra options
+        options: {
+          // 'builtin-classes': true,
+          // 'warnings': ['-no_doc', '-dup_member', '-link_ambiguous'],
+          // 'external': ['XMLHttpRequest']
+        }
+      }
+    });
 
 
     /**
@@ -794,7 +805,7 @@
     grunt.config('csslint.all', {
       src: [
         '<%= dirs.src %>/**/*.css',
-        '<%= dirs.build %>/**/*.css',
+        '<%= dirs.build %>/**/base.css',
         '!<%= dirs.build %>/**/burnscars.css',
         '!<%= dirs.build %>/**/dependencies/**/*',
         '!<%= dirs.src %>/**/<%= files.avoid %>'
@@ -818,9 +829,12 @@
 
     grunt.config('karma.options', kOpts);
 
+    grunt.config('karma.base', {
+      browsers: ['PhantomJS']
+    });
+
     grunt.config('karma.local', {
       browsers: [
-        'PhantomJS',
         'Chrome',
         'ChromeCanary',
         'Firefox',
@@ -832,7 +846,7 @@
     /**
      * Karma + sauce
      */
-    grunt.config('karma.sauce-desktop-latest', {
+    grunt.config('karma.sauce-desktop', {
       browsers: ['sl_chrome', 'sl_opera', 'sl_firefox', 'sl_safari7', 'sl_ie11']
     });
 
@@ -844,7 +858,7 @@
       browsers: ['sl_safari5', 'sl_ie9', 'sl_ie8', 'sl_ie7', 'sl_ie6']
     });
 
-    grunt.config('karma.sauce-mobile-latest', {
+    grunt.config('karma.sauce-mobile', {
       browsers: ['sl_android', 'sl_ios7']
     });
 
@@ -852,9 +866,73 @@
       browsers: ['sl_ios61']
     });
 
-    grunt.config('karma.sl-mobile-old', {
+    grunt.config('karma.sauce-mobile-old', {
       browsers: ['sl_ios6', 'sl_ios51', 'sl_ios5', 'sl_ios4']
     });
+
+    /**
+     * Karma + browserstack
+     */
+    grunt.config('karma.stack-desktop', {
+      browsers: ['bs_firefox_25_mac', 'bs_safari_7_mac', 'bs_ie_11']
+    });
+
+
+    /**
+     * Jasmine + phantom solo doesn't work well (karma seems more tested)
+     * but code coverage might be done this way
+     */
+    grunt.config('jasmine.coverage', {
+      // src: '<%= dirs.build %>/lib/burnscars.js',
+      src: [
+        '<%= dirs.build %>/source.lib/dependencies/js/*.js',
+        '<%= dirs.build %>/source.lib/burnscars/*.js'
+      ],
+      options: {
+        specs: '<%= dirs.build %>/app/tests/specs/*.js',
+        template: require('grunt-template-jasmine-istanbul'),
+        templateOptions: {
+          coverage: '<%= dirs.build %>/coverage/coverage.json',
+          report: '<%= dirs.build %>/coverage'
+        }
+      }
+    });
+
+    /**
+     * Dull server might be useful for tests that require cross-domain XHR
+     */
+    grunt.config('connect', {
+      server: {
+        options: {
+          port: 42000,
+          base: '.build'
+        }
+      }
+    });
+
+    /**
+     * Jinja processing
+     */
+    // https://github.com/matthewwithanm/grunt-jinja
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -874,23 +952,6 @@
      * Minify
      */
 
-//     /**
-//      * Documentation
-//      */
-//     gruntConfig.yuidoc = {
-//         compile: {
-//             name: '<%= pkg.name %> API',
-//             description: '<%= pkg.description %>',
-//             version: '<%= pkg.version %>',
-//             url: '<%= pkg.homepage %>',
-//             options: {
-//                 paths: '<%= dirs.src %>/lib/**/*.js',
-//                 outdir: 'doc/yui',
-//                 themedir: '<%= dirs.dependencies %>/yuidoc-bootstrap-theme',
-//                 helpers: ['<%= dirs.dependencies %>/yuidoc-bootstrap-theme/helpers/helpers.js']
-//             }
-//         }
-//     };
 
 
 //       // notify: {
@@ -927,84 +988,6 @@
 //       // qunit: {
 //       //   files: ['test/*.html']
 //       // },
-
-
-
-
-
-
-
-
-
-
-// https://github.com/matthewwithanm/grunt-jinja
-
-
-//         // jasmine: {
-//         //     test: { src: 'src/controller/controller_v2.js' },
-//         //     testmin: { src: 'build/js/min/widemotion.min.js' },
-//         //     options: { specs: 'testing/tests_01.js' }
-//         // },
-
-//       jasmine: {
-//         customTemplate: {
-//           src: 'build/*.js',
-//           options: {
-//             specs: '<%= dirs.tests %>/specs/*.js',
-//             helpers: '<%= dirs.tests %>/helpers/*.js'
-//             // template: 'custom.tmpl'
-//           }
-//         }
-//       }
-//     };
-
-
-    // grunt.config('copy.dist', {
-    //   files: [{
-    //     expand: true,
-    //     cwd: '<%= dirs.build %>',
-    //     src: ['**/*'],
-    //     filter: 'isFile',
-    //     dest: '<%= dirs.dist %>/<%= pkg.version %>'
-    //   }]
-    // });
-
-    // grunt.config('watch.copy-dist', {
-    //   files: [
-    //     '<%= dirs.build %>/**/*'
-    //   ],
-    //   tasks: ['copy:dist']
-    // });
-
-
-    // grunt.registerTask('devbuild',
-    //   [
-    //     'copy:tests', 'copy:devdependencies'
-    //   ]);
-
-
-
-    // grunt.registerTask('mint', ['uglify:build', 'sass:build', 'imagemin:build', 'htmlmin:build']);
-
-    // grunt.registerTask('hint', ['jshint', 'csslint']);
-
-    // grunt.registerTask('dist', ['copy:dist']);
-
-    // grunt.registerTask('default', ['build'/*, 'devbuild', 'dist'*/]);
-
-    // grunt.registerTask('all', ['build', 'devbuild', 'mint', 'dist', 'hint']);
-
-    // grunt.registerTask('hint', ['jshint', 'csslint']);
-
-    // grunt.registerTask('all', ['build', 'mint', 'deploy', 'hint']);
-
-//     // grunt.registerTask('pack', ['sass', 'copy']);
-
-//     // grunt.registerTask('release', ['default'])
-
-//     // grunt.registerTask('test', ['jshint', 'qunit']);
-//     // grunt.registerTask('default', ['concat', 'jshint', 'qunit', 'uglify']);
-//     // grunt.registerTask( "default", [ "coffee", "notify:coffee", "uglify", "notify:js" ]);
 
   };
 })();

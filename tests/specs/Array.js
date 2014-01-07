@@ -1,5 +1,6 @@
 (function() {
   /*global it:false, describe:false, runs:false, expect:false*/
+  /*jshint -W009, -W010, -W054 */
   'use strict';
 
   describe('Array basics test suite', function() {
@@ -88,6 +89,7 @@
     });
 
     describe('Array instance via array constructor (base structure)', function() {
+      /*jshint newcap:false*/
       basechecks(Array());
     });
 
@@ -237,8 +239,8 @@
               new Object(), new Array(), new RegExp(), new Function());
           expect(a.length).toEqual(t);
           expect(a.length).toEqual(19);
-          expect(a[0] == NaN);
-          expect(a[18] == 'string');
+          expect(a[0]).toBe(NaN);
+          expect(a[18]).toEqual('string');
         });
       });
     });
