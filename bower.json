@@ -33,6 +33,7 @@
     "node_modules",
     "dependencies",
     "test",
+    "build/app",
     ".*"
   ]
 }

@@ -36,7 +36,7 @@
   },
   "dependencies": {},
   "license": "MIT",
-  "main": "dist/spitfire.min.js",
+  "main": "build/burnscars.js",
   "readmeFilename": "README.md",
   "devDependencies": {
     "matchdep": "~0.3.0",

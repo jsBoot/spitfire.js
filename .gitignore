@@ -4,7 +4,6 @@
 # Build systems
 dependencies
 node_modules
-.build
 .tmp
 
 # IDE
