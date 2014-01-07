@@ -17,3 +17,5 @@ node_modules
 
 # Oldies
 *xxx*
+
+/sauce_connect.log
