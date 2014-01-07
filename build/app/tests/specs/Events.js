@@ -1,0 +1,2 @@
+!function(){"use strict";describe("Events",function(){describe("Basic support",function(){it("addEventListener in window",function(){expect("addEventListener"in window).toBe(!0)}),it("addEventListener in document",function(){expect("addEventListener"in document).toBe(!0)}),it("removeEventListener in window",function(){expect("removeEventListener"in window).toBe(!0)}),it("removeEventListener in document",function(){expect("removeEventListener"in document).toBe(!0)})})})}();
+//# sourceMappingURL=Events.js.map

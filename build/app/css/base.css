@@ -1,0 +1,17 @@
+/*
+ * -------------------------------------------------------
+ * Project:  spitfire.js
+ * Version:  1.3.0
+ * Homepage: http://spitfire.jsboot.com
+ *
+ * Author:   WebItUp
+ * Contact:  dev@webitup.fr
+ * Homepage: http://www.webitup.fr/lab
+ *
+ * Copyright (c) 07-01-2014 WebItUp under MIT all rights reserved.
+ * -------------------------------------------------------
+ */
+
+
+body{min-height:800px;background:transparent center center no-repeat fixed;background-image:url("../images/logo.png"),-moz-linear-gradient(top left, #2e2e47,#fdffff);background-image:url("../images/logo.png"),-o-linear-gradient(top left, #2e2e47,#fdffff);background-image:url("../images/logo.png"),-webkit-linear-gradient(top left, #2e2e47,#fdffff);background-image:url("../images/logo.png"),linear-gradient(to bottom right, #2e2e47,#fdffff)}
+/*# sourceMappingURL=base.css.map */
