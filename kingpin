@@ -7,28 +7,40 @@
 
 # UI helpers
 ui::fatal(){
-  tput setaf 1
+  if [ ! -z "$TERM" ]; then
+    tput setaf 1
+  fi
   for i in "$@"; do
     echo "FATAL: $i"
   done
-  tput op
+  if [ ! -z "$TERM" ]; then
+    tput op
+  fi
   exit 1
 }
 
 ui::info(){
-  tput setaf 2
+  if [ ! -z "$TERM" ]; then
+    tput setaf 2
+  fi
   for i in "$@"; do
     echo "INFO: $i"
   done
-  tput op
+  if [ ! -z "$TERM" ]; then
+    tput op
+  fi
 }
 
 ui::warning(){
-  tput setaf 3
+  if [ ! -z "$TERM" ]; then
+    tput setaf 3
+  fi
   for i in "$@"; do
     echo "WARNING: $i"
   done
-  tput op
+  if [ ! -z "$TERM" ]; then
+    tput op
+  fi
 }
 
 ui::text(){
@@ -48,7 +60,9 @@ ui::confirm(){
     echo "$i"
   done
   echo "Press enter now."
-  # read
+  if [ ! -z "$TERM" ]; then
+    read
+  fi
 }
 
 ui::ask(){
@@ -61,14 +75,18 @@ ui::section(){
     then
     return
   fi
-  tput setaf 2
+  if [ ! -z "$TERM" ]; then
+    tput setaf 2
+  fi
   echo "____________________________________________________________________________________________"
   for i in "$@"; do
     echo "| $i"
   done
   echo "____________________________________________________________________________________________"
   echo ""
-  tput op
+  if [ ! -z "$TERM" ]; then
+    tput op
+  fi
 }
 
 ui::header(){
@@ -76,14 +94,18 @@ ui::header(){
     then
     return
   fi
-  tput setaf 2
+  if [ ! -z "$TERM" ]; then
+    tput setaf 2
+  fi
   echo "★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★"
   for i in "$@"; do
     echo "★ $i"
   done
   echo "★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★"
   echo ""
-  tput op
+  if [ ! -z "$TERM" ]; then
+    tput op
+  fi
 }
 
 # Base system installers / output
@@ -394,7 +416,8 @@ init(){
   ant
 
   # Avoid grunt watch hitting the roof
-  ulimit -n 10480
+  # XXX require root?
+  # ulimit -n 10480
 }
 
 command=${1#-}
