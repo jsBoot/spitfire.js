@@ -2,6 +2,8 @@
   "name": "spitfirejs",
   "version": "1.3.0",
   "dependencies": {
+  },
+  "devDependencies": {
     "normalize-css": "1.1.3",
     "html5-boilerplate": "4.3.0",
     "console-shim": "*",
@@ -18,9 +20,9 @@
     "headjs": "1.0.3",
     "labjs": "*",
     "yepnope": "1.5.4",
-    "yui": "yui/yui3#3.14.1"
-  },
-  "devDependencies": {
+    "yui": "yui/yui3#3.14.1",
+
+
     "jasmine-reporters": "master",
     "jasmine": "1.3.1",
     "jasmine-bootstrap": "jsBoot/jasmine-bootstrap#master",
