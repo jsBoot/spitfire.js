@@ -356,7 +356,7 @@
         '<%= dirs.dependencies %>/jasmine-reporters/src/*.js',
         '<%= dirs.dependencies %>/jasmine/lib/jasmine-core/jasmine.css',
         '<%= dirs.dependencies %>/jasmine-bootstrap/src/jasmine-bootstrap.css',
-        '!**/<%= files.avoid %>'
+        '!<%= dirs.dependencies %>/**/<%= files.avoid %>'
       ],
       dest: '<%= dirs.build %>/source.app/dependencies',
       rename: function(dest, src){
