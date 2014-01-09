@@ -15,7 +15,7 @@
  * @author Getify
  *
  * @license MIT
- * @copyright 07-01-2014 WebItUp all rights reserved
+ * @copyright 09-01-2014 WebItUp all rights reserved
  * @name gulliver.js
  * @location https://github.com/WebItUp/spitfire.js/src/lib/gulliver.js#git.revision
  */

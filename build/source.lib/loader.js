@@ -13,7 +13,7 @@
  * @author WebItUp
  *
  * @license MIT
- * @copyright 07-01-2014 WebItUp all rights reserved
+ * @copyright 09-01-2014 WebItUp all rights reserved
  * @name loader.js
  * @location https://github.com/WebItUp/spitfire.js/src/lib/loader.js#git.revision
  */
@@ -265,12 +265,11 @@
     var c = document.getElementsByTagName('script');
     var m;
     var re = new RegExp(pattern);
-    // for(var x = 0, it; (x < c.length) && (it = c[x].src); x++){
     for (var x = 0, it; x < c.length; (it = c[x].getAttribute('src')), x++) {
-      if (it && re.test(it)) {
+      if (re.test(it)) {
         m = it.split('/');
         m.pop();
-        m = m.join('/') || './';
+        m = (m.join('/') || '.');
         break;
       }
     }

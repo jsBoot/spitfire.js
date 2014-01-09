@@ -12,7 +12,7 @@
  * @author WebItUp
  *
  * @license MIT
- * @copyright 07-01-2014 WebItUp all rights reserved
+ * @copyright 09-01-2014 WebItUp all rights reserved
  * @name shimer.js
  * @location https://github.com/WebItUp/spitfire.js/src/lib/shimer.js#git.revision
  */
@@ -448,7 +448,7 @@
         ok &= !!window.console[props[x]];
       return ok;
     })(),
-    uri: 'console'
+    uri: 'console-shim'
   }, root.SAFE);
 
   // ==========
