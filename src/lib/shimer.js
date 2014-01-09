@@ -448,7 +448,7 @@
         ok &= !!window.console[props[x]];
       return ok;
     })(),
-    uri: 'console'
+    uri: 'console-shim'
   }, root.SAFE);
 
   // ==========
