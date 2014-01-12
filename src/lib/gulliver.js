@@ -67,8 +67,8 @@
         var scripts = document.getElementsByTagName('script');
         var re = new RegExp('(.*)\\/' + (name || 'gulliver') + '((?:-min)?\\.js)');
         for (var x = 0, baseGulliPath; x < scripts.length; x++) {
-          baseGulliPath = scripts[x];
-          if (baseGulliPath.src && (baseGulliPath = baseGulliPath.src.match(re))) {
+          baseGulliPath = scripts[x].getAttribute('src');
+          if (baseGulliPath && (baseGulliPath = baseGulliPath.match(re))) {
             baseGulliPath.shift();
             uri = baseGulliPath.shift() + '/' + uri + baseGulliPath.shift();
             break;
